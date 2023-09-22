@@ -48,7 +48,7 @@
 .home.orca {
   margin-top: 36px;
 }
-.home.project {
+.home.project, .home.insight {
   display: flex;
   flex-direction: column;
   width: 1648px;
@@ -56,7 +56,7 @@
   margin: auto;
   margin-top: 36px;
 }
-.home.project.head {
+.home.project.head, .home.head.insight {
   display: flex;
   flex-direction: row;
   width: 1648px;
@@ -65,14 +65,14 @@
   margin-left: 0px;
   justify-content: space-between;
 }
-.home.project.head div {
+.home.project.head div, .home.head.insight div {
   font-family: Pretendard;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
   line-height: 28px; /* 116.667% */
 }
-.home.project.body {
+.home.project.body, .home.body.insight {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   row-gap: 10px;
@@ -80,14 +80,21 @@
   height: 230px;
   margin-top: 14px;
 }
-.home.project.body div {
+.home.project.body div, .home.body.insight div {
   width: 1648px;
   height: 70px;
   border: 1px solid #000;
 }
-.home.project.body div img {
+.home.project.body div img, .home.body.insight div img {
   margin-top: 21px;
   margin-left: 21px;
+}
+.home.insight {
+  height: 352px;
+}
+.home.insight.body {
+  grid-template-rows: repeat(4, 1fr);
+  height: 310px;
 }
 
 .apply {

@@ -80,7 +80,7 @@ const Home = ({
 			</div>
 			<div className='home insight'>
 				<div className='home insight head'>
-					<div>Projects</div>
+					<div>Insights</div>
 					<button className='apply'>적용</button>
 				</div>
 				<div className='home insight body'>
