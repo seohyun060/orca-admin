@@ -1,4 +1,5 @@
 import HomeContainer from '../pages/Home/containers/HomeContainer';
+import ResearcherContainer from 'src/pages/Researcher/containers/ResearcherContainer';
 import React, { useEffect, useState } from 'react';
 import {
 	BrowserRouter as Router,
@@ -26,6 +27,7 @@ const RootNavigation = () => {
 					<HomeContainer />
 				}
 			/>
+			<Route path='/researcher' element={<ResearcherContainer />} />
 		</Routes>
 	);
 };
