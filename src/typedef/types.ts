@@ -6,6 +6,7 @@ export type Researchers = {
 };
 
 export type Insights = {
+	id: number;
 	type: string;
 	title: string;
 	date: string;
