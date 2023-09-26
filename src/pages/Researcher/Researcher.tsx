@@ -64,6 +64,11 @@ const Researcher = ({
 					<img src={images.search} />
 				</div>
 				<button
+					disabled={stored ? true : false}
+					style={{
+						backgroundColor: stored ? '#E1E1E1' : '#0D5699',
+						color: stored ? '#9E9E9E' : '#fff',
+					}}
 					onClick={() => {
 						onSetEdit(
 							false,
