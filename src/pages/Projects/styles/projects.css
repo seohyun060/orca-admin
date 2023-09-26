@@ -313,6 +313,9 @@
 
 .CandIInputSet {
   display: flex;
+  margin-bottom: 20px;
+}
+.CandIInputSet:last-child {
   margin-bottom: 50px;
 }
 .CandIInputSet input {
@@ -337,8 +340,26 @@
   line-height: 28px;
   margin-bottom: 14px;
 }
-.Publiciations .smallInput {
+
+.PublicationLink {
+  display: flex;
+  margin-bottom: 20px;
+}
+.PublicationLink .smallInput {
+  display: flex;
+  align-items: center;
   width: 1426px;
+}
+.PublicationLink .smallInput img {
+  padding-right: 16px;
+}
+.PublicationLink .smallInput input {
+  width: 1333px;
+  font-family: Pretendard;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
 }
 
 .BackImage {
