@@ -1,32 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Researcher from '../Researcher';
 import { ResearcherList, EChange } from '@typedef/types';
-type Props = {};
-const researcherList: ResearcherList = [];
-for (let j = 0; j < 24; j++) {
-	if (j < 16) {
-		researcherList.push({
-			name: `${j}Name`,
-			department: 'Radiology Department',
-			project: 'CadAI-B projects',
-			stored: false,
-		});
-	} else {
-		researcherList.push({
-			name: `${j}Name`,
-			department: 'Radiology Department',
-			project: 'CadAI-B projects',
-			stored: true,
-		});
-	}
-}
-const ResearcherContainer = (props: Props) => {
+import { useNavigate } from 'react-router-dom';
+type Props = {
+	researcherList: ResearcherList;
+	setResearcherList: any;
+};
+const ResearcherContainer = ({ researcherList, setResearcherList }: Props) => {
+	const navigate = useNavigate();
 	const [search, setSearch] = useState('');
 	const [stored, setStored] = useState(false);
-	const [filteredList, setFilteredList] = useState<ResearcherList>([]);
+	const [filteredList, setFilteredList] =
+		useState<ResearcherList>(researcherList);
 	const [displayedColor, setDisplayedColor] = useState(1);
 	const [storedColor, setStoredColor] = useState(0.3);
-
+	const [edit, setEdit] = useState(0);
 	const onDisplayedClick = useCallback(() => {
 		if (stored) {
 			setStored(false);
@@ -44,20 +32,28 @@ const ResearcherContainer = (props: Props) => {
 		console.log(stored, displayedColor, storedColor);
 	}, [stored, displayedColor, storedColor]);
 	const onStoredisplayClick = useCallback(
-		(filteredList: ResearcherList, index: number) => {
-			const updatedList = [...filteredList]; // Create a copy of the list
-			updatedList[index].stored = !updatedList[index].stored; // Toggle stored value
-			setFilteredList(updatedList); // Up
+		(researcherList: ResearcherList, id: number) => {
+			const updatedList = [...researcherList]; // Create a copy of the list
+			for (let i = 0; i < updatedList.length; i++) {
+				if (updatedList[i].id == id) {
+					updatedList[i].stored = !updatedList[i].stored;
+					break;
+				}
+			}
+			setResearcherList(updatedList); // Up
 		},
-		[filteredList],
+		[researcherList],
 	);
 	const onTrashClick = useCallback(
-		(filteredList: ResearcherList, index: number) => {
-			const updatedList = [...filteredList]; // Create a copy of the list
-			updatedList.splice(index, 1);
-			setFilteredList(updatedList); // Up
+		(id: number) => {
+			setResearcherList((prevList: ResearcherList) => {
+				const updatedList = prevList.filter(
+					(researcher) => researcher.id !== id,
+				);
+				return updatedList;
+			});
 		},
-		[filteredList],
+		[researcherList],
 	);
 	const onSetSearch = useCallback(
 		(e: EChange) => {
@@ -65,6 +61,42 @@ const ResearcherContainer = (props: Props) => {
 		},
 		[search],
 	);
+	const onSetEdit = useCallback(
+		(
+			edit: boolean,
+			id: number,
+			name: string,
+			department: string,
+			project: string,
+			location: number,
+			profile: string,
+			link: string,
+			twitter: string,
+			biography: string,
+			publications: string[],
+		) => {
+			//setEdit(index);
+
+			navigate('/researcherinfo', {
+				state: {
+					Edit: edit,
+					Id: id,
+					Name: name,
+					Department: department,
+					Project: project,
+					Location: location,
+					Profile: profile,
+					Link: link,
+					Twitter: twitter,
+					Biography: biography,
+					Publications: publications,
+				},
+			});
+			window.scrollTo(0, 0);
+		},
+		[edit],
+	);
+
 	useEffect(() => {
 		setFilteredList(
 			researcherList.filter(
@@ -72,7 +104,7 @@ const ResearcherContainer = (props: Props) => {
 			),
 		);
 		return () => {};
-	}, [search]);
+	}, [search, researcherList]);
 
 	return (
 		<Researcher
@@ -86,6 +118,8 @@ const ResearcherContainer = (props: Props) => {
 			onStoredClick={onStoredClick}
 			onStoredisplayClick={onStoredisplayClick}
 			onTrashClick={onTrashClick}
+			onSetEdit={onSetEdit}
+			researcherList={researcherList}
 		/>
 	);
 };

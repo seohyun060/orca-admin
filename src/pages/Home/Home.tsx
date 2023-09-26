@@ -25,7 +25,7 @@ const Home = ({
 					<button className='apply'>적용</button>
 				</div>
 				<div className='home main body'>
-					<label htmlFor='fileInput'>
+					<label htmlFor='mainInput'>
 						{selectedMain ? (
 							<p>{selectedMain.name}</p>
 						) : (
@@ -33,7 +33,7 @@ const Home = ({
 						)}
 						<input
 							type='file'
-							id='fileInput'
+							id='mainInput'
 							onChange={uploadMainHandler}
 							style={{ display: 'none' }}
 						/>
@@ -46,7 +46,7 @@ const Home = ({
 					<button className='apply'>적용</button>
 				</div>
 				<div className='home orca body'>
-					<label htmlFor='fileInput'>
+					<label htmlFor='orcaInput'>
 						{selectedOrca ? (
 							<p>{selectedOrca.name}</p>
 						) : (
@@ -54,7 +54,7 @@ const Home = ({
 						)}
 						<input
 							type='file'
-							id='fileInput'
+							id='orcaInput'
 							onChange={uploadOrcaHandler}
 							style={{ display: 'none' }}
 						/>

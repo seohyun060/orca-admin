@@ -2,6 +2,7 @@ import React from 'react';
 import './styles/researcher.styles.css';
 import { EChange, ResearcherList } from '@typedef/types';
 import images from 'src/assets/images';
+import { OnSetEdit } from '@typedef/types';
 type Props = {
 	stored: boolean;
 	search: string;
@@ -12,7 +13,9 @@ type Props = {
 	onDisplayedClick: () => void;
 	onStoredClick: () => void;
 	onStoredisplayClick: (filteredList: ResearcherList, index: number) => void;
-	onTrashClick: (filteredList: ResearcherList, index: number) => void;
+	onTrashClick: (index: number) => void;
+	onSetEdit: OnSetEdit;
+	researcherList: ResearcherList;
 };
 
 const Researcher = ({
@@ -26,6 +29,8 @@ const Researcher = ({
 	onStoredClick,
 	onStoredisplayClick,
 	onTrashClick,
+	onSetEdit,
+	researcherList,
 }: Props) => {
 	return (
 		<div className='researcher'>
@@ -58,7 +63,25 @@ const Researcher = ({
 					></input>
 					<img src={images.search} />
 				</div>
-				<button>사용자 추가</button>
+				<button
+					onClick={() => {
+						onSetEdit(
+							false,
+							researcherList.length + 1,
+							'',
+							'',
+							'',
+							15,
+							'',
+							'',
+							'',
+							'',
+							[],
+						);
+					}}
+				>
+					사용자 추가
+				</button>
 			</div>
 			<div className='researcher-body'>
 				<div className='label'>
@@ -86,17 +109,36 @@ const Researcher = ({
 								<button
 									className='store'
 									onClick={() => {
-										onStoredisplayClick(filteredList, index);
+										onStoredisplayClick(researcherList, researcher.id);
 									}}
 								>
 									{stored ? '게시' : '보관'}
 								</button>
-								<button className='edit'>편집</button>
+								<button
+									className='edit'
+									onClick={() => {
+										onSetEdit(
+											true,
+											researcher.id,
+											researcher.name,
+											researcher.department,
+											researcher.project,
+											researcher.location,
+											researcher.profile,
+											researcher.link,
+											researcher.twitter,
+											researcher.biography,
+											researcher.publications,
+										);
+									}}
+								>
+									편집
+								</button>
 							</div>
 							<img
 								src={images.trash}
 								onClick={() => {
-									onTrashClick(filteredList, index);
+									onTrashClick(researcher.id);
 								}}
 							/>
 						</div>
