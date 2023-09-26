@@ -10,11 +10,14 @@ import {
 } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import './styles/rootnavigation.style.css';
+import { Insights } from '@typedef/types';
 import HelmetHoc from './helmet/HelmetHoc';
-// /* eslint no-restricted-globals: ["off"] */
 
+// /* eslint no-restricted-globals: ["off"] */
 const RootNavigation = () => {
 	const [key, setkey] = useState('');
+	const [insightList, setInsightList] = useState<Insights[]>([]);
+
 	useEffect(() => {
 		setkey(new Date().getSeconds().toString());
 	}, [key]);

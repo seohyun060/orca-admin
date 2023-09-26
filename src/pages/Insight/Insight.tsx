@@ -3,7 +3,7 @@ import React from 'react';
 type Props = {};
 
 const Insight = (props: Props) => {
-	return <div>Insight</div>;
+	return <div className='insight'>Insight</div>;
 };
 
 export default Insight;
