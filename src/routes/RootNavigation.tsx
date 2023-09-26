@@ -1,6 +1,7 @@
 import HomeContainer from '../pages/Home/containers/HomeContainer';
 import ResearcherContainer from 'src/pages/Researcher/containers/ResearcherContainer';
 import React, { useEffect, useState } from 'react';
+import InsightContainer from 'src/pages/Insight/containers/InsightContainer';
 import {
 	BrowserRouter as Router,
 	useLocation,
@@ -28,6 +29,7 @@ const RootNavigation = () => {
 				}
 			/>
 			<Route path='/researcher' element={<ResearcherContainer />} />
+			<Route path='/insight' element={<InsightContainer />} />
 		</Routes>
 	);
 };
