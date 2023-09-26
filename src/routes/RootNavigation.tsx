@@ -1,5 +1,6 @@
 import HomeContainer from '../pages/Home/containers/HomeContainer';
 import ResearcherContainer from 'src/pages/Researcher/containers/ResearcherContainer';
+import GnbContainer from 'src/pages/Gnb/containers/GnbContainer';
 import React, { useEffect, useState } from 'react';
 import {
 	BrowserRouter as Router,
@@ -19,16 +20,19 @@ const RootNavigation = () => {
 	}, [key]);
 	const location = useLocation();
 	return (
-		<Routes location={location}>
-			<Route
-				path='/'
-				element={
-					//<HelmetHoc title='Portfolio | 움직이는네모'>
-					<HomeContainer />
-				}
-			/>
-			<Route path='/researcher' element={<ResearcherContainer />} />
-		</Routes>
+		<>
+			<GnbContainer location={location.pathname} />
+			<Routes location={location}>
+				<Route
+					path='/'
+					element={
+						//<HelmetHoc title='Portfolio | 움직이는네모'>
+						<HomeContainer />
+					}
+				/>
+				<Route path='/researcher' element={<ResearcherContainer />} />
+			</Routes>
+		</>
 	);
 };
 

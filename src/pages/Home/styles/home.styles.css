@@ -1,8 +1,9 @@
 .home {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 96%;
   height: 1080px;
+  margin-left: 76px;
 }
 .home.main, .home.orca {
   display: flex;
