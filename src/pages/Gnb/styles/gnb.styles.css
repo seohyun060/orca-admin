@@ -1,0 +1,34 @@
+.gnb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  height: 1080px;
+  background-color: black;
+  position: fixed;
+  z-index: 100;
+}
+.gnb-tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 120px;
+  height: 730px;
+  margin-top: 140px;
+}
+.gnb-tabs-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.gnb-tabs-item .label {
+  height: 29px;
+  color: #fff;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28.5px; /* 190% */
+}/*# sourceMappingURL=gnb.styles.css.map */
