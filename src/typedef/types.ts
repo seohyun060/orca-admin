@@ -5,5 +5,10 @@ export type Researchers = {
 	stored: boolean;
 };
 
+export type GNBTableTypes = {
+	label: string;
+	path: string;
+	icon: string;
+};
 export type ResearcherList = Researchers[];
 export type EChange = React.ChangeEvent<HTMLInputElement>;
