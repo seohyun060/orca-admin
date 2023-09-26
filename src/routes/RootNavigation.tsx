@@ -2,6 +2,7 @@ import HomeContainer from '../pages/Home/containers/HomeContainer';
 import ResearcherContainer from 'src/pages/Researcher/containers/ResearcherContainer';
 import React, { useEffect, useState } from 'react';
 import InsightContainer from 'src/pages/Insight/containers/InsightContainer';
+import InsightInfoContainer from 'src/pages/InsightInfo/containers/InsightInfoContainer';
 import {
 	BrowserRouter as Router,
 	useLocation,
@@ -50,6 +51,15 @@ const RootNavigation = () => {
 				path='/insight'
 				element={
 					<InsightContainer
+						insightList={insightList}
+						setInsightList={setInsightList}
+					/>
+				}
+			/>
+			<Route
+				path='/insightinfo'
+				element={
+					<InsightInfoContainer
 						insightList={insightList}
 						setInsightList={setInsightList}
 					/>
