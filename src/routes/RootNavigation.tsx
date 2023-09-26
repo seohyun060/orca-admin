@@ -1,5 +1,6 @@
 import HomeContainer from "../pages/Home/containers/HomeContainer";
 import ProjectDetail from "src/pages/Projects/ProjectDetail";
+import Events from "src/pages/Events/Events";
 import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
@@ -32,6 +33,13 @@ const RootNavigation = () => {
         element={
           //<HelmetHoc title='Portfolio | 움직이는네모'>
           <ProjectDetail />
+        }
+      />
+      <Route
+        path="/events"
+        element={
+          //<HelmetHoc title='Portfolio | 움직이는네모'>
+          <Events />
         }
       />
     </Routes>

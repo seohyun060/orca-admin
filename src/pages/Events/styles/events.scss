@@ -1,0 +1,120 @@
+// font
+.semi24 {
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.Layout {
+  width: 1496px;
+  margin: 54px auto;
+}
+
+.EventUpperBar {
+  display: flex;
+  justify-content: space-between;
+  width: 1496px;
+  margin-bottom: 26px;
+
+  .title {
+    color: #000;
+    line-height: 28px;
+  }
+}
+
+.EventsDashboard {
+  display: flex;
+  justify-content: space-between;
+}
+
+.EventsCalendar {
+  width: 584px;
+  height: 554px;
+  border: 1px solid #000;
+}
+
+.EventsList {
+  width: 888px;
+  height: 554px;
+  border: 1px solid #000;
+  padding: 39px 39px 0px 39px;
+  overflow: hidden;
+}
+
+.EventsCarousel {
+  width: 810px;
+  height: 450px;
+  overflow: hidden;
+}
+
+.EventsSlide {
+  
+}
+
+// EventCard
+
+.EventCardLayout {
+  display: flex;
+  width: 810px;
+  height: 82px;
+  padding: 10px 17px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 6px;
+  border: 1px solid var(--Midium-gray, #9e9e9e);
+  background: #fff;
+
+  margin-bottom: 10px;
+}
+
+// ... 줄이기 추가
+.EventCardTitle {
+  width: 780px;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.EventCardPeriod {
+  display: flex;
+  div {
+    color: #000;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 28px;
+  }
+  .year {
+    margin-right: 8px;
+  }
+  .days {
+  }
+}
+
+// common
+
+.ApplyButton {
+  display: inline-flex;
+  height: 34px;
+  padding: 2px 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  background: var(--blue, #0d5699);
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 28.5px;
+}
