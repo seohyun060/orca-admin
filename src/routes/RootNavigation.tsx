@@ -106,14 +106,14 @@ const RootNavigation = () => {
           }
         />
         <Route
-          path="/projects/default"
+          path="/project/default"
           element={
             //<HelmetHoc title='Portfolio | 움직이는네모'>
             <ProjectDetail />
           }
         />
         <Route
-          path="/events"
+          path="/event"
           element={
             //<HelmetHoc title='Portfolio | 움직이는네모'>
             <Events />

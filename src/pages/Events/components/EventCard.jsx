@@ -2,7 +2,7 @@ import React from "react";
 
 const EventCard = () => {
   return (
-    <article className="EventCardLayout">
+    <article className="EventCardLayout" onClick={null}>
       <div className="EventCardTitle">
         The Annual Meeting of the Korean Breast Cancer Society Breast
         Cancerncasdfafasdfdas
