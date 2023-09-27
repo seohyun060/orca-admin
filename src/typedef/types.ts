@@ -22,7 +22,7 @@ export type Insights = {
 	type: string;
 	title: string;
 	date: string;
-	pdf: string;
+	pdfList: string[];
 	text: string;
 	stored: boolean;
 };
@@ -56,4 +56,12 @@ export type OnApplyClicked = (
 	twitterEdit: string,
 	biographyEdit: string,
 	publicationEdit: string[],
+) => void;
+
+export type OnApplyInsight = (
+	edit: boolean,
+	id: number,
+	type: string,
+	pdfList: string[],
+	text: string,
 ) => void;

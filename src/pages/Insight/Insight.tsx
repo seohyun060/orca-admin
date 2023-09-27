@@ -16,6 +16,13 @@ type Props = {
 	filteredList: Insights[];
 	onStoredisplayClick: (filteredList: Insights[], index: number) => void;
 	onTrashClick: (index: number) => void;
+	onEditClicked: (
+		edit: boolean,
+		id: number,
+		type: string,
+		pdfList: string[],
+		text: string,
+	) => void;
 };
 
 const Insight = ({
@@ -31,6 +38,7 @@ const Insight = ({
 	filteredList,
 	onStoredisplayClick,
 	onTrashClick,
+	onEditClicked,
 }: Props) => {
 	return (
 		<div className='insight'>
@@ -69,7 +77,9 @@ const Insight = ({
 						backgroundColor: stored ? '#E1E1E1' : '#0D5699',
 						color: stored ? '#9E9E9E' : '#fff',
 					}}
-					onClick={() => {}}
+					onClick={() => {
+						onEditClicked(false, insightList.length + 1, 'White paper', [], '');
+					}}
 				>
 					인사이트 추가
 				</button>
@@ -105,7 +115,18 @@ const Insight = ({
 								>
 									{stored ? '게시' : '보관'}
 								</button>
-								<button className='edit' onClick={() => {}}>
+								<button
+									className='edit'
+									onClick={() => {
+										onEditClicked(
+											true,
+											insight.id,
+											insight.type,
+											insight.pdfList,
+											insight.text,
+										);
+									}}
+								>
 									편집
 								</button>
 							</div>

@@ -2,15 +2,18 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Insight from '../Insight';
 import { Insights, ResearcherList } from '@typedef/types';
 import { EChange } from '@typedef/types';
+import { useNavigate } from 'react-router-dom';
 type Props = {
 	insightList: Insights[];
 	setInsightList: any;
 };
 
 const InsightContainer = ({ insightList, setInsightList }: Props) => {
+	const navigate = useNavigate();
 	const [displayedColor, setDisplayedColor] = useState(1);
 	const [storedColor, setStoredColor] = useState(0.3);
 	const [stored, setStored] = useState(false);
+	const [edit, setEdit] = useState(0);
 	const [search, setSearch] = useState('');
 	const [filteredList, setFilteredList] = useState<Insights[]>(insightList);
 
@@ -58,6 +61,28 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 		},
 		[insightList],
 	);
+	const onEditClicked = useCallback(
+		(
+			edit: boolean,
+			id: number,
+			type: string,
+			pdfList: string[],
+			text: string,
+		) => {
+			navigate('/insightinfo', {
+				state: {
+					Edit: edit,
+					Id: id,
+					Type: type,
+					PdfList: pdfList,
+					Text: text,
+				},
+			});
+			window.scrollTo(0, 0);
+		},
+		[edit],
+	);
+
 	useEffect(() => {
 		setFilteredList(
 			insightList.filter((insight) => insight.title.indexOf(search) !== -1),
@@ -78,6 +103,7 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 			filteredList={filteredList}
 			onStoredisplayClick={onStoredisplayClick}
 			onTrashClick={onTrashClick}
+			onEditClicked={onEditClicked}
 		/>
 	);
 };

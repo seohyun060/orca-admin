@@ -103,72 +103,7 @@ const ResearcherInfoContainer = ({
 		},
 		[locationEdit, dropbox],
 	);
-	// const onApplyClicked = useCallback(
-	// 	(
-	// 		edit: boolean,
-	// 		id: number,
-	// 		locationEdit: number,
-	// 		nameEdit: string,
-	// 		departmentEdit: string,
-	// 		projectEdit: string,
-	// 		selectedProfile: File | null,
-	// 		linkEdit: string,
-	// 		twitterEdit: string,
-	// 		biographyEdit: string,
-	// 		publicationEdit: string[],
-	// 	) => {
-	// 		let updatedResearchers = [...researcherList];
-	// 		if (edit) {
-	// 			for (let i = 0; i < researcherList.length; i++) {
-	// 				if (researcherList[i].id === id) {
-	// 					const tempResearcher: Researchers = {
-	// 						id: researcherList[i].id,
-	// 						name: nameEdit,
-	// 						department: departmentEdit,
-	// 						project: projectEdit,
-	// 						stored: researcherList[i].stored,
-	// 						location: locationEdit,
-	// 						profile: selectedProfile ? selectedProfile.name : '',
-	// 						link: linkEdit,
-	// 						twitter: twitterEdit,
-	// 						biography: biographyEdit,
-	// 						publications: publicationEdit,
-	// 					};
-	// 					updatedResearchers[i] = tempResearcher;
-	// 					break;
-	// 				}
-	// 			}
-	// 		} else {
-	// 			const tempResearcher: Researchers = {
-	// 				id: id,
-	// 				name: nameEdit,
-	// 				department: departmentEdit,
-	// 				project: projectEdit,
-	// 				stored: false,
-	// 				location: locationEdit,
-	// 				profile: selectedProfile ? selectedProfile.name : '',
-	// 				link: linkEdit,
-	// 				twitter: twitterEdit,
-	// 				biography: biographyEdit,
-	// 				publications: publicationEdit,
-	// 			};
-	// 			updatedResearchers = [...updatedResearchers, tempResearcher];
-	// 		}
-	// 		setResearcherList(updatedResearchers);
-	// 	},
-	// 	[
-	// 		nameEdit,
-	// 		departmentEdit,
-	// 		projectEdit,
-	// 		locationEdit,
-	// 		selectedProfile,
-	// 		linkEdit,
-	// 		twitterEdit,
-	// 		biographyEdit,
-	// 		publicationEdit,
-	// 		researcherList,
-	// 	],
-	// );
+
 	const onApplyClicked = useCallback(
 		(
 			edit: boolean,
