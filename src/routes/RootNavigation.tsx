@@ -31,7 +31,7 @@ const RootNavigation = () => {
 				type: i < 9 ? 'White paper' : 'News',
 				title: `${i}1234sd6879ds4fd`,
 				date: '23.09.23',
-				pdf: 'https://drive.google.com/file/d/1bmyXFEIM9nUawFC5DGz0s62DtMDpQwXy/view?usp=drive_link',
+				pdfList: [],
 				text: 'this is my insight',
 				stored: i < 12 ? false : true,
 			};
@@ -43,7 +43,7 @@ const RootNavigation = () => {
 	useEffect(() => {
 		console.log(researcherList);
 		const updatedList = [];
-		for (let j = 0; j < 24; j++) {
+		for (let j = 0; j < 20; j++) {
 			const researcher = {
 				id: j + 1,
 				name: `${j}Name`,
@@ -54,8 +54,8 @@ const RootNavigation = () => {
 				profile: `${j}profile.png`,
 				link: 'https://ca70-221-166-133-218.ngrok-free.app',
 				twitter: `${j}twitter`,
-				biography: 'skrt skrt',
-				publications: ['yeet', 'aye', 'skrt'],
+				biography: 'Biography of researcher',
+				publications: ['Publication1', 'Publication2', 'Publication3'],
 			};
 			updatedList.push(researcher);
 		}
@@ -67,52 +67,52 @@ const RootNavigation = () => {
 	return (
 		<>
 			<GnbContainer location={location.pathname} />
-		<Routes location={location}>
-			<Route
-				path='/'
-				element={
-					//<HelmetHoc title='Portfolio | 움직이는네모'>
-					<HomeContainer />
-				}
-			/>
-			<Route
-				path='/researcher'
-				element={
-					<ResearcherContainer
-						researcherList={researcherList}
-						setResearcherList={setResearcherList}
-					/>
-				}
-			/>
+			<Routes location={location}>
+				<Route
+					path='/'
+					element={
+						//<HelmetHoc title='Portfolio | 움직이는네모'>
+						<HomeContainer />
+					}
+				/>
+				<Route
+					path='/researcher'
+					element={
+						<ResearcherContainer
+							researcherList={researcherList}
+							setResearcherList={setResearcherList}
+						/>
+					}
+				/>
 
-			<Route
-				path='/researcherinfo'
-				element={
-					<ResearcherInfoContainer
-						researcherList={researcherList}
-						setResearcherList={setResearcherList}
-					/>
-				}
-			/>
-			<Route
-				path='/insight'
-				element={
-					<InsightContainer
-						insightList={insightList}
-						setInsightList={setInsightList}
-					/>
-				}
-			/>
-			<Route
-				path='/insightinfo'
-				element={
-					<InsightInfoContainer
-						insightList={insightList}
-						setInsightList={setInsightList}
-					/>
-				}
-			/>
-		</Routes>
+				<Route
+					path='/researcherinfo'
+					element={
+						<ResearcherInfoContainer
+							researcherList={researcherList}
+							setResearcherList={setResearcherList}
+						/>
+					}
+				/>
+				<Route
+					path='/insight'
+					element={
+						<InsightContainer
+							insightList={insightList}
+							setInsightList={setInsightList}
+						/>
+					}
+				/>
+				<Route
+					path='/insightinfo'
+					element={
+						<InsightInfoContainer
+							insightList={insightList}
+							setInsightList={setInsightList}
+						/>
+					}
+				/>
+			</Routes>
 		</>
 	);
 };
