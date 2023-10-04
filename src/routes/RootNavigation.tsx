@@ -7,6 +7,7 @@ import GnbContainer from 'src/pages/Gnb/containers/GnbContainer';
 import ResearcherInfoContainer from 'src/pages/ResearcherInfo/containers/ResearcherInfoContainer';
 import React, { useEffect, useState } from 'react';
 import InsightContainer from 'src/pages/Insight/containers/InsightContainer';
+import OrcagroupContainer from 'src/pages/Orcagroup/containers/OrcagroupContainer';
 import InsightInfoContainer from 'src/pages/InsightInfo/containers/InsightInfoContainer';
 import {
 	BrowserRouter as Router,
@@ -130,6 +131,7 @@ const RootNavigation = () => {
 					}
 				/>
 				<Route path='/newsletter' element={<NewsletterContainer />} />
+				<Route path='/orcagroup' element={<OrcagroupContainer />} />
 			</Routes>
 		</>
 	);
