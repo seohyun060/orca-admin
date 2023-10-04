@@ -27,6 +27,10 @@ export type Insights = {
 	stored: boolean;
 };
 
+export type Newsletters = {
+	id: number;
+	email: string;
+};
 export type ResearcherList = Researchers[];
 export type EChange = React.ChangeEvent<HTMLInputElement>;
 
