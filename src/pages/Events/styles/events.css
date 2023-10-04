@@ -41,6 +41,7 @@
   border: 1px solid #000;
   overflow: hidden;
   align-items: center;
+  justify-content: center;
 }
 .EventsList img {
   width: 21px;
@@ -49,19 +50,13 @@
 }
 
 .EventsCarousel {
-  width: 810px;
-  height: 450px;
-  overflow: hidden;
-}
-
-.CarouselProgress {
-  padding-top: 39px;
+  width: 840px;
+  height: 470px;
+  overflow-y: scroll;
 }
 
 .EventsSlide {
   display: flex;
-  height: 460px;
-  flex-wrap: wrap;
   flex-direction: column;
 }
 
@@ -254,10 +249,12 @@
   padding-right: 10px;
 }
 .EventMapContainer {
+  display: flex;
   width: 1496px;
   height: 475px;
   flex-shrink: 0;
   margin-bottom: 50px;
+  overflow: hidden;
 }
 
 .EventGalleryInput .title {
@@ -390,4 +387,13 @@
 
 .react-calendar__year-view {
   padding: 10px 20px;
+}
+
+.react-calendar__tile {
+  background: none;
+}
+
+.react-calendar__tile:hover {
+  background-color: transparent !important;
+  cursor: auto !important;
 }/*# sourceMappingURL=events.css.map */

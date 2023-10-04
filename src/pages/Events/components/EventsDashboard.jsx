@@ -68,7 +68,7 @@ const EventsDashboard = () => {
         <EventCalendar />
       </div>
       <div className="EventsList">
-        <img src={images.previous} onClick={onBackButtonClick}></img>
+        {/* <img src={images.previous} onClick={onBackButtonClick}></img> */}
         <div className="CarouselProgress">
           <div className="EventsCarousel">
             <div className="EventsSlide" ref={eventSlideRef}>
@@ -80,9 +80,9 @@ const EventsDashboard = () => {
               <EventCard />
             </div>
           </div>
-          <div className="dotbar">{dotBar}</div>
+          {/* <div className="dotbar">{dotBar}</div> */}
         </div>
-        <img src={images.next} onClick={onGoButtonClick}></img>
+        {/* <img src={images.next} onClick={onGoButtonClick}></img> */}
       </div>
     </article>
   );

@@ -43,17 +43,18 @@ const Events = () => {
           </div>
           <button className="SaveButton">적용</button>
         </div>
+        <div></div>
         <label className="EventImageInput">
           <div className="UploadImageSpace">
             <img src={images.upload} alt="Upload" />
           </div>
-          <label htmlFor="imagePath">
+          <div htmlFor="imagePath">
             {selectedMain ? (
               <div className="imagePath">{selectedMain.name}</div>
             ) : (
               <div className="imagePath">Event Image</div>
             )}
-          </label>
+          </div>
           <input
             type="file"
             id="mainInput"
@@ -104,13 +105,13 @@ const Events = () => {
             <div className="UploadImageSpace">
               <img src={images.upload} alt="Upload" />
             </div>
-            <label htmlFor="imagePath">
+            <div htmlFor="imagePath">
               {selectedMain ? (
                 <div className="imagePath">{selectedMain.name}</div>
               ) : (
                 <div className="imagePath">Event Image</div>
               )}
-            </label>
+            </div>
             <input
               type="file"
               id="mainInput"
@@ -137,13 +138,13 @@ const Events = () => {
             <div className="UploadImageSpace">
               <img src={images.upload} alt="Upload" />
             </div>
-            <label htmlFor="imagePath">
+            <div htmlFor="imagePath">
               {selectedMain ? (
                 <div className="imagePath">{selectedMain.name}</div>
               ) : (
                 <div className="imagePath">Event Image</div>
               )}
-            </label>
+            </div>
             <input
               type="file"
               id="mainInput"

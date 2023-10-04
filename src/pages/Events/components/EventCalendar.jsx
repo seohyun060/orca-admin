@@ -12,9 +12,7 @@ const tileDisabled = ({ activeStartDate, date, view }) => {
   return false;
 };
 
-const handleDateChange = (selectedDate) => {
-  
-};
+const handleDateChange = (selectedDate) => {};
 
 const EventCalendar = () => {
   const [value, setValue] = useState(new Date());
