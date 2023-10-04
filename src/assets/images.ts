@@ -21,6 +21,8 @@ const images = {
 	download: '/assets/images/download.svg',
 	add: '/assets/images/add.svg',
 	back: '/assets/images/back.svg',
+	next: '/assets/images/next.svg',
+	previous: '/assets/images/previous.svg',
 };
 
 export default images;
