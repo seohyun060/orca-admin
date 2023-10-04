@@ -23,6 +23,7 @@ const images = {
 	back: '/assets/images/back.svg',
 	next: '/assets/images/next.svg',
 	previous: '/assets/images/previous.svg',
+	reload: '/assets/images/reload.svg',
 };
 
 export default images;

@@ -1,4 +1,5 @@
 import HomeContainer from '../pages/Home/containers/HomeContainer';
+import DashboardContainer from 'src/pages/Dashboard/containers/DashboardContainer';
 import ResearcherContainer from 'src/pages/Researcher/containers/ResearcherContainer';
 import ProjectDetail from 'src/pages/Projects/ProjectDetail';
 import NewsletterContainer from 'src/pages/Newsletter/containers/NewsletterContainer';
@@ -72,6 +73,7 @@ const RootNavigation = () => {
 		<>
 			<GnbContainer location={location.pathname} />
 			<Routes location={location}>
+				<Route path='/dashboard' element={<DashboardContainer />} />
 				<Route
 					path='/'
 					element={
@@ -79,6 +81,7 @@ const RootNavigation = () => {
 						<HomeContainer />
 					}
 				/>
+
 				<Route
 					path='/researcher'
 					element={
