@@ -1,23 +1,24 @@
-import HomeContainer from "../pages/Home/containers/HomeContainer";
-import ResearcherContainer from "src/pages/Researcher/containers/ResearcherContainer";
-import ProjectDetail from "src/pages/Projects/ProjectDetail";
-import Events from "src/pages/Events/Events";
-import GnbContainer from "src/pages/Gnb/containers/GnbContainer";
-import ResearcherInfoContainer from "src/pages/ResearcherInfo/containers/ResearcherInfoContainer";
-import React, { useEffect, useState } from "react";
-import InsightContainer from "src/pages/Insight/containers/InsightContainer";
-import InsightInfoContainer from "src/pages/InsightInfo/containers/InsightInfoContainer";
+import HomeContainer from '../pages/Home/containers/HomeContainer';
+import ResearcherContainer from 'src/pages/Researcher/containers/ResearcherContainer';
+import ProjectDetail from 'src/pages/Projects/ProjectDetail';
+import NewsletterContainer from 'src/pages/Newsletter/containers/NewsletterContainer';
+import Events from 'src/pages/Events/Events';
+import GnbContainer from 'src/pages/Gnb/containers/GnbContainer';
+import ResearcherInfoContainer from 'src/pages/ResearcherInfo/containers/ResearcherInfoContainer';
+import React, { useEffect, useState } from 'react';
+import InsightContainer from 'src/pages/Insight/containers/InsightContainer';
+import InsightInfoContainer from 'src/pages/InsightInfo/containers/InsightInfoContainer';
 import {
-  BrowserRouter as Router,
-  useLocation,
-  Route,
-  Routes,
-} from "react-router-dom";
-import { ResearcherList } from "@typedef/types";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-import "./styles/rootnavigation.style.css";
-import { Insights } from "@typedef/types";
-import HelmetHoc from "./helmet/HelmetHoc";
+	BrowserRouter as Router,
+	useLocation,
+	Route,
+	Routes,
+} from 'react-router-dom';
+import { ResearcherList } from '@typedef/types';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import './styles/rootnavigation.style.css';
+import { Insights } from '@typedef/types';
+import HelmetHoc from './helmet/HelmetHoc';
 
 // /* eslint no-restricted-globals: ["off"] */
 const RootNavigation = () => {
@@ -87,50 +88,51 @@ const RootNavigation = () => {
 					}
 				/>
 
-        <Route
-          path="/researcherinfo"
-          element={
-            <ResearcherInfoContainer
-              researcherList={researcherList}
-              setResearcherList={setResearcherList}
-            />
-          }
-        />
-        <Route
-          path="/insight"
-          element={
-            <InsightContainer
-              insightList={insightList}
-              setInsightList={setInsightList}
-            />
-          }
-        />
-        <Route
-          path="/projects/default"
-          element={
-            //<HelmetHoc title='Portfolio | 움직이는네모'>
-            <ProjectDetail />
-          }
-        />
-        <Route
-          path="/events"
-          element={
-            //<HelmetHoc title='Portfolio | 움직이는네모'>
-            <Events />
-          }
-        />
-        <Route
-          path="/insightinfo"
-          element={
-            <InsightInfoContainer
-              insightList={insightList}
-              setInsightList={setInsightList}
-            />
-          }
-        />
-      </Routes>
-    </>
-  );
+				<Route
+					path='/researcherinfo'
+					element={
+						<ResearcherInfoContainer
+							researcherList={researcherList}
+							setResearcherList={setResearcherList}
+						/>
+					}
+				/>
+				<Route
+					path='/insight'
+					element={
+						<InsightContainer
+							insightList={insightList}
+							setInsightList={setInsightList}
+						/>
+					}
+				/>
+				<Route
+					path='/projects/default'
+					element={
+						//<HelmetHoc title='Portfolio | 움직이는네모'>
+						<ProjectDetail />
+					}
+				/>
+				<Route
+					path='/events'
+					element={
+						//<HelmetHoc title='Portfolio | 움직이는네모'>
+						<Events />
+					}
+				/>
+				<Route
+					path='/insightinfo'
+					element={
+						<InsightInfoContainer
+							insightList={insightList}
+							setInsightList={setInsightList}
+						/>
+					}
+				/>
+				<Route path='/newsletter' element={<NewsletterContainer />} />
+			</Routes>
+		</>
+	);
 };
 
 export default RootNavigation;
