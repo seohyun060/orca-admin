@@ -1,0 +1,12 @@
+.SetEventDateCalendar {
+  position: relative;
+  margin-top: 20px;
+  z-index: 101;
+}
+.SetEventDateCalendar .react-calendar {
+  height: 320px;
+}
+.SetEventDateCalendar .react-calendar__tile:disabled {
+  font-size: 0px;
+  background-color: #fff;
+}/*# sourceMappingURL=setEventDateCalendar.css.map */

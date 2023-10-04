@@ -1,0 +1,67 @@
+.SetEventDateCalendar {
+  position: relative;
+
+  margin-top: 20px;
+  z-index: 101;
+
+  .react-calendar {
+    height: 320px;
+  }
+
+  // .react-calendar__navigation__label {
+  //     color: #000;
+  //     text-align: center;
+  //     font-family: Inter;
+  //     font-size: 24px;
+  //     font-style: normal;
+  //     font-weight: 700;
+  //     line-height: normal;
+  //   }
+
+  //   .react-calendar__month-view__weekdays {
+  //     color: #000;
+  //     text-align: center;
+  //     font-family: Pretendard;
+  //     font-size: 30px;
+  //     font-style: normal;
+  //     font-weight: 600;
+  //     line-height: 28px;
+  //   }
+
+  //   .react-calendar__month-view__days__day {
+  //     padding: 12px;
+  //   }
+
+  //   .react-calendar__tile {
+  //     color: #000;
+  //     text-align: center;
+  //     font-family: Pretendard;
+  //     font-size: 30px;
+  //     font-style: normal;
+  //     font-weight: 400;
+  //     line-height: 28px;
+  //   }
+
+    .react-calendar__tile:disabled {
+      font-size: 0px;
+      background-color: #fff;
+    }
+
+  //   .react-calendar__month-view__weekdays {
+  //     overflow: hidden;
+  //   }
+
+  //   .react-calendar__navigation__prev-button,
+  //   .react-calendar__navigation__next-button {
+  //     font-size: 30px;
+  //   }
+
+  //   .react-calendar__navigation__prev2-button,
+  //   .react-calendar__navigation__next2-button {
+  //     display: none;
+  //   }
+
+  //   .react-calendar__year-view {
+  //     padding: 10px 20px;
+  //   }
+}

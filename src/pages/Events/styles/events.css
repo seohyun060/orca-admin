@@ -104,6 +104,18 @@
   border: 0px;
 }
 
+.EventImageSet {
+  display: flex;
+  width: 1496px;
+  height: 50px;
+  margin-bottom: 15px;
+}
+.EventImageSet .EventImageInput {
+  width: 1425px;
+  height: 50px;
+  flex-shrink: 0;
+  margin-right: 21px;
+}
 .EventImageInput {
   display: flex;
   width: 1496px;
@@ -143,12 +155,23 @@
 }
 
 .EventPeriodSetting {
+  display: flex;
   width: 1496px;
   height: 80px;
   flex-shrink: 0;
   border: 1px solid #000;
   margin-bottom: 29px;
   padding: 20px 25px;
+}
+
+.EventStartDate,
+.EventEndDate {
+  width: 350px;
+  font-family: Pretendard;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
 }
 
 .EventPeriodDetail {
@@ -240,7 +263,7 @@
   margin-bottom: 12px;
 }
 .EventLocationSearch input {
-  width: 98%;
+  width: 1446px;
   font-family: Pretendard;
   font-size: 22px;
   font-style: normal;
@@ -324,76 +347,4 @@
   font-style: normal;
   font-weight: 300;
   line-height: 28.5px;
-}
-
-.react-calendar {
-  width: 100%;
-  border: 0px;
-  padding: 50px;
-}
-
-.react-calendar__navigation__label {
-  color: #000;
-  text-align: center;
-  font-family: Inter;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.react-calendar__month-view__weekdays {
-  color: #000;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 30px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 28px;
-}
-
-.react-calendar__month-view__days__day {
-  padding: 12px;
-}
-
-.react-calendar__tile {
-  color: #000;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 30px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 28px;
-}
-
-.react-calendar__tile:disabled {
-  font-size: 0px;
-  background-color: #fff;
-}
-
-.react-calendar__month-view__weekdays {
-  overflow: hidden;
-}
-
-.react-calendar__navigation__prev-button,
-.react-calendar__navigation__next-button {
-  font-size: 30px;
-}
-
-.react-calendar__navigation__prev2-button,
-.react-calendar__navigation__next2-button {
-  display: none;
-}
-
-.react-calendar__year-view {
-  padding: 10px 20px;
-}
-
-.react-calendar__tile {
-  background: none;
-}
-
-.react-calendar__tile:hover {
-  background-color: transparent !important;
-  cursor: auto !important;
 }/*# sourceMappingURL=events.css.map */

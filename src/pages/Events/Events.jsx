@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import moment from "moment";
+
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 import EventsDashboard from "./components/EventsDashboard";
 import MapContainer from "./components/MapContainer";
+
+import SetEventDateCalendar from "./components/SetEventDateCalendar";
 
 import "./styles/events.css";
 import images from "src/assets/images";
 
 const Events = () => {
+  const today = moment().format("YYYY-MM-DD");
+
   const [isPast, setIsPast] = useState(true);
+
+  const [isStartDateClick, setIsStartDateClick] = useState(false);
+  const [eventStartDate, setEventStartDate] = useState(today);
+  const [isEndDateClick, setIsEndDateClick] = useState(false);
+  const [eventEndDate, setEventEndDate] = useState(today);
+
   const [selectedMain, setSelectedMain] = useState(null);
-  const [place, setPlace] = useState(null);
+  const [eventDetailImg, setEventDetailImg] = useState([{ id: 1, file: null }]);
+  const [eventGalleryImg, setEventGalleryImg] = useState([
+    { id: 1, file: null },
+  ]);
 
   const uploadMainHandler = (event) => {
     const file = event.target.files?.[0];
@@ -17,6 +33,52 @@ const Events = () => {
       setSelectedMain(file);
     }
   };
+
+  const uploadGalleryHandler = (id, event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setEventGalleryImg((prevInputs) =>
+        prevInputs.map((input) =>
+          input.id === id ? { ...input, file: file } : input
+        )
+      );
+    }
+  };
+
+  const addGalleryButtonClick = () => {
+    const newId = eventGalleryImg[eventGalleryImg.length - 1].id + 1;
+    setEventGalleryImg([...eventGalleryImg, { id: newId, file: null }]);
+  };
+
+  const removeGalleryButtonClick = (id) => {
+    setEventGalleryImg((prevInputs) =>
+      prevInputs.filter((input) => input.id !== id)
+    );
+  };
+
+  const uploadDetailHandler = (id, event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setEventDetailImg((prevInputs) =>
+        prevInputs.map((input) =>
+          input.id === id ? { ...input, file: file } : input
+        )
+      );
+    }
+  };
+
+  const addDetailButtonClick = () => {
+    const newId = eventDetailImg[eventDetailImg.length - 1].id + 1;
+    setEventDetailImg([...eventDetailImg, { id: newId, file: null }]);
+  };
+
+  const removeDetailButtonClick = (id) => {
+    setEventDetailImg((prevInputs) =>
+      prevInputs.filter((input) => input.id !== id)
+    );
+  };
+
+  useEffect(() => {});
 
   return (
     <div className="Layout">
@@ -43,7 +105,6 @@ const Events = () => {
           </div>
           <button className="SaveButton">적용</button>
         </div>
-        <div></div>
         <label className="EventImageInput">
           <div className="UploadImageSpace">
             <img src={images.upload} alt="Upload" />
@@ -69,8 +130,36 @@ const Events = () => {
         <div className="EventPeriodInput">
           <div className="ArticleTitle">이벤트 날짜</div>
           <div className="EventPeriodSetting">
-            <div className="EventStartDate"></div>
-            <div className="EventEndDate"></div>
+            <div className="EventStartDate">
+              <div onClick={() => setIsStartDateClick(!isStartDateClick)}>
+                시작날짜: {eventStartDate}
+              </div>
+
+              {isStartDateClick ? (
+                <SetEventDateCalendar
+                  setIsClose={setIsStartDateClick}
+                  eventDate={eventStartDate}
+                  setEventDate={setEventStartDate}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="EventEndDate">
+              <div onClick={() => setIsEndDateClick(!isEndDateClick)}>
+                종료날짜: {eventEndDate}
+              </div>
+
+              {isEndDateClick ? (
+                <SetEventDateCalendar
+                setIsClose={setIsEndDateClick}
+                  eventDate={eventEndDate}
+                  setEventDate={setEventEndDate}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
           <div className="EventPeriodDetail">
             <div className="EventPeriodDetailElement">
@@ -101,57 +190,77 @@ const Events = () => {
           <div className="ArticleTitle">Detailed Explanation</div>
           <textarea className="ArticleInputArea" placeholder="Text" />
           {/* 이미지 목록 첨부 필요 */}
-          <label className="EventImageInput">
-            <div className="UploadImageSpace">
-              <img src={images.upload} alt="Upload" />
-            </div>
-            <div htmlFor="imagePath">
-              {selectedMain ? (
-                <div className="imagePath">{selectedMain.name}</div>
+          {eventDetailImg.map((input, index) => (
+            <div className="EventImageSet">
+              <label className="EventImageInput">
+                <div className="UploadImageSpace">
+                  <img src={images.upload} alt="Upload" />
+                </div>
+                <div htmlFor="imagePath">
+                  {input.file ? (
+                    <div className="imagePath">{input.file.name}</div>
+                  ) : (
+                    <div className="imagePath">Event Image</div>
+                  )}
+                </div>
+                <input
+                  type="file"
+                  id="mainInput"
+                  onChange={(e) => uploadDetailHandler(input.id, e)}
+                  style={{ display: "none" }}
+                />
+              </label>
+              {input.id !== eventDetailImg[eventDetailImg.length - 1].id ? (
+                <img
+                  src={images.addform}
+                  onClick={() => removeDetailButtonClick(input.id)}
+                />
               ) : (
-                <div className="imagePath">Event Image</div>
+                <img
+                  src={images.addform}
+                  onClick={() => addDetailButtonClick()}
+                />
               )}
             </div>
-            <input
-              type="file"
-              id="mainInput"
-              onChange={(e) => uploadMainHandler(e)}
-              style={{ display: "none" }}
-            />
-          </label>
+          ))}
         </div>
-        <div className="EventLocationInput">
-          <div className="ArticleTitle">Location</div>
-          <div className="EventLocationSearch">
-            {/* 검색하여 지도 업데이트 하는 과정 추가필요 */}
-            <input />
-            <img src={images.search} />
-          </div>
-          <div className="EventMapContainer">
-            <MapContainer />
-          </div>
-        </div>
+        <MapContainer />
         <div className="EventGalleryInput">
           <div className="title">Gallery</div>
           {/* 이미지 목록 첨부 필요 */}
-          <label className="EventImageInput">
-            <div className="UploadImageSpace">
-              <img src={images.upload} alt="Upload" />
-            </div>
-            <div htmlFor="imagePath">
-              {selectedMain ? (
-                <div className="imagePath">{selectedMain.name}</div>
+          {eventGalleryImg.map((input, index) => (
+            <div className="EventImageSet">
+              <label className="EventImageInput">
+                <div className="UploadImageSpace">
+                  <img src={images.upload} alt="Upload" />
+                </div>
+                <div htmlFor="imagePath">
+                  {input.file ? (
+                    <div className="imagePath">{input.file.name}</div>
+                  ) : (
+                    <div className="imagePath">Event Image</div>
+                  )}
+                </div>
+                <input
+                  type="file"
+                  id="mainInput"
+                  onChange={(e) => uploadGalleryHandler(input.id, e)}
+                  style={{ display: "none" }}
+                />
+              </label>
+              {input.id !== eventGalleryImg[eventGalleryImg.length - 1].id ? (
+                <img
+                  src={images.addform}
+                  onClick={() => removeGalleryButtonClick(input.id)}
+                />
               ) : (
-                <div className="imagePath">Event Image</div>
+                <img
+                  src={images.addform}
+                  onClick={() => addGalleryButtonClick()}
+                />
               )}
             </div>
-            <input
-              type="file"
-              id="mainInput"
-              onChange={(e) => uploadMainHandler(e)}
-              style={{ display: "none" }}
-            />
-          </label>
+          ))}
         </div>
       </div>
     </div>
