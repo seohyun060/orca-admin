@@ -69,3 +69,45 @@ export type OnApplyInsight = (
 	pdfList: string[],
 	text: string,
 ) => void;
+
+export type VisitorGraph = {
+	monthly: number[];
+	weekly: number[];
+	daily: number[];
+};
+
+type AccVisitor = {
+	today: number;
+	yesterday: number;
+	lastweek: number;
+	last7days: number;
+	last30days: number;
+	last60days: number;
+	last90days: number;
+	last12months: number;
+	thisyear: number;
+	lastyear: number;
+	total: number;
+};
+export type VisitorTable = {
+	web: AccVisitor;
+	mobile: AccVisitor;
+};
+
+type ProjectStatus = {
+	active: number;
+	completed: number;
+	terminated: number;
+};
+
+type EventStatus = {
+	lastEvent: number;
+	upcomingEvent: number;
+};
+export type StatisticsList = {
+	researcherNumber: number;
+	newsletterNumber: number;
+	orcagroupNumber: number;
+	projectStatus: ProjectStatus;
+	eventStatus: EventStatus;
+};
