@@ -1,10 +1,9 @@
 .home {
 	display: flex;
 	flex-direction: column;
-
+	width: calc(100% - 120px);
 	height: 1080px;
 	margin-left: 120px;
-	width: calc(100% - 120px);
 	//overflow-x: hidden;
 	&.main {
 		display: flex;
@@ -17,11 +16,11 @@
 		&.head {
 			display: flex;
 			flex-direction: row;
+			justify-content: space-between;
 			width: 1648px;
 			height: 28px;
 			margin-top: 0px;
 			margin-left: 0px;
-			justify-content: space-between;
 			div {
 				font-family: Pretendard;
 				font-size: 24px;
@@ -63,11 +62,11 @@
 		&.head {
 			display: flex;
 			flex-direction: row;
+			justify-content: space-between;
 			width: 1648px;
 			height: 28px;
 			margin-top: 0px;
 			margin-left: 0px;
-			justify-content: space-between;
 			div {
 				font-family: Pretendard;
 				font-size: 24px;
@@ -106,15 +105,14 @@
 }
 
 .apply {
-	height: 34px;
-	padding: 2px 40px;
 	justify-content: center;
 	align-items: center;
-	gap: 10px;
 	flex-shrink: 0;
+	height: 34px;
+	padding: 2px 40px;
+	gap: 10px;
 	background: var(--blue, #0d5699);
 	color: #fff;
-
 	/* Web/Pre. Light 20 */
 	font-family: Pretendard;
 	font-size: 20px;
