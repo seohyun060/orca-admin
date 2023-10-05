@@ -88,7 +88,15 @@ const Events = () => {
     <div className="Layout">
       <div className="EventUpperBar">
         <div className="title semi24">이벤트 페이지</div>
-        <button className="ApplyButton" onClick={() => setIsFormOpen(true)}>새로 추가</button>
+        {!isFormOpen ? (
+          <button className="ApplyButton" onClick={() => setIsFormOpen(true)}>
+            새로 추가
+          </button>
+        ) : (
+          <button className="ApplyButton" onClick={() => setIsFormOpen(false)}>
+            입력 취소
+          </button>
+        )}
       </div>
       <EventsDashboard />
       {isFormOpen ? (
@@ -247,43 +255,48 @@ const Events = () => {
             ))}
           </div>
           <MapContainer />
-          <div className="EventGalleryInput">
-            <div className="title">Gallery</div>
-            {/* 이미지 목록 첨부 필요 */}
-            {eventGalleryImg.map((input, index) => (
-              <div className="EventImageSet">
-                <label className="EventImageInput">
-                  <div className="UploadImageSpace">
-                    <img src={images.upload} alt="Upload" />
-                  </div>
-                  <div htmlFor="imagePath">
-                    {input.file ? (
-                      <div className="imagePath">{input.file.name}</div>
-                    ) : (
-                      <div className="imagePath">Event Image</div>
-                    )}
-                  </div>
-                  <input
-                    type="file"
-                    id="mainInput"
-                    onChange={(e) => uploadGalleryHandler(input.id, e)}
-                    style={{ display: "none" }}
-                  />
-                </label>
-                {input.id !== eventGalleryImg[eventGalleryImg.length - 1].id ? (
-                  <img
-                    src={images.addform}
-                    onClick={() => removeGalleryButtonClick(input.id)}
-                  />
-                ) : (
-                  <img
-                    src={images.addform}
-                    onClick={() => addGalleryButtonClick()}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+          {isPast ? (
+            <div className="EventGalleryInput">
+              <div className="title">Gallery</div>
+              {/* 이미지 목록 첨부 필요 */}
+              {eventGalleryImg.map((input, index) => (
+                <div className="EventImageSet">
+                  <label className="EventImageInput">
+                    <div className="UploadImageSpace">
+                      <img src={images.upload} alt="Upload" />
+                    </div>
+                    <div htmlFor="imagePath">
+                      {input.file ? (
+                        <div className="imagePath">{input.file.name}</div>
+                      ) : (
+                        <div className="imagePath">Event Image</div>
+                      )}
+                    </div>
+                    <input
+                      type="file"
+                      id="mainInput"
+                      onChange={(e) => uploadGalleryHandler(input.id, e)}
+                      style={{ display: "none" }}
+                    />
+                  </label>
+                  {input.id !==
+                  eventGalleryImg[eventGalleryImg.length - 1].id ? (
+                    <img
+                      src={images.addform}
+                      onClick={() => removeGalleryButtonClick(input.id)}
+                    />
+                  ) : (
+                    <img
+                      src={images.addform}
+                      onClick={() => addGalleryButtonClick()}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       ) : (
         <></>
