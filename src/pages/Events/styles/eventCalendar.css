@@ -24,6 +24,15 @@
 .EventCalendar .react-calendar__month-view__days__day {
   padding: 12px;
 }
+.EventCalendar .react-calendar__year-view__months__month {
+  padding: 30px;
+}
+.EventCalendar .react-calendar__decade-view__years__year {
+  padding: 30px;
+}
+.EventCalendar .react-calendar__century-view__decades__decade {
+  padding: 20px;
+}
 .EventCalendar .react-calendar__tile {
   color: #000;
   text-align: center;

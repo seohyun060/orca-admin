@@ -186,10 +186,30 @@
 .EventEndDate {
   width: 350px;
   font-family: Pretendard;
-  font-size: 22px;
+  font-size: 20px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
+  line-height: 37px;
+  &div {
+    height: 37px;
+  }
+}
+
+.EventDateAllday {
+  display: flex;
+  align-items: center;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
   line-height: 28px;
+  margin-left: 620px;
+  input, img {
+    width: 31px;
+    height: 31px;
+    margin-right: 12px;
+  }
 }
 
 .EventPeriodDetail {

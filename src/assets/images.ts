@@ -23,6 +23,7 @@ const images = {
 	back: '/assets/images/back.svg',
 	next: '/assets/images/next.svg',
 	previous: '/assets/images/previous.svg',
+	checkbox: '/assets/images/checkbox.svg'
 };
 
 export default images;
