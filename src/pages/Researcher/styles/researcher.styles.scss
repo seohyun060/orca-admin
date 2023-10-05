@@ -2,7 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-
 	margin-bottom: 80px;
 	&-head {
 		display: flex;
@@ -161,16 +160,15 @@
 				}
 				.store {
 					display: inline-flex;
-					height: 39.064px;
-					padding: 2px 40px;
-					padding-top: 4px;
 					justify-content: center;
 					align-items: center;
 					gap: 10px;
 					flex-shrink: 0;
+					height: 39.064px;
+					padding: 2px 40px;
+					padding-top: 4px;
 					background: var(--Midium-gray, #9e9e9e);
 					color: #fff;
-
 					/* Web/Pre. Light 20 */
 					font-family: Pretendard;
 					font-size: 20px;
