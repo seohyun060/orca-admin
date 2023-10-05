@@ -24,6 +24,7 @@ const images = {
 	next: '/assets/images/next.svg',
 	previous: '/assets/images/previous.svg',
 	reload: '/assets/images/reload.svg',
+	checkbox: '/assets/images/checkbox.svg'
 };
 
 export default images;

@@ -9,7 +9,7 @@ const AddForm = (props) => {
   const [inputName, setInputName] = useState(name);
   const [inputAffiliation, setInputAffiliation] = useState(affiliation);
   const [inputLink, setInputLink] = useState(link);
-
+  
   return (
     <div className="CandIInputSet">
       <div className="subject">이름</div>
