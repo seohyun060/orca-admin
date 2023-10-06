@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import images from "src/assets/images";
 
 const PublicationForm = (props) => {
-  const { link, onButtonClick, index } = props;
+  const { id, link, onButtonClick, inputData, changeInputData } = props;
   const [inputLink, setInputLink] = useState(link);
+
+  const syncParentData = () => {
+    let modifyData = [...inputData];
+    modifyData.map((data) => {
+      if (data.id === id) {
+        data.link = inputLink
+      }
+    })
+    changeInputData(modifyData)
+  }
+
+  useEffect(() => {
+    setInputLink(link);
+  }, [link]);
+
+  useEffect(() => {
+    syncParentData();
+  }, [inputLink]);
 
   return (
     <div className="PublicationLink">
@@ -15,10 +33,7 @@ const PublicationForm = (props) => {
           onChange={(e) => setInputLink(e.target.value)}
         />
       </div>
-      <img
-        src={images.addform}
-        onClick={() => onButtonClick(index)}
-      />
+      <img src={images.addform} onClick={() => onButtonClick(id)} />
     </div>
   );
 };
