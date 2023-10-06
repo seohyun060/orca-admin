@@ -24,12 +24,12 @@
 		}
 		button {
 			display: inline-flex;
-			height: 34px;
-			padding: 2px 40px;
+			flex-shrink: 0;
 			justify-content: center;
 			align-items: center;
 			gap: 10px;
-			flex-shrink: 0;
+			height: 34px;
+			padding: 2px 40px;
 			background: var(--blue, #0d5699);
 			color: #fff;
 
@@ -51,14 +51,15 @@
 		margin-top: 39px;
 		.map-button {
 			display: inline-flex;
-			width: 336px;
-			height: 54px;
-			padding: 8px 18px;
+			flex-shrink: 0;
 			justify-content: center;
 			align-items: center;
 			gap: 10px;
-			flex-shrink: 0;
+			width: 336px;
+			height: 54px;
+			padding: 8px 18px;
 			background: #000;
+
 			div {
 				color: #fff;
 				text-align: center;
@@ -71,6 +72,7 @@
 				line-height: 28px; /* 127.273% */
 			}
 		}
+
 		.map-button:hover {
 			cursor: pointer;
 		}
@@ -86,9 +88,9 @@
 				z-index: 10;
 				width: 187px; /* 187px - 1px (border) */
 				height: 187px; /* 187px - 1px (border) */
+				border: 0.5px solid #000;
 				font-size: 24px;
 				font-weight: bold;
-				border: 0.5px solid #000;
 				box-sizing: border-box; /* Include border in width and height calculation */
 				color: #000;
 				text-align: center;
@@ -150,13 +152,14 @@
 				font-weight: 400;
 				line-height: 28px; /* 127.273% */
 			}
+
 			.dropdown-button {
+				display: flex;
+				align-items: center;
 				position: relative;
 				width: 193px;
 				height: 54px;
 				border: 1px solid black;
-				display: flex;
-				align-items: center;
 				.location {
 					width: 193px;
 					color: var(--Midium-gray, #9e9e9e);
@@ -178,35 +181,43 @@
 				cursor: pointer;
 			}
 			.dropdown-container {
+				/* 레이아웃 관련 속성 */
 				position: absolute;
 				margin-left: 200px;
 				margin-top: 64px;
 				width: 193px;
 				height: 324px;
 				overflow-y: auto;
+
+				/* 기타 속성 */
 				z-index: 20;
 				scroll-behavior: smooth;
-
 				border: 1px solid #000;
+
 				.dropdown-content {
+					/* 레이아웃 관련 속성 */
 					display: flex;
 					flex-direction: column;
-					.dropdown-item {
-						width: 100%;
-						height: 54px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						font-size: 18px;
-						font-weight: bold;
-						border-bottom: 1px solid #000;
-						background-color: white;
-					}
-					.dropdown-item:hover {
+
+					/* 텍스트 관련 속성 */
+					font-size: 18px;
+					font-weight: bold;
+
+					/* 기타 속성 */
+					width: 100%;
+					height: 54px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border-bottom: 1px solid #000;
+					background-color: white;
+
+					&:hover {
 						background-color: #f0f0f0;
 						cursor: pointer;
 					}
-					.dropdown-item:last-child {
+
+					&:last-child {
 						border-bottom: none;
 					}
 				}
@@ -225,6 +236,7 @@
 				flex-direction: row;
 				width: 280px;
 				.text {
+					/* 레이아웃 관련 속성 */
 					display: inline-flex;
 					height: 54px;
 					padding: 8px 18px;
@@ -232,17 +244,20 @@
 					align-items: center;
 					gap: 10px;
 					flex-shrink: 0;
+
+					/* 기타 속성 */
 					background: var(--Dark-gray, #3c3c3c);
 					color: #fff;
 					text-align: center;
 
-					/* web. re.22 */
+					/* 텍스트 관련 속성 */
 					font-family: Pretendard;
 					font-size: 22px;
 					font-style: normal;
 					font-weight: 400;
 					line-height: 28px; /* 127.273% */
 				}
+
 				input {
 					width: 205px;
 					height: 54px;
@@ -329,25 +344,29 @@
 			margin-top: 50px;
 			border: 1px solid var(--Dark-gray, #3c3c3c);
 			.text {
-				width: 105px;
+				/* 레이아웃 관련 속성 */
 				display: inline-flex;
-				height: 54px;
-				padding: 8px 18px;
-				justify-content: center;
-				align-items: center;
-				gap: 10px;
-				flex-shrink: 0;
-				background: var(--Dark-gray, #3c3c3c);
-				color: #fff;
-				text-align: center;
+				position: relative;
+				float: none; /* 적절한 float 값을 설정하세요 */
+				width: auto; /* 적절한 width 값을 설정하세요 */
+				height: auto; /* 적절한 height 값을 설정하세요 */
+				margin: 0; /* 적절한 margin 값을 설정하세요 */
+				padding: 8px 18px; /* 적절한 padding 값을 설정하세요 */
+				box-sizing: content-box; /* 적절한 box-sizing 값을 설정하세요 */
 
-				/* web. re.22 */
+				/* 텍스트 관련 속성 */
+				color: #fff;
 				font-family: Pretendard;
 				font-size: 22px;
-				font-style: normal;
 				font-weight: 400;
-				line-height: 20px; /* 127.273% */
+				text-align: center;
+
+				/* 기타 속성 */
+				background: var(--Dark-gray, #3c3c3c);
+				border: none; /* 적절한 border 값을 설정하세요 */
+				border-radius: 0; /* 적절한 border-radius 값을 설정하세요 */
 			}
+
 			img {
 				margin-left: 20px;
 			}
@@ -404,10 +423,11 @@
 			}
 		}
 		.publication {
-			width: 1496px;
-			height: fit-content;
 			display: flex;
 			flex-direction: column;
+			width: 1496px;
+			height: fit-content;
+
 			margin-top: 56px;
 			.head {
 				color: #000;
@@ -420,6 +440,7 @@
 				line-height: 28px; /* 116.667% */
 			}
 			.box {
+				/* 레이아웃 관련 속성 */
 				position: relative;
 				display: flex;
 				flex-direction: row;
@@ -430,19 +451,22 @@
 				border: 1px solid var(--Dark-gray, #3c3c3c);
 				margin-bottom: 10px;
 
+				/* 텍스트 관련 속성 (input) */
 				input {
 					width: 1400px;
 					color: var(--Midium-gray, #9e9e9e);
-					//text-align: center;
 					margin-left: 19px;
-					/* web. re.22 */
 					font-family: Pretendard;
 					font-size: 18px;
 					font-style: normal;
 					font-weight: 400;
 					line-height: 28px; /* 127.273% */
 				}
+
+				/* 기타 속성 */
+				/* 추가하고자 하는 기타 속성을 여기에 추가하세요 */
 			}
+
 			.lastitem {
 				display: flex;
 				flex-direction: row;
