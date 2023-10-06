@@ -34,12 +34,16 @@ const ResearcherInfoContainer = ({
 	const [publicationEdit, setPublicationEdit] =
 		useState<string[]>(publications);
 	const [locationEdit, setLocationEdit] = useState(mapLocation);
-	const uploadProfileHandler = (event: ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0];
-		if (file) {
-			setSelectedProfile(file);
-		}
-	};
+
+	const uploadProfileHandler = useCallback(
+		(event: ChangeEvent<HTMLInputElement>) => {
+			const file = event.target.files?.[0];
+			if (file) {
+				setSelectedProfile(file);
+			}
+		},
+		[setSelectedProfile],
+	);
 
 	const onChangePublicationEdit = useCallback(
 		(e: EChange, index: number) => {
