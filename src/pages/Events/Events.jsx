@@ -273,7 +273,7 @@ const Events = () => {
                       )}
                     </div>
                     <input
-                      type="file"
+                      type="file"sc
                       id="mainInput"
                       onChange={(e) => uploadGalleryHandler(input.id, e)}
                       style={{ display: "none" }}

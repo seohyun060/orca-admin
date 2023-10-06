@@ -318,11 +318,14 @@
   height: 200px;
 }
 
-.ConditionsLink {
+.Conditions {
   display: flex;
   width: 1496px;
   height: 54px;
-  border: 1px solid var(--Dark-gray, #3c3c3c);
+}
+.Conditions .element {
+  width: 1496px;
+  margin-right: 0px;
 }
 
 .LinkInput {

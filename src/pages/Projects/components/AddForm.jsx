@@ -1,15 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import images from "src/assets/images";
 
 const AddForm = (props) => {
-  const { index, name, affiliation, link, onButtonClick } =
-    props;
+  const {
+    id,
+    name,
+    affiliation,
+    link,
+    onButtonClick,
+    inputData,
+    changeInputData,
+  } = props;
 
   const [inputName, setInputName] = useState(name);
   const [inputAffiliation, setInputAffiliation] = useState(affiliation);
   const [inputLink, setInputLink] = useState(link);
-  
+
+  const syncParentData = () => {
+    let modifyData = [...inputData];
+    modifyData.map((data) => {
+      if (data.id === id) {
+        data.name = inputName
+        data.affiliation = inputAffiliation
+        data.link = inputLink
+      }
+    })
+    changeInputData(modifyData)
+  }
+
+  useEffect(() => {
+    setInputName(name);
+    setInputAffiliation(affiliation);
+    setInputLink(link);
+  }, [name, affiliation, link]);
+
+  useEffect(() => {
+    syncParentData()
+  }, [inputName, inputAffiliation, inputLink]);
+
   return (
     <div className="CandIInputSet">
       <div className="subject">이름</div>
@@ -33,7 +62,7 @@ const AddForm = (props) => {
         value={inputLink}
         onChange={(e) => setInputLink(e.target.value)}
       />
-      <img src={images.addform} onClick={() => onButtonClick(index)} />
+      <img src={images.addform} onClick={() => onButtonClick(id)} />
     </div>
   );
 };

@@ -22,17 +22,25 @@ const ProjectDetail = () => {
   ]);
   const [investigatorFormArray, setInvestigatorFormArray] = useState([
     ...ProjectDummy,
-    { name: "", affiliation: "", link: "" },
+    {
+      id: ProjectDummy[ProjectDummy.length - 1].id + 1,
+      name: "",
+      affiliation: "",
+      link: "",
+    },
   ]);
-  const [investigatorNumber, setInvestigatorNumber] = useState(0);
   const [collaboratorFormArray, setCollaboratorFormArray] = useState([
     ...ProjectDummy,
-    { name: "", affiliation: "", link: "" },
+    {
+      id: ProjectDummy[ProjectDummy.length - 1].id + 1,
+      name: "",
+      affiliation: "",
+      link: "",
+    },
   ]);
-  const [collaboratorNumber, setCollaboratorNumber] = useState(0);
   const [publicationFormArray, setPublicationFormArray] = useState([
     ...ProjectDummy,
-    { name: "", affiliation: "", link: "" },
+    { id: ProjectDummy[ProjectDummy.length - 1].id + 1, link: "" },
   ]);
   const [publicationNumber, setPublicationNumber] = useState(0);
 
@@ -40,57 +48,48 @@ const ProjectDetail = () => {
 
   const [projectTitle, setProjectTitle] = useState(location.state.title);
 
-  const onInvestigatorButtonClick = (index) => {
-    if (index === investigatorNumber) {
+  const onInvestigatorButtonClick = (id) => {
+    const lastIndex =
+      investigatorFormArray[investigatorFormArray.length - 1].id;
+    if (id === lastIndex) {
       setInvestigatorFormArray([
         ...investigatorFormArray,
-        { name: "", affiliation: "", link: "" },
+        { id: lastIndex + 1, name: "", affiliation: "", link: "" },
       ]);
-      setInvestigatorNumber(investigatorNumber + 1);
     } else {
-      console.log(index);
-      const temp = [...investigatorFormArray];
-      console.log(temp);
-      temp.splice(index, 1);
-      console.log(temp);
-      setInvestigatorFormArray(temp);
-      setInvestigatorNumber(investigatorNumber - 1);
+      setInvestigatorFormArray((prevInputs) =>
+        prevInputs.filter((input) => input.id !== id)
+      );
     }
   };
 
-  const onCollaboratorButtonClick = (index) => {
-    if (index === collaboratorNumber) {
+  const onCollaboratorButtonClick = (id) => {
+    console.log(collaboratorFormArray);
+    const lastIndex =
+      collaboratorFormArray[collaboratorFormArray.length - 1].id;
+    if (id === lastIndex) {
       setCollaboratorFormArray([
         ...collaboratorFormArray,
-        { name: "", affiliation: "", link: "" },
+        { id: lastIndex + 1, name: "", affiliation: "", link: "" },
       ]);
-      setCollaboratorNumber(collaboratorNumber + 1);
     } else {
-      console.log(index);
-      const temp = [...collaboratorFormArray];
-      console.log(temp);
-      temp.splice(index, 1);
-      console.log(temp);
-      setCollaboratorFormArray(temp);
-      setCollaboratorNumber(collaboratorNumber - 1);
+      setCollaboratorFormArray((prevInputs) =>
+        prevInputs.filter((input) => input.id !== id)
+      );
     }
   };
 
-  const onPublicationButtonClick = (index) => {
-    if (index === publicationNumber) {
+  const onPublicationButtonClick = (id) => {
+    const lastIndex = publicationFormArray[publicationFormArray.length - 1].id;
+    if (id === lastIndex) {
       setPublicationFormArray([
         ...publicationFormArray,
-        { name: "", affiliation: "", link: "" },
+        { id: lastIndex + 1, name: "", affiliation: "", link: "" },
       ]);
-      setPublicationNumber(publicationNumber + 1);
     } else {
-      console.log(index);
-      const temp = [...publicationFormArray];
-      console.log(temp);
-      temp.splice(index, 1);
-      console.log(temp);
-      setPublicationFormArray(temp);
-      setPublicationNumber(publicationNumber - 1);
+      setPublicationFormArray((prevInputs) =>
+        prevInputs.filter((input) => input.id !== id)
+      );
     }
   };
 
@@ -116,7 +115,7 @@ const ProjectDetail = () => {
     const temp = [...status];
     const idx = temp.indexOf(location.state.status);
     temp[idx] = true;
-    setIsStatusChecked(temp)
+    setIsStatusChecked(temp);
   };
 
   const investigator = {
@@ -126,11 +125,9 @@ const ProjectDetail = () => {
   };
 
   useEffect(() => {
-    setInvestigatorNumber(ProjectDummy.length);
-    setCollaboratorNumber(ProjectDummy.length);
     setPublicationNumber(ProjectDummy.length);
-    initStatus()
-  }, []);
+    initStatus();
+  }, [investigatorFormArray]);
 
   return (
     <div className="Layout">
@@ -214,12 +211,9 @@ const ProjectDetail = () => {
             <div className="ArticleTitle">Official Title</div>
             <textarea className="ArticleInputArea" placeholder="Text" />
           </div>
-          <div className="ConditionsLink">
-            <div className="subject">Conditions Link</div>
-            <div className="LinkInput">
-              <img src={images.link} />
-              <input />
-            </div>
+          <div className="Conditions">
+            <div className="subject">Conditions</div>
+            <input className="smallInput element" />
           </div>
         </article>
         <article className="divideSector">
@@ -371,37 +365,41 @@ const ProjectDetail = () => {
         <div className="CandI">
           <div className="title">Collaborators and Investigators</div>
           <div className="subtitle">Principal Investigator</div>
-          {investigatorFormArray.map((data, index) => (
+          {investigatorFormArray.map((data) => (
             <AddForm
-              index={index}
+              id={data.id}
               name={data.name}
               affiliation={data.affiliation}
               link={data.link}
               onButtonClick={onInvestigatorButtonClick}
-              investigatorNumber={investigatorNumber}
+              inputData={investigatorFormArray}
+              changeInputData={setInvestigatorFormArray}
             ></AddForm>
           ))}
           <div className="subtitle">Collaborators</div>
-          {collaboratorFormArray.map((data, index) => (
+          {collaboratorFormArray.map((data) => (
             <AddForm
-              index={index}
+              id={data.id}
               name={data.name}
               affiliation={data.affiliation}
               link={data.link}
               onButtonClick={onCollaboratorButtonClick}
-              investigatorNumber={collaboratorNumber}
-            />
+              inputData={collaboratorFormArray}
+              changeInputData={setCollaboratorFormArray}
+            ></AddForm>
           ))}
         </div>
       </article>
       <article className="divideSector">
         <div className="Publiciations">
           <div className="title">Publications</div>
-          {publicationFormArray.map((data, index) => (
+          {publicationFormArray.map((data) => (
             <PublicationForm
-              index={index}
+              id={data.id}
               link={data.link}
               onButtonClick={onPublicationButtonClick}
+              inputData={publicationFormArray}
+              changeInputData={setPublicationFormArray}
             />
           ))}
         </div>
