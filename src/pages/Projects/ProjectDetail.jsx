@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./styles/projects.css";
 import images from "src/assets/images";
@@ -11,9 +11,9 @@ import ProjectDummy from "./ProjectDummy";
 
 const ProjectDetail = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const status = ["Active", "Completed", "Terminated"];
-  const [isStatusChecked, setIsStatusChecked] = useState([true, false, false]);
+  const [isStatusChecked, setIsStatusChecked] = useState([false, false, false]);
   const [isSexesChecked, setIsSexesChecked] = useState([true, false, false]);
   const [isVolunteersChecked, setIsVolunteersChecked] = useState([
     true,
@@ -37,6 +37,8 @@ const ProjectDetail = () => {
   const [publicationNumber, setPublicationNumber] = useState(0);
 
   const [projectDetailData, setProjectDetailData] = useState(ProjectDummy);
+
+  const [projectTitle, setProjectTitle] = useState(location.state.title);
 
   const onInvestigatorButtonClick = (index) => {
     if (index === investigatorNumber) {
@@ -93,7 +95,7 @@ const ProjectDetail = () => {
   };
 
   const onStatusButtonClick = (index) => {
-    let temp = [false, false, false, false];
+    let temp = [false, false, false];
     temp[index] = true;
     setIsStatusChecked(temp);
   };
@@ -110,6 +112,13 @@ const ProjectDetail = () => {
     setIsVolunteersChecked(temp);
   };
 
+  const initStatus = () => {
+    const temp = [...status];
+    const idx = temp.indexOf(location.state.status);
+    temp[idx] = true;
+    setIsStatusChecked(temp)
+  };
+
   const investigator = {
     name: "",
     affiliation: "",
@@ -120,6 +129,7 @@ const ProjectDetail = () => {
     setInvestigatorNumber(ProjectDummy.length);
     setCollaboratorNumber(ProjectDummy.length);
     setPublicationNumber(ProjectDummy.length);
+    initStatus()
   }, []);
 
   return (
@@ -151,7 +161,12 @@ const ProjectDetail = () => {
         <article className="divideSector">
           <div className="ProjectDetailTitle">
             <div className="ArticleTitle">프로젝트 제목</div>
-            <textarea className="ArticleInputArea" placeholder="Text" />
+            <textarea
+              className="ArticleInputArea"
+              placeholder="Text"
+              value={projectTitle}
+              onChange={(e) => setProjectTitle(e.target.value)}
+            />
           </div>
           <div className="ProjectDetailPeriod">
             <div className="PeriodInputBox">

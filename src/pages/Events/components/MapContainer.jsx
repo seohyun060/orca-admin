@@ -11,8 +11,8 @@ import images from "src/assets/images";
 function MapContainer() {
   const [searchBox, setSearchBox] = useState(null);
   const [center, setCenter] = useState({
-    lat: 35.8714, // 위도
-    lng: 128.6014, // 경도
+    lat: 35.955, // 위도
+    lng: 128.5657, // 경도
   });
 
   const libraries = ["places"];
@@ -55,7 +55,7 @@ function MapContainer() {
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={14}
+            zoom={16}
           >
             {/* 여기에 지도 내용을 추가하세요. */}
 
