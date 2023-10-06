@@ -13,14 +13,13 @@ const Project = (props) => {
   const [search, setSearch] = useState("");
   const [filteredList, setFilteredList] = useState(projectList);
 
-  const onDisplayedClick = useCallback(() => {
+  const onDisplayedClick = () => {
     if (stored) {
       setStored(false);
       setDisplayedColor(1);
       setStoredColor(0.3);
     }
-    console.log(stored, displayedColor, storedColor);
-  }, [stored, displayedColor, storedColor]);
+  };
 
   const onStoredClick = () => {
     if (!stored) {
@@ -28,7 +27,6 @@ const Project = (props) => {
       setDisplayedColor(0.3);
       setStoredColor(1);
     }
-    console.log(stored, displayedColor, storedColor);
   };
 
   const onSetSearch = (e) => {
@@ -46,6 +44,19 @@ const Project = (props) => {
     setProjectList(updatedList); // Up
   };
 
+  const onEditClicked = (id, title, pid, category, status) => {
+    navigate("/project/default", {
+      state: {
+        id: id,
+        title: title,
+        pid: pid,
+        category: category,
+        status: status,
+      },
+    });
+    window.scrollTo(0, 0);
+  };
+
   const onTrashClick = (id) => {
     setProjectList((prevList) => {
       const updatedList = prevList.filter((insight) => insight.id !== id);
@@ -53,40 +64,31 @@ const Project = (props) => {
     });
   };
 
-  const onEditClicked = (edit, id, type, pdfList, text) => {
-    navigate("/insightinfo", {
-      state: {
-        Edit: edit,
-        Id: id,
-        Type: type,
-        PdfList: pdfList,
-        Text: text,
-      },
-    });
-    window.scrollTo(0, 0);
-  };
-
   useEffect(() => {
     const updatedProjects = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
       const project = {
         id: i + 1,
-        name: "Project name",
+        title: "Project name",
         pid: "1234sd6879ds4fd",
         category: "CadAI-B/T",
-        status: "Active",
+        status: "Completed",
+        stored: false,
       };
       updatedProjects.push(project);
     }
     setProjectList(updatedProjects);
   }, []);
 
-  // useEffect(() => {
-  //   setFilteredList(
-  //     projectList.filter((project) => project.id.indexOf(search) !== -1)
-  //   );
-  //   return () => {};
-  // }, [search, projectList]);
+  useEffect(() => {
+    setFilteredList(
+      projectList.filter((project) => {
+        if (project.title.includes(search)) {
+          return true;
+        }
+      })
+    );
+  }, [search, projectList]);
 
   return (
     <div className="Project">
@@ -126,7 +128,7 @@ const Project = (props) => {
             color: stored ? "#9E9E9E" : "#fff",
           }}
           onClick={() => {
-            onEditClicked(false, projectList.length + 1, "White paper", [], "");
+            onEditClicked();
           }}
         >
           프로젝트 추가
@@ -173,11 +175,11 @@ const Project = (props) => {
                   className="edit"
                   onClick={() => {
                     onEditClicked(
-                      true,
                       project.id,
-                      project.type,
-                      project.pdfList,
-                      project.text
+                      project.title,
+                      project.pid,
+                      project.category,
+                      project.status
                     );
                   }}
                 >
