@@ -8,7 +8,6 @@ type Props = {
 	onTypeClicked: (type: string) => void;
 	//pdfEdit: string[];
 	onAddClicked: () => void;
-	pdfListEdit: File[];
 	uploadPdfHandler: (
 		event: ChangeEvent<HTMLInputElement>,
 		index: number,
@@ -16,8 +15,7 @@ type Props = {
 	titleEdit: string;
 	onChangeTitleEdit: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onBackClicked: any;
-	urlList: string[];
-	pdfList: string[];
+	pdfListEdit: string[];
 	id: number;
 	selectedType: string;
 	onApplyClicked: OnApplyInsight;
@@ -28,15 +26,12 @@ const InsightInfo = ({
 	dropbox,
 	onDropboxClicked,
 	onTypeClicked,
-	//pdfEdit,
 	onAddClicked,
-	pdfListEdit,
 	uploadPdfHandler,
 	titleEdit,
 	onChangeTitleEdit,
 	onBackClicked,
-	urlList,
-	pdfList,
+	pdfListEdit,
 	id,
 	selectedType,
 	onApplyClicked,
@@ -59,7 +54,7 @@ const InsightInfo = ({
 				<div
 					className='upload'
 					onClick={() => {
-						onApplyClicked(edit, id, selectedType, urlList, titleEdit);
+						onApplyClicked(edit, id, selectedType, pdfListEdit, titleEdit);
 					}}
 				>
 					올리기
@@ -91,7 +86,7 @@ const InsightInfo = ({
 				)}
 			</div>
 			<div className='insightinfo-pdf'>
-				{urlList.length === 0 ? (
+				{pdfListEdit.length === 0 ? (
 					<div className='lastitem'>
 						<div className='box'>
 							<label htmlFor='mainInput'>
@@ -110,8 +105,8 @@ const InsightInfo = ({
 						<img className='add' src={images.add} onClick={onAddClicked}></img>
 					</div>
 				) : (
-					urlList.map((pdf, index) => {
-						if (index === urlList.length - 1) {
+					pdfListEdit.map((pdf, index) => {
+						if (index === pdfListEdit.length - 1) {
 							return (
 								<div key={index} className='lastitem'>
 									<div className='box'>
@@ -174,13 +169,13 @@ const InsightInfo = ({
 			<div className='insightinfo-preview'>
 				<div className='head'>미리보기</div>
 
-				{urlList.map((url, index) => {
+				{pdfListEdit.map((url, index) => {
 					if (url) {
 						// Check if url is not an empty string
 						return (
 							<iframe
 								key={index}
-								src={urlList[index]}
+								src={pdfListEdit[index]}
 								height='776x'
 								title='PDF Viewer'
 							/>
