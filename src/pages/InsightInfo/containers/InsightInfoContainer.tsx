@@ -9,18 +9,18 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 	const location = useLocation();
 	const edit = location.state.Edit;
 	const id = location.state.Id;
-	const type = location.state.Type;
-	const title = location.state.Title;
-	const pdfList = location.state.PdfList; // insight page 항목에서 넘겨받은 insight의 pdf url의 배열
+
 	const [dropbox, setDropbox] = useState(false);
-	const [selectedType, setSelectedType] = useState(type);
-	// const [pdfEdit, setPdfEdit] = useState<string[]>(['']);
-	const [pdfListEdit, setPdfListEdit] = useState<File[]>([]); // 새로 추가한 , 혹은 편집된 pdf 파일 배열
-	const [titleEdit, setTitleEdit] = useState(title);
-	const [urlList, setUrlList] = useState<string[]>(pdfList); // 넘겨받은 pdf url을 관리할 배열 state
+	const [selectedType, setSelectedType] = useState(location.state.Type);
+	const [titleEdit, setTitleEdit] = useState(location.state.Title);
+	const [pdfListEdit, setPdfListEdit] = useState<string[]>(
+		location.state.PdfList,
+	); // 넘겨받은 pdf url을 관리할 배열 state
+
 	const onDropboxClicked = useCallback(() => {
 		setDropbox((prev) => !prev);
 	}, [dropbox]);
+
 	const onTypeClicked = useCallback(
 		(type: string) => {
 			setSelectedType(type);
@@ -29,24 +29,21 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 		[selectedType, dropbox],
 	);
 	const onAddClicked = useCallback(() => {
-		setUrlList((prevList) => [...prevList, '']);
-	}, [urlList]);
-	const uploadPdfHandler = (
-		event: ChangeEvent<HTMLInputElement>,
-		index: number,
-	) => {
-		const file = event.target.files?.[0];
-		if (file) {
-			const updatedPdfList = [...pdfListEdit, file];
-			setPdfListEdit(updatedPdfList);
-			const url = URL.createObjectURL(file);
-			let updatedUrlList = [...urlList];
-			updatedUrlList[index] = url;
-			setUrlList(updatedUrlList);
-			console.log(url, index);
-			console.log(urlList);
-		}
-	};
+		setPdfListEdit((prevList) => [...prevList, '']);
+	}, [pdfListEdit]);
+
+	const uploadPdfHandler = useCallback(
+		(event: ChangeEvent<HTMLInputElement>, index: number) => {
+			const file = event.target.files?.[0];
+			if (file) {
+				const url = URL.createObjectURL(file);
+				const updatedUrlList = [...pdfListEdit];
+				updatedUrlList[index] = url;
+				setPdfListEdit(updatedUrlList);
+			}
+		},
+		[pdfListEdit, setPdfListEdit],
+	);
 	const onChangeTitleEdit = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 			setTitleEdit(e.target.value);
@@ -91,24 +88,28 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 			setInsightList(updatedInsights);
 			navigate('/insight');
 			window.scrollTo(0, 0);
-			console.log(insightList[1].text);
 		},
-		[edit, id, selectedType, urlList, titleEdit, insightList, setInsightList],
+		[
+			edit,
+			id,
+			selectedType,
+			pdfListEdit,
+			titleEdit,
+			insightList,
+			setInsightList,
+		],
 	);
 	return (
 		<InsightInfo
 			dropbox={dropbox}
 			onDropboxClicked={onDropboxClicked}
 			onTypeClicked={onTypeClicked}
-			//pdfEdit={pdfEdit}
 			onAddClicked={onAddClicked}
-			pdfListEdit={pdfListEdit}
 			uploadPdfHandler={uploadPdfHandler}
 			titleEdit={titleEdit}
 			onChangeTitleEdit={onChangeTitleEdit}
 			onBackClicked={onBackClicked}
-			urlList={urlList}
-			pdfList={pdfList}
+			pdfListEdit={pdfListEdit}
 			id={id}
 			selectedType={selectedType}
 			onApplyClicked={onApplyClicked}

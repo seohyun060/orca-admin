@@ -23,7 +23,6 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 			setDisplayedColor(1);
 			setStoredColor(0.3);
 		}
-		console.log(stored, displayedColor, storedColor);
 	}, [stored, displayedColor, storedColor]);
 	const onStoredClick = useCallback(() => {
 		if (!stored) {
@@ -31,7 +30,6 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 			setDisplayedColor(0.3);
 			setStoredColor(1);
 		}
-		console.log(stored, displayedColor, storedColor);
 	}, [stored, displayedColor, storedColor]);
 	const onSetSearch = useCallback(
 		(e: EChange) => {
