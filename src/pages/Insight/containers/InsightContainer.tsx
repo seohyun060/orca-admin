@@ -67,7 +67,7 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 			id: number,
 			type: string,
 			pdfList: string[],
-			text: string,
+			title: string,
 		) => {
 			navigate('/insightinfo', {
 				state: {
@@ -75,7 +75,7 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 					Id: id,
 					Type: type,
 					PdfList: pdfList,
-					Text: text,
+					Title: title,
 				},
 			});
 			window.scrollTo(0, 0);
@@ -92,7 +92,6 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 	return (
 		<Insight
 			insightList={insightList}
-			setInsightList={setInsightList}
 			displayedColor={displayedColor}
 			onDisplayedClick={onDisplayedClick}
 			storedColor={storedColor}
