@@ -10,13 +10,13 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 	const edit = location.state.Edit;
 	const id = location.state.Id;
 	const type = location.state.Type;
-	const text = location.state.Text;
+	const title = location.state.Title;
 	const pdfList = location.state.PdfList; // insight page 항목에서 넘겨받은 insight의 pdf url의 배열
 	const [dropbox, setDropbox] = useState(false);
 	const [selectedType, setSelectedType] = useState(type);
 	// const [pdfEdit, setPdfEdit] = useState<string[]>(['']);
 	const [pdfListEdit, setPdfListEdit] = useState<File[]>([]); // 새로 추가한 , 혹은 편집된 pdf 파일 배열
-	const [insightTextEdit, setInsightTextEdit] = useState(text);
+	const [titleEdit, setTitleEdit] = useState(title);
 	const [urlList, setUrlList] = useState<string[]>(pdfList); // 넘겨받은 pdf url을 관리할 배열 state
 	const onDropboxClicked = useCallback(() => {
 		setDropbox((prev) => !prev);
@@ -47,11 +47,11 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 			console.log(urlList);
 		}
 	};
-	const onChangeInsightTextEdit = useCallback(
+	const onChangeTitleEdit = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-			setInsightTextEdit(e.target.value);
+			setTitleEdit(e.target.value);
 		},
-		[insightTextEdit],
+		[titleEdit],
 	);
 	const onBackClicked = useCallback(() => {
 		navigate('/insight');
@@ -63,20 +63,20 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 			id: number,
 			type: string,
 			pdfList: string[],
-			text: string,
+			title: string,
 		) => {
 			const filteredUrlList = pdfList.filter((item) => item !== '');
 			const createTempInsight = () => ({
 				id: id,
 				type: type,
-				title: edit
-					? insightList.find((insight) => insight.id === id)?.title
+				text: edit
+					? insightList.find((insight) => insight.id === id)?.text
 					: '',
 				date: edit
 					? insightList.find((insight) => insight.id === id)?.date
 					: '',
 				pdfList: filteredUrlList,
-				text: text,
+				title: title,
 				stored: edit
 					? insightList.find((insight) => insight.id === id)?.stored
 					: false,
@@ -93,15 +93,7 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 			window.scrollTo(0, 0);
 			console.log(insightList[1].text);
 		},
-		[
-			edit,
-			id,
-			selectedType,
-			urlList,
-			insightTextEdit,
-			insightList,
-			setInsightList,
-		],
+		[edit, id, selectedType, urlList, titleEdit, insightList, setInsightList],
 	);
 	return (
 		<InsightInfo
@@ -112,8 +104,8 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 			onAddClicked={onAddClicked}
 			pdfListEdit={pdfListEdit}
 			uploadPdfHandler={uploadPdfHandler}
-			insightTextEdit={insightTextEdit}
-			onChangeInsightTextEdit={onChangeInsightTextEdit}
+			titleEdit={titleEdit}
+			onChangeTitleEdit={onChangeTitleEdit}
 			onBackClicked={onBackClicked}
 			urlList={urlList}
 			pdfList={pdfList}

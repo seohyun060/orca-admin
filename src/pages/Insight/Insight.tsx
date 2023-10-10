@@ -5,7 +5,6 @@ import './styles/insight.styles.css';
 import { EChange } from '@typedef/types';
 type Props = {
 	insightList: Insights[];
-	setInsightList: any;
 	displayedColor: number;
 	onDisplayedClick: () => void;
 	storedColor: number;
@@ -27,7 +26,6 @@ type Props = {
 
 const Insight = ({
 	insightList,
-	setInsightList,
 	displayedColor,
 	onDisplayedClick,
 	storedColor,
@@ -123,7 +121,7 @@ const Insight = ({
 											insight.id,
 											insight.type,
 											insight.pdfList,
-											insight.text,
+											insight.title,
 										);
 									}}
 								>

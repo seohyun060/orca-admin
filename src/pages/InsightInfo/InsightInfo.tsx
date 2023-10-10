@@ -13,8 +13,8 @@ type Props = {
 		event: ChangeEvent<HTMLInputElement>,
 		index: number,
 	) => void;
-	insightTextEdit: string;
-	onChangeInsightTextEdit: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	titleEdit: string;
+	onChangeTitleEdit: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onBackClicked: any;
 	urlList: string[];
 	pdfList: string[];
@@ -32,8 +32,8 @@ const InsightInfo = ({
 	onAddClicked,
 	pdfListEdit,
 	uploadPdfHandler,
-	insightTextEdit,
-	onChangeInsightTextEdit,
+	titleEdit,
+	onChangeTitleEdit,
 	onBackClicked,
 	urlList,
 	pdfList,
@@ -59,7 +59,7 @@ const InsightInfo = ({
 				<div
 					className='upload'
 					onClick={() => {
-						onApplyClicked(edit, id, selectedType, urlList, insightTextEdit);
+						onApplyClicked(edit, id, selectedType, urlList, titleEdit);
 					}}
 				>
 					올리기
@@ -163,11 +163,11 @@ const InsightInfo = ({
 				)}
 			</div>
 			<div className='insightinfo-text'>
-				<div className='head'>인사이드 텍스트</div>
+				<div className='head'>인사이드 제목</div>
 				<textarea
-					onChange={onChangeInsightTextEdit}
+					onChange={onChangeTitleEdit}
 					required
-					value={insightTextEdit}
+					value={titleEdit}
 				></textarea>
 			</div>
 			<div className='insightinfo-divider'></div>
