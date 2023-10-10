@@ -2,13 +2,13 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	position: fixed;
+	z-index: 100;
 	//justify-content: center;
 	width: 120px;
 	height: 1080px;
 	background-color: black;
 
-	position: fixed;
-	z-index: 100;
 	&-tabs {
 		display: flex;
 		flex-direction: column;
