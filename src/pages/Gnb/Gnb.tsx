@@ -4,9 +4,10 @@ import { GNBTableTypes } from '@typedef/types';
 type Props = {
 	tabTable: GNBTableTypes[];
 	onTabClicked: (path: string) => void;
+	location: string;
 };
 
-const Gnb = ({ tabTable, onTabClicked }: Props) => {
+const Gnb = ({ tabTable, onTabClicked, location }: Props) => {
 	return (
 		<div className='gnb'>
 			<div className='gnb-tabs'>
@@ -17,6 +18,13 @@ const Gnb = ({ tabTable, onTabClicked }: Props) => {
 							className='gnb-tabs-item'
 							onClick={() => {
 								onTabClicked(tab.path);
+							}}
+							style={{
+								backgroundColor:
+									location === tab.path ||
+									(tab.path !== '/' && location.includes(tab.path))
+										? '#3c3c3c'
+										: '#000000',
 							}}
 						>
 							<img src={tab.icon} />

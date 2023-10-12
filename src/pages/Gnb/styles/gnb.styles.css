@@ -34,8 +34,4 @@
   font-style: normal;
   font-weight: 500;
   line-height: 28.5px; /* 190% */
-}
-.gnb-tabs-item:hover {
-  cursor: pointer;
-  background: var(--Dark-gray, #3c3c3c);
 }/*# sourceMappingURL=gnb.styles.css.map */

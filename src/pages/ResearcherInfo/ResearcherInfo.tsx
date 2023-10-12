@@ -124,7 +124,7 @@ const ResearcherInfo = ({
 
 					<div className='dropdown-button' onClick={onDropboxClicked}>
 						<div className='location'>{locationEdit}</div>
-						<img src={images.down_b} />
+						<img src={dropbox ? images.up_b : images.down_b} />
 					</div>
 					{dropbox ? (
 						<div className='dropdown-container'>

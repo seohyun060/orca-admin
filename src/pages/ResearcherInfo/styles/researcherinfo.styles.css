@@ -161,7 +161,7 @@
 }
 .researcherinfo-body .numbering .dropdown-button .location {
   width: 193px;
-  color: var(--Midium-gray, #9e9e9e);
+  color: var(--Midium-gray, #000);
   margin-left: 16px;
   /* web. re.22 */
   font-family: Pretendard;
@@ -199,12 +199,26 @@
   font-weight: bold;
   /* 기타 속성 */
   width: 100%;
-  height: 54px;
+  height: -moz-fit-content;
+  height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #000;
   background-color: white;
+}
+.researcherinfo-body .numbering .dropdown-container .dropdown-content .dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #000;
+  background-color: white;
+  width: 100%;
+  height: 54px;
+  border-bottom: 1px solid #000;
+}
+.researcherinfo-body .numbering .dropdown-container .dropdown-content .dropdown-item:last-child {
+  border-bottom: none;
 }
 .researcherinfo-body .numbering .dropdown-container .dropdown-content:hover {
   background-color: #f0f0f0;
@@ -238,7 +252,6 @@
   /* 기타 속성 */
   background: var(--Dark-gray, #3c3c3c);
   color: #fff;
-  text-align: center;
   /* 텍스트 관련 속성 */
   font-family: Pretendard;
   font-size: 22px;
@@ -250,8 +263,8 @@
   width: 205px;
   height: 54px;
   border: 1px solid var(--Dark-gray, #3c3c3c);
-  color: var(--Midium-gray, #9e9e9e);
-  text-align: center;
+  padding-left: 20px;
+  color: var(--Midium-gray, #000);
   /* web. re.22 */
   font-family: Pretendard;
   font-size: 18px;
@@ -305,7 +318,7 @@
 }
 .researcherinfo-body .profile-image label p {
   margin-left: 16px;
-  color: var(--Midium-gray, #9e9e9e);
+  color: var(--Midium-gray, #000);
   text-align: center;
   /* web. re.22 */
   font-family: Pretendard;
@@ -327,18 +340,20 @@
   /* 레이아웃 관련 속성 */
   display: inline-flex;
   position: relative;
+  width: 75px;
   float: none; /* 적절한 float 값을 설정하세요 */
-  width: auto; /* 적절한 width 값을 설정하세요 */
   height: auto; /* 적절한 height 값을 설정하세요 */
   margin: 0; /* 적절한 margin 값을 설정하세요 */
   padding: 8px 18px; /* 적절한 padding 값을 설정하세요 */
   box-sizing: content-box; /* 적절한 box-sizing 값을 설정하세요 */
+  justify-content: center;
   /* 텍스트 관련 속성 */
-  color: #fff;
+  color: white;
   font-family: Pretendard;
   font-size: 22px;
   font-weight: 400;
   text-align: center;
+  align-items: center;
   /* 기타 속성 */
   background: var(--Dark-gray, #3c3c3c);
   border: none; /* 적절한 border 값을 설정하세요 */
@@ -346,11 +361,12 @@
 }
 .researcherinfo-body .link img, .researcherinfo-body .twitter img {
   margin-left: 20px;
+  width: 30px;
 }
 .researcherinfo-body .link input, .researcherinfo-body .twitter input {
   width: 1420px;
   margin-left: 19px;
-  color: var(--Midium-gray, #9e9e9e);
+  color: var(--Midium-gray, #000);
   /* web. re.22 */
   font-family: Pretendard;
   font-size: 18px;
@@ -384,7 +400,7 @@
   flex-shrink: 0;
   border: 1px solid var(--Dark-gray, #3c3c3c);
   padding: 12px 14px 14px 12px;
-  color: var(--Midium-gray, #9e9e9e);
+  color: var(--Midium-gray, #000);
   /* web. light.20 */
   font-family: Pretendard;
   font-size: 20px;
@@ -402,6 +418,7 @@
 }
 .researcherinfo-body .publication .head {
   color: #000;
+  margin-bottom: 14px;
   /* semi 24 */
   font-family: Pretendard;
   font-size: 24px;
@@ -426,7 +443,7 @@
 }
 .researcherinfo-body .publication .box input {
   width: 1400px;
-  color: var(--Midium-gray, #9e9e9e);
+  color: var(--Midium-gray, #000);
   margin-left: 19px;
   font-family: Pretendard;
   font-size: 18px;

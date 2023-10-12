@@ -18,6 +18,7 @@ const images = {
 	newsletter: '/assets/images/newsletter.svg',
 	orcagroup: '/assets/images/orcagroup.svg',
 	up_w: '/assets/images/up-w.svg',
+	up_b: '/assets/images/up-b.svg',
 	down_w: '/assets/images/down-w.svg',
 	down_b: '/assets/images/down-b.svg',
 	download: '/assets/images/download.svg',
