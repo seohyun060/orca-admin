@@ -39,6 +39,7 @@
 		}
 		button:hover {
 			cursor: pointer;
+			background: #093f71;
 		}
 	}
 	&-body {
@@ -100,6 +101,10 @@
 
 			img {
 				margin-left: 21px;
+			}
+			img:hover {
+				content: url('/public/assets/images/trash-r.svg');
+				cursor: pointer;
 			}
 		}
 	}

@@ -40,6 +40,10 @@
 			font-weight: 300;
 			line-height: 35px; /* 142.5% */
 		}
+		button:hover {
+			cursor: pointer;
+			background: #093f71;
+		}
 	}
 	&-map {
 		display: flex;

@@ -38,6 +38,7 @@
 }
 .newsletter-head button:hover {
   cursor: pointer;
+  background: #093f71;
 }
 .newsletter-body {
   display: flex;
@@ -96,4 +97,8 @@
 }
 .newsletter-body .list img {
   margin-left: 21px;
+}
+.newsletter-body .list img:hover {
+  content: url("/public/assets/images/trash-r.svg");
+  cursor: pointer;
 }/*# sourceMappingURL=newsletter.styles.css.map */
