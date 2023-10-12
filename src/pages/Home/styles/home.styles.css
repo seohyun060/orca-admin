@@ -1,9 +1,9 @@
 .home {
   display: flex;
   flex-direction: column;
+  width: calc(100% - 120px);
   height: 1080px;
   margin-left: 120px;
-  width: calc(100% - 120px);
 }
 .home.main, .home.orca {
   display: flex;
@@ -16,11 +16,11 @@
 .home.main.head, .home.head.orca {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width: 1648px;
   height: 28px;
   margin-top: 0px;
   margin-left: 0px;
-  justify-content: space-between;
   /* semi 24 */
 }
 .home.main.head div, .home.head.orca div {
@@ -60,11 +60,11 @@
 .home.project.head, .home.head.insight {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width: 1648px;
   height: 28px;
   margin-top: 0px;
   margin-left: 0px;
-  justify-content: space-between;
 }
 .home.project.head div, .home.head.insight div {
   font-family: Pretendard;
@@ -99,12 +99,12 @@
 }
 
 .apply {
-  height: 34px;
-  padding: 2px 40px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   flex-shrink: 0;
+  height: 34px;
+  padding: 2px 40px;
+  gap: 10px;
   background: var(--blue, #0d5699);
   color: #fff;
   /* Web/Pre. Light 20 */
@@ -113,4 +113,9 @@
   font-style: normal;
   font-weight: 300;
   line-height: 28.5px; /* 142.5% */
+}
+
+.apply:hover {
+  cursor: pointer;
+  background: #093f71;
 }/*# sourceMappingURL=home.styles.css.map */

@@ -67,12 +67,12 @@ const Insight = ({
 						required
 						value={search}
 					></input>
-					<img src={images.search} />
+					{search ? <img src={images.search_b} /> : <img src={images.search} />}
 				</div>
 				<button
 					disabled={stored ? true : false}
+					className={stored ? 'add' : 'add-active'}
 					style={{
-						backgroundColor: stored ? '#E1E1E1' : '#0D5699',
 						color: stored ? '#9E9E9E' : '#fff',
 					}}
 					onClick={() => {

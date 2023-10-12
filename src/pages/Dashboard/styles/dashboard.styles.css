@@ -8,7 +8,7 @@
 .dashboard-head {
   display: flex;
   flex-direction: row;
-  width: 1648px;
+  width: 1500px;
   height: 45px;
   margin: auto;
   margin-top: 55px;
@@ -23,7 +23,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: 28px; /* 116.667% */
-  margin-right: 1051px;
+  margin-right: 907px;
 }
 .dashboard-head .reload {
   display: flex;
@@ -67,16 +67,17 @@
 }
 .dashboard-head .excel:hover {
   cursor: pointer;
+  background: #093f71;
 }
 .dashboard-analystic {
-  width: 1648px;
+  width: 1500px;
   height: 432px;
   margin: auto;
   margin-top: 32px;
   background-color: #0d5699;
 }
 .dashboard-statistic {
-  width: 1648px;
+  width: 1500px;
   height: 422px;
   margin: auto;
   margin-top: 61px;
@@ -87,7 +88,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 1648px;
+  width: 1500px;
   height: 44px;
   margin-bottom: 0px;
 }
@@ -132,7 +133,7 @@
 .dashboard-statistic-body {
   display: flex;
   flex-direction: column;
-  width: 1648px;
+  width: 1500px;
   height: 378px;
   border: 1px solid black;
   margin-top: 0px;
@@ -242,13 +243,13 @@
 .dashboard-statistic-body .people .orcagroup {
   display: flex;
   flex-direction: column;
-  width: 233px;
+  width: 240px;
   height: 110px;
   margin-top: 40px;
   margin-left: 82px;
 }
 .dashboard-statistic-body .people .orcagroup-head {
-  width: 233px;
+  width: 240px;
   height: 28px;
   margin-top: 0px;
   margin-left: 0px;

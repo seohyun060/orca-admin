@@ -18,14 +18,14 @@
   margin-right: 11px;
 }
 .insightinfo-head .back {
+  margin-top: 3px;
+  margin-right: 79px;
   color: #000;
   /* web. re.22 */
   font-family: Pretendard;
   font-size: 22px;
   font-style: normal;
   font-weight: 400;
-  margin-top: 3px;
-  margin-right: 79px;
   line-height: 70px; /* 127.273% */
 }
 .insightinfo-head .title {
@@ -41,12 +41,12 @@
 }
 .insightinfo-head .upload {
   display: inline-flex;
-  height: 34px;
-  padding: 2px 40px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  height: 34px;
+  padding: 2px 40px;
   background: var(--blue, #0d5699);
   color: #fff;
   /* Web/Pre. Light 20 */
@@ -64,12 +64,12 @@
   margin-top: 26px;
 }
 .insightinfo-type .dropdown-button {
+  display: flex;
+  align-items: center;
   position: relative;
   width: 436px;
   height: 54px;
   border: 1px solid black;
-  display: flex;
-  align-items: center;
 }
 .insightinfo-type .dropdown-button .location {
   width: 193px;
@@ -96,10 +96,10 @@
 }
 .insightinfo-type .dropdown-container {
   position: absolute;
-  margin-top: 10px;
+  z-index: 20;
   width: 436px;
   height: 219px;
-  z-index: 20;
+  margin-top: 10px;
   border: 1px solid #000;
 }
 .insightinfo-type .dropdown-container .dropdown-content {
@@ -107,11 +107,11 @@
   flex-direction: column;
 }
 .insightinfo-type .dropdown-container .dropdown-content .dropdown-item {
-  width: 100%;
-  height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 54px;
   font-size: 18px;
   font-weight: bold;
   border-bottom: 1px solid #000;
@@ -125,20 +125,20 @@
   border-bottom: none;
 }
 .insightinfo-pdf {
+  display: flex;
+  flex-direction: column;
   width: 1496px;
   height: -moz-fit-content;
   height: fit-content;
-  display: flex;
-  flex-direction: column;
   margin: auto;
   margin-top: 56px;
 }
 .insightinfo-pdf .box {
-  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  position: relative;
   width: 1496px;
   height: 50px;
   border: 1px solid var(--Dark-gray, #3c3c3c);
@@ -176,10 +176,10 @@
   line-height: 28px; /* 127.273% */
 }
 .insightinfo-pdf .lastitem {
-  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
   width: 1496px;
 }
 .insightinfo-pdf .lastitem .box {

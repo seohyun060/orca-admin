@@ -80,13 +80,13 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 		},
 		[edit],
 	);
-
 	useEffect(() => {
 		setFilteredList(
 			insightList.filter((insight) => insight.title.indexOf(search) !== -1),
 		);
 		return () => {};
 	}, [search, insightList]);
+
 	return (
 		<Insight
 			insightList={insightList}

@@ -2,13 +2,13 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	position: fixed;
+	z-index: 100;
 	//justify-content: center;
 	width: 120px;
 	height: 1080px;
 	background-color: black;
 
-	position: fixed;
-	z-index: 100;
 	&-tabs {
 		display: flex;
 		flex-direction: column;
@@ -21,6 +21,9 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			justify-content: center;
+			width: 120px;
+			height: 77px;
 			.label {
 				height: 29px;
 				color: #fff;
@@ -31,9 +34,6 @@
 				font-weight: 500;
 				line-height: 28.5px; /* 190% */
 			}
-		}
-		&-item:hover {
-			cursor: pointer;
 		}
 	}
 }

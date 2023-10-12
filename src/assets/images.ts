@@ -6,7 +6,9 @@ const images = {
 	paging_dot_dark: '/assets/images/paging_dot_dark.svg',
 	paging_dot_medium: '/assets/images/paging_dot_medium.svg',
 	search: '/assets/images/search.svg',
+	search_b: '/assets/images/search-b.svg',
 	trash: '/assets/images/trash.svg',
+	trash_r: '/assets/images/trash-r.svg',
 	dashboard: '/assets/images/dashboard.svg',
 	home: '/assets/images/home.svg',
 	researcher: '/assets/images/researcher.svg',
@@ -16,6 +18,7 @@ const images = {
 	newsletter: '/assets/images/newsletter.svg',
 	orcagroup: '/assets/images/orcagroup.svg',
 	up_w: '/assets/images/up-w.svg',
+	up_b: '/assets/images/up-b.svg',
 	down_w: '/assets/images/down-w.svg',
 	down_b: '/assets/images/down-b.svg',
 	download: '/assets/images/download.svg',
@@ -24,7 +27,7 @@ const images = {
 	next: '/assets/images/next.svg',
 	previous: '/assets/images/previous.svg',
 	reload: '/assets/images/reload.svg',
-	checkbox: '/assets/images/checkbox.svg'
+	checkbox: '/assets/images/checkbox.svg',
 };
 
 export default images;

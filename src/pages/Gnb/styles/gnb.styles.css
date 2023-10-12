@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: fixed;
+  z-index: 100;
   width: 120px;
   height: 1080px;
   background-color: black;
-  position: fixed;
-  z-index: 100;
 }
 .gnb-tabs {
   display: flex;
@@ -21,6 +21,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 77px;
 }
 .gnb-tabs-item .label {
   height: 29px;
@@ -31,7 +34,4 @@
   font-style: normal;
   font-weight: 500;
   line-height: 28.5px; /* 190% */
-}
-.gnb-tabs-item:hover {
-  cursor: pointer;
 }/*# sourceMappingURL=gnb.styles.css.map */

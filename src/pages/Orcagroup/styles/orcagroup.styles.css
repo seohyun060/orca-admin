@@ -38,6 +38,7 @@
 }
 .orcagroup-head button:hover {
   cursor: pointer;
+  background: #093f71;
 }
 .orcagroup-body {
   display: flex;
@@ -96,4 +97,8 @@
 }
 .orcagroup-body .list img {
   margin-left: 21px;
+}
+.orcagroup-body .list img:hover {
+  content: url("/public/assets/images/trash-r.svg");
+  cursor: pointer;
 }/*# sourceMappingURL=orcagroup.styles.css.map */
