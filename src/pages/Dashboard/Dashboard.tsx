@@ -4,6 +4,7 @@ import './styles/dashboard.styles.css';
 import { StatisticsList } from '@typedef/types';
 import Analytics from './components/Analytics';
 import Chart from './components/Chart';
+
 type Props = {
 	statisticsList: StatisticsList | undefined;
 	downloadStatisticsAsExcel: () => void;
@@ -34,7 +35,7 @@ const Dashboard = ({ statisticsList, downloadStatisticsAsExcel }: Props) => {
 			</div>
 			<div className='dashboard-analystic'>
 				{/* <Analytics /> */}
-				<Chart />
+				{/* <Chart /> */}
 			</div>
 			<div className='dashboard-statistic'>
 				<div className='dashboard-statistic-head'>
