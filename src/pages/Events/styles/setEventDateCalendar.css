@@ -6,6 +6,16 @@
 .SetEventDateCalendar .react-calendar {
   height: 330px;
 }
+.SetEventDateCalendar .react-calendar__navigation__label {
+  font-size: 20px;
+}
+.SetEventDateCalendar .react-calendar__tile {
+  font-size: 20px;
+}
+.SetEventDateCalendar .react-calendar__month-view__weekdays__weekday {
+  font-size: 20px;
+  padding: 5px;
+}
 .SetEventDateCalendar .react-calendar__year-view__months__month {
   padding: 25px;
 }

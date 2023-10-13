@@ -5,7 +5,11 @@ import EventCard from "./EventCard";
 
 import images from "src/assets/images";
 
-const EventsDashboard = () => {
+const EventsDashboard = (props) => {
+  const { eventData, setIsFormOpen } = props;
+
+  const [monthData, setMonthData] = useState([]);
+
   const [currentEventSlide, setCurrentEventSlide] = useState(0);
   const [eventSlideMoving, setEventSlideMoving] = useState(0);
   const eventSlideRef = useRef();
@@ -13,6 +17,18 @@ const EventsDashboard = () => {
   const totalSides = 2; // 추후 갯수만큼 불러오기 upper(event/6)
 
   const cardSize = 810 + 30;
+
+  const onEventDataChange = (targetMonth) => {
+    setMonthData(
+      eventData.data.filter((data) => {
+        const startMonth = new Date(data.eventDate.startDate).getMonth();
+        const endMonth = new Date(data.eventDate.endDate).getMonth();
+        if (startMonth == targetMonth || endMonth == targetMonth) {
+          return true;
+        }
+      })
+    );
+  };
 
   const onBackButtonClick = () => {
     if (currentEventSlide <= 0) {
@@ -56,6 +72,7 @@ const EventsDashboard = () => {
 
   useEffect(() => {
     eventSlideRef.current.style.transition = "transform 0.4s ease-in-out";
+    onEventDataChange(new Date().getMonth());
   }, []);
 
   useEffect(() => {
@@ -65,19 +82,22 @@ const EventsDashboard = () => {
   return (
     <article className="EventsDashboard">
       <div className="EventsCalendar">
-        <EventCalendar />
+        <EventCalendar
+          eventData={eventData}
+          onEventDataChange={onEventDataChange}
+        />
       </div>
       <div className="EventsList">
         {/* <img src={images.previous} onClick={onBackButtonClick}></img> */}
         <div className="CarouselProgress">
           <div className="EventsCarousel">
             <div className="EventsSlide" ref={eventSlideRef}>
-              <EventCard />
-              <EventCard />
-              <EventCard />
-              <EventCard />
-              <EventCard />
-              <EventCard />
+              {monthData.map((data) => (
+                <EventCard
+                  data={data}
+                  setIsFormOpen={setIsFormOpen}
+                />
+              ))}
             </div>
           </div>
           {/* <div className="dotbar">{dotBar}</div> */}
