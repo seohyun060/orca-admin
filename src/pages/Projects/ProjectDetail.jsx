@@ -124,6 +124,46 @@ const ProjectDetail = () => {
     link: "",
   };
 
+  const formData = new FormData();
+
+  const postProjectForm = async() => {
+    // formData.append("projectId", "testpid");
+    // formData.append("status", "ACTIVE");
+    // formData.append("projectTitle", "ProjectTestDataTitle1");
+    // formData.append("startDate", "2023-10-16");
+    // formData.append("completeDate", "2023-10-17");
+    // formData.append("enrollment", "2000");
+    // formData.append("studyType", "CADAI_B");
+    // formData.append("otherStudyId", null);
+    // formData.append("overview", null);
+    // formData.append("officialTitle", null);
+    // formData.append("conditions", "Myocardial");
+    // formData.append("name", null);
+    // formData.append("phoneNumber", null);
+    // formData.append("email", null);
+    // formData.append("location", null);
+    // formData.append("inclusionCriteria", null);
+    // formData.append("exclusionCriteria", null);
+    // formData.append("ageEligible", null);
+    // formData.append("sexEligible", "ALL");
+    // formData.append("acceptedHealthy", "YES");
+    // formData.append("samplingMethod", null);
+    // formData.append("observationalModel", null);
+    // formData.append("timePerspective", null);
+    // formData.append("interventionTreatment", null);
+    // formData.append("primaryOutcome", null);
+    // formData.append("secondaryOutcome", null);
+    // formData.append("pi", null);
+    // formData.append("collaborators", null);
+    // formData.append("publications", null);
+
+
+    fetch("/api/projects", {
+      method: "GET",
+      // body: formData,
+    }).then((res) => res.json().then((data) => console.log("data", data)));
+  };
+
   useEffect(() => {
     setPublicationNumber(ProjectDummy.length);
     initStatus();
@@ -141,7 +181,9 @@ const ProjectDetail = () => {
           <div className="ProjectDetailPageTitle">
             프로젝트 상세 페이지 추가/편집
           </div>
-          <button className="SaveButton">적용</button>
+          <button className="SaveButton" onClick={postProjectForm}>
+            적용
+          </button>
         </div>
 
         <div className="ProjectDetailButtonSet Status">
