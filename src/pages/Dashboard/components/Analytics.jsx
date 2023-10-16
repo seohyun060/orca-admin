@@ -161,51 +161,49 @@ const Analytics = () => {
 	function displayResults(response) {
 		var formattedJson = JSON.stringify(response.result, null, 2);
 		document.getElementById('query-output').value = formattedJson;
+		console.log(formattedJson);
 	}
 
 	useEffect(() => {
-		//queryReports();
-		// const handleClientLoad = () => {
-		// 	gapi.load('client:auth2', {
-		// 		callback: () => {
-		// 			gapi.client
-		// 				.init({
-		// 					apiKey: 'AIzaSyAzzskOnh6nNx5hrfsvFw655yRpMM4umrk', // Replace with your API key
-		// 					discoveryDocs: DISCOVERY_DOCS,
-		// 					clientId: CLIENT_ID,
-		// 					scope: SCOPES.join(' '),
-		// 				})
-		// 				.then(() => {
-		// 					// Now you can use gapi.client and make API calls
-		// 					// Query the API
-		// 					queryReports();
-		// 				});
-		// 		},
-		// 		onerror: () => {
-		// 			// Handle errors
-		// 		},
-		// 		timeout: 10000, // 10 seconds
-		// 		ontimeout: () => {
-		// 			// Handle timeouts
-		// 		},
-		// 	});
-		// };
-		// // Load the Google API client library
-		// const script = document.createElement('script');
-		// script.src = 'https://apis.google.com/js/api.js';
-		// script.onload = handleClientLoad;
-		// document.body.appendChild(script);
-		// // Clean up on component unmount
-		// return () => {
-		// 	document.body.removeChild(script);
-		// };
+		const handleClientLoad = () => {
+			gapi.load('client:auth2', {
+				callback: () => {
+					gapi.client
+						.init({
+							apiKey: 'AIzaSyAzzskOnh6nNx5hrfsvFw655yRpMM4umrk', // Replace with your API key
+							discoveryDocs: DISCOVERY_DOCS,
+							clientId: CLIENT_ID,
+							scope: SCOPES.join(' '),
+						})
+						.then(() => {
+							// Now you can use gapi.client and make API calls
+							// Query the API
+							queryReports();
+						});
+				},
+				onerror: () => {
+					// Handle errors
+				},
+				timeout: 10000, // 10 seconds
+				ontimeout: () => {
+					// Handle timeouts
+				},
+			});
+		};
+		// Load the Google API client library
+		const script = document.createElement('script');
+		script.src = 'https://apis.google.com/js/api.js';
+		script.onload = handleClientLoad;
+		document.body.appendChild(script);
+		// Clean up on component unmount
+		return () => {
+			document.body.removeChild(script);
+		};
 	}, []);
 
 	return (
 		<div>
-			{/* <button id='auth-button' hidden>
-				Authorize
-			</button> */}
+			{/* <button id='auth-button'>Authorize</button> */}
 			<button
 				id='auth-button'
 				onClick={() => {
@@ -216,6 +214,13 @@ const Analytics = () => {
 			</button>
 			<h1>Hello Analytics Reporting API V4</h1>
 			<p className='g-signin2' data-onsuccess='queryReports'></p>
+			<button
+				onClick={() => {
+					queryReports();
+				}}
+			>
+				sign in button
+			</button>
 			<textarea cols='80' rows='20' id='query-output'></textarea>
 		</div>
 	);

@@ -2,7 +2,9 @@ import { error } from 'console';
 import { gapi } from 'gapi-script';
 import { GApiProvider } from 'react-gapi-auth2';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 const Chart = () => {
+	const API_KEY = 'AIzaSyCSO-S1bl4nZzn62EWbpdkfLdte8u2lsbU';
 	var VIEW_ID = '6275024029';
 	var CLIENT_ID =
 		'342186072976-ea0uvmocruc0pgrpn591r0ibhr8s0en8.apps.googleusercontent.com';
@@ -18,12 +20,66 @@ const Chart = () => {
 
 	const [data, setData] = useState([]);
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [analyticsData, setAnalyticsData] = useState(null);
+	// useEffect(() => {
+	// 	gapi.load('client:auth2', initGapi);
 
-	useEffect(() => {
-		gapi.load('client:auth2', initGapi);
+	// 	return () => {};
+	// }, []);
 
-		return () => {};
-	}, []);
+	const fetchDataFromAnalytics = async () => {
+		const startDate = '2023-09-01';
+		const endDate = '2023-09-30';
+		const apiUrl = `https://analyticsdata.googleapis.com/v1alpha:runReport`;
+
+		const requestBody = {
+			property: `properties/-/googleAnalyticsData`,
+			resource: {
+				dateRanges: [
+					{
+						startDate,
+						endDate,
+					},
+				],
+				dimensions: [{ name: 'date' }],
+				metrics: [{ name: 'activeUsers' }, { name: 'sessions' }],
+				dimensionFilter: {
+					filter: {
+						fieldName: 'date',
+						stringFilter: { matchType: 'EXACT', value: '2023-09-10' }, // Sample date
+					},
+				},
+				keepEmptyRows: true,
+			},
+		};
+
+		try {
+			const response = await axios.post(apiUrl, requestBody, {
+				headers: {
+					Authorization: `Bearer ${API_KEY}`,
+					'Content-Type': 'application/json',
+				},
+			});
+
+			return response.data;
+		} catch (error) {
+			console.error('Error fetching data from Analytics API:', error);
+			throw error;
+		}
+	};
+	// useEffect(() => {
+	// 	const fetchAnalyticsData = async () => {
+	// 		try {
+	// 			const data = await fetchDataFromAnalytics();
+	// 			setAnalyticsData(data);
+	// 		} catch (error) {
+	// 			console.error('Error fetching analytics data:', error);
+	// 		}
+	// 	};
+
+	// 	fetchAnalyticsData();
+	// }, []);
+
 	const clientConfig = {
 		apiKey: 'AIzaSyCSO-S1bl4nZzn62EWbpdkfLdte8u2lsbU',
 		discoveryDocs: DISCOVERY_DOCS,
@@ -52,6 +108,7 @@ const Chart = () => {
 	};
 
 	const handleLogin = () => {
+		initGapi();
 		gapi.load('client:auth2', () => {
 			gapi.auth2
 				.getAuthInstance()
@@ -128,22 +185,23 @@ const Chart = () => {
 
 	return (
 		<div>
-			<GApiProvider clientConfig={clientConfig}>
-				<button
-					onClick={() => {
-						handleLogin();
-					}}
-				>
-					login
-				</button>
-				<button
-					onClick={() => {
-						handleFetchData();
-					}}
-				>
-					fetch
-				</button>
-			</GApiProvider>
+			{/* {analyticsData && <pre>{JSON.stringify(analyticsData, null, 2)}</pre>} */}
+			{/* <GApiProvider clientConfig={clientConfig}> */}
+			<button
+				onClick={() => {
+					handleLogin();
+				}}
+			>
+				login
+			</button>
+			<button
+				onClick={() => {
+					handleFetchData();
+				}}
+			>
+				fetch
+			</button>
+			{/* </GApiProvider> */}
 		</div>
 	);
 };

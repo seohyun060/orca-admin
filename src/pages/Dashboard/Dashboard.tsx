@@ -35,7 +35,7 @@ const Dashboard = ({ statisticsList, downloadStatisticsAsExcel }: Props) => {
 			</div>
 			<div className='dashboard-analystic'>
 				{/* <Analytics /> */}
-				{/* <Chart /> */}
+				<Chart />
 			</div>
 			<div className='dashboard-statistic'>
 				<div className='dashboard-statistic-head'>
