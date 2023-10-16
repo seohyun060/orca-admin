@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { gapi } from 'gapi-script';
+// import ReactGA from 'react-ga4';
 //import '../components/AnalyticsScript'; // Load the script
 
 const Analytics = () => {
@@ -165,40 +166,44 @@ const Analytics = () => {
 	}
 
 	useEffect(() => {
-		const handleClientLoad = () => {
-			gapi.load('client:auth2', {
-				callback: () => {
-					gapi.client
-						.init({
-							apiKey: 'AIzaSyAzzskOnh6nNx5hrfsvFw655yRpMM4umrk', // Replace with your API key
-							discoveryDocs: DISCOVERY_DOCS,
-							clientId: CLIENT_ID,
-							scope: SCOPES.join(' '),
-						})
-						.then(() => {
-							// Now you can use gapi.client and make API calls
-							// Query the API
-							queryReports();
-						});
-				},
-				onerror: () => {
-					// Handle errors
-				},
-				timeout: 10000, // 10 seconds
-				ontimeout: () => {
-					// Handle timeouts
-				},
-			});
-		};
+		// ReactGA.initialize(
+		// 	'342186072976-ea0uvmocruc0pgrpn591r0ibhr8s0en8.apps.googleusercontent.com',
+		// );
+		// console.log('a');
+		// const handleClientLoad = () => {
+		// 	gapi.load('client:auth2', {
+		// 		callback: () => {
+		// 			gapi.client
+		// 				.init({
+		// 					apiKey: 'AIzaSyAzzskOnh6nNx5hrfsvFw655yRpMM4umrk', // Replace with your API key
+		// 					discoveryDocs: DISCOVERY_DOCS,
+		// 					clientId: CLIENT_ID,
+		// 					scope: SCOPES.join(' '),
+		// 				})
+		// 				.then(() => {
+		// 					// Now you can use gapi.client and make API calls
+		// 					// Query the API
+		// 					queryReports();
+		// 				});
+		// 		},
+		// 		onerror: () => {
+		// 			// Handle errors
+		// 		},
+		// 		timeout: 10000, // 10 seconds
+		// 		ontimeout: () => {
+		// 			// Handle timeouts
+		// 		},
+		// 	});
+		// };
 		// Load the Google API client library
-		const script = document.createElement('script');
-		script.src = 'https://apis.google.com/js/api.js';
-		script.onload = handleClientLoad;
-		document.body.appendChild(script);
-		// Clean up on component unmount
-		return () => {
-			document.body.removeChild(script);
-		};
+		// const script = document.createElement('script');
+		// script.src = 'https://apis.google.com/js/api.js';
+		// script.onload = handleClientLoad;
+		// document.body.appendChild(script);
+		// // Clean up on component unmount
+		// return () => {
+		// 	document.body.removeChild(script);
+		// };
 	}, []);
 
 	return (

@@ -11,11 +11,11 @@ import '../styles/core.css';
 const store = createStore(rootReducer, composeWithDevTools());
 
 function App() {
-  return (
-    <Provider store={store}>
-      <RootNavigationContainer />
-    </Provider>
-  );
+	return (
+		<Provider store={store}>
+			<RootNavigationContainer />
+		</Provider>
+	);
 }
 
 export default App;
