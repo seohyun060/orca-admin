@@ -129,7 +129,12 @@
     margin-right: 21px;
   }
 
-  img {
+  > img {
+    width: 50px;
+    height: 50px;
+    &:hover {
+      content: url("../../../../public/assets/images/removeform_hover.svg");
+    }
   }
 }
 
@@ -191,8 +196,16 @@
   font-style: normal;
   font-weight: 300;
   line-height: 37px;
-  &div {
+  .clickLayout {
+    display: flex;
+    align-items: center;
     height: 37px;
+    img {
+      width: 25px;
+      height: 24px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
 }
 
@@ -206,7 +219,8 @@
   font-weight: 300;
   line-height: 28px;
   margin-left: 620px;
-  input, img {
+  input,
+  img {
     width: 31px;
     height: 31px;
     margin-right: 12px;
@@ -215,7 +229,7 @@
 
 .EventPeriodDetail {
   width: 1496px;
-  height: 300px;
+  height: fit-content;
   flex-shrink: 0;
   border: 1px solid var(--Dark-gray, #3c3c3c);
   padding: 30px 44px;
@@ -235,21 +249,23 @@
 
   input {
     width: 910px;
-    height: 31px;
+    height: 50px;
     flex-shrink: 0;
     border: 1px solid #000;
     margin-bottom: 20px;
     padding: 5px 19px 6px 19px;
+
+    font-size: 22px;
+    font-weight: 400;
   }
 
   .EventLinkInput {
     display: flex;
     align-items: center;
     width: 910px;
-    height: 31px;
+    height: 50px;
     flex-shrink: 0;
     border: 1px solid #000;
-    margin-bottom: 20px;
 
     input {
       width: 92%;
@@ -296,6 +312,16 @@
     font-weight: 400;
     line-height: 28px;
     margin-bottom: 50px;
+  }
+
+  > div:last-child {
+    > img {
+      width: 50px;
+      height: 50px;
+      &:hover {
+        content: url("../../../../public/assets/images/addform_hover.svg");
+      }
+    }
   }
 }
 
@@ -350,6 +376,16 @@
     line-height: 28px;
     margin-bottom: 12px;
   }
+
+  > div:last-child {
+    > img {
+      width: 50px;
+      height: 50px;
+      &:hover {
+        content: url("../../../../public/assets/images/addform_hover.svg");
+      }
+    }
+  }
 }
 
 // EventCard
@@ -367,6 +403,10 @@
   background: #fff;
   margin-right: 30px;
   margin-bottom: 10px;
+  &:hover {
+    background: var(--Light-gray, #f0f0f0);
+    cursor: pointer;
+  }
 }
 
 .EventCardTitle {

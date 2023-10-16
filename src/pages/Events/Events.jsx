@@ -11,11 +11,16 @@ import SetEventDateCalendar from "./components/SetEventDateCalendar";
 import "./styles/events.css";
 import images from "src/assets/images";
 
+import EventDummyData from "./EventDummyData.json";
+
 const Events = () => {
   const today = moment().format("YYYY-MM-DD");
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isPast, setIsPast] = useState(true);
+
+  // Form Data
+  const [articleTitle, setArticleTitle] = useState();
   const [isStartDateClick, setIsStartDateClick] = useState(false);
   const [eventStartDate, setEventStartDate] = useState(today);
   const [isEndDateClick, setIsEndDateClick] = useState(false);
@@ -26,6 +31,9 @@ const Events = () => {
   const [eventGalleryImg, setEventGalleryImg] = useState([
     { id: 1, file: null },
   ]);
+
+  console.log(EventDummyData);
+  console.log("index:", isFormOpen);
 
   const uploadMainHandler = (event) => {
     const file = event.target.files?.[0];
@@ -82,7 +90,21 @@ const Events = () => {
     );
   };
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (isFormOpen) {
+      setArticleTitle(EventDummyData.data[isFormOpen - 1].title);
+      setEventStartDate(
+        moment(EventDummyData.data[isFormOpen - 1].eventDate.startDate).format(
+          "YYYY-MM-DD"
+        )
+      );
+      setEventEndDate(
+        moment(EventDummyData.data[isFormOpen - 1].eventDate.endDate).format(
+          "YYYY-MM-DD"
+        )
+      );
+    }
+  }, [isFormOpen]);
 
   return (
     <div className="Layout">
@@ -98,7 +120,10 @@ const Events = () => {
           </button>
         )}
       </div>
-      <EventsDashboard />
+      <EventsDashboard
+        eventData={EventDummyData}
+        setIsFormOpen={setIsFormOpen}
+      />
       {isFormOpen ? (
         <div className="EventInputLayout">
           <div className="EventInputLayoutUpperBar">
@@ -138,13 +163,22 @@ const Events = () => {
           </label>
           <div className="EventTitleInput">
             <div className="ArticleTitle">이벤트 제목</div>
-            <textarea className="ArticleInputArea" />
+            <textarea
+              className="ArticleInputArea"
+              placeholder="Text"
+              value={articleTitle}
+              onChange={(e) => setArticleTitle(e.target.value)}
+            />
           </div>
           <div className="EventPeriodInput">
             <div className="ArticleTitle">이벤트 날짜</div>
             <div className="EventPeriodSetting">
               <div className="EventStartDate">
-                <div onClick={() => setIsStartDateClick(!isStartDateClick)}>
+                <div
+                  className="clickLayout"
+                  onClick={() => setIsStartDateClick(!isStartDateClick)}
+                >
+                  <img src={images.smallcalendar} />
                   시작날짜: {eventStartDate}
                 </div>
                 {isStartDateClick ? (
@@ -158,7 +192,11 @@ const Events = () => {
                 )}
               </div>
               <div className="EventEndDate">
-                <div onClick={() => setIsEndDateClick(!isEndDateClick)}>
+                <div
+                  className="clickLayout"
+                  onClick={() => setIsEndDateClick(!isEndDateClick)}
+                >
+                  <img src={images.smallcalendar} />
                   종료날짜: {eventEndDate}
                 </div>
                 {isEndDateClick ? (
@@ -172,9 +210,6 @@ const Events = () => {
                 )}
               </div>
               <div className="EventDateAllday">
-                {/* <button>
-                <img src={images.checkbox} />
-              </button> */}
                 {!isAlldayChecked ? (
                   <input
                     type="checkbox"
@@ -196,13 +231,19 @@ const Events = () => {
                 <div className="title">Venue</div>
                 <input />
               </div>
-              <div className="EventPeriodDetailElement">
-                <div className="title">Opening Hours</div>
-                <div className="EventPeriodDetailTime">
-                  <input placeholder="Hour" />
-                  <input placeholder="Minute" />
+
+              {!isAlldayChecked ? (
+                <div className="EventPeriodDetailElement">
+                  <div className="title">Opening Hours</div>
+                  <div className="EventPeriodDetailTime">
+                    <input placeholder="Hour" />
+                    <input placeholder="Minute" />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <></>
+              )}
+
               <div className="EventPeriodDetailElement">
                 <div className="title">Related Website</div>
                 <div className="EventLinkInput">
@@ -242,8 +283,8 @@ const Events = () => {
                 </label>
                 {input.id !== eventDetailImg[eventDetailImg.length - 1].id ? (
                   <img
-                    src={images.addform}
-                    onClick={() => removeDetailButtonClick(input.id)}
+                    src={images.removeform}
+                    onClick={() => removeDetailButtonClick(input.id)}F
                   />
                 ) : (
                   <img
@@ -273,7 +314,8 @@ const Events = () => {
                       )}
                     </div>
                     <input
-                      type="file"sc
+                      type="file"
+                      sc
                       id="mainInput"
                       onChange={(e) => uploadGalleryHandler(input.id, e)}
                       style={{ display: "none" }}
@@ -282,7 +324,7 @@ const Events = () => {
                   {input.id !==
                   eventGalleryImg[eventGalleryImg.length - 1].id ? (
                     <img
-                      src={images.addform}
+                      src={images.removeform}
                       onClick={() => removeGalleryButtonClick(input.id)}
                     />
                   ) : (
