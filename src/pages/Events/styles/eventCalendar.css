@@ -27,6 +27,7 @@
 }
 .EventCalendar .react-calendar__month-view__days__day:hover {
   background: none;
+  cursor: default !important;
 }
 .EventCalendar .react-calendar__month-view__days__day:focus {
   background: none;
@@ -77,7 +78,7 @@
   background: none;
   color: inherit;
 }
-.EventCalendar .react-calendar__tile--active :first-child {
+.EventCalendar .react-calendar__tile--active abbr {
   display: flex;
   align-items: center;
   justify-content: center;

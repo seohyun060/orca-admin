@@ -117,13 +117,12 @@
   flex-shrink: 0;
   margin-right: 21px;
 }
-.EventImageSetimg {
+.EventImageSet > img {
   width: 50px;
   height: 50px;
-  background-image: url("../../../../public/assets/images/addform.svg");
 }
-.EventImageSetimg:hover {
-  background-image: url("../../../../public/assets/images/trash.svg");
+.EventImageSet > img:hover {
+  content: url("../../../../public/assets/images/removeform_hover.svg");
 }
 
 .EventImageInput {
@@ -183,9 +182,18 @@
   font-weight: 300;
   line-height: 37px;
 }
-.EventStartDatediv,
-.EventEndDatediv {
+.EventStartDate .clickLayout,
+.EventEndDate .clickLayout {
+  display: flex;
+  align-items: center;
   height: 37px;
+}
+.EventStartDate .clickLayout img,
+.EventEndDate .clickLayout img {
+  width: 25px;
+  height: 24px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .EventDateAllday {
@@ -208,7 +216,8 @@
 
 .EventPeriodDetail {
   width: 1496px;
-  height: 300px;
+  height: -moz-fit-content;
+  height: fit-content;
   flex-shrink: 0;
   border: 1px solid var(--Dark-gray, #3c3c3c);
   padding: 30px 44px;
@@ -226,20 +235,21 @@
 }
 .EventPeriodDetailElement input {
   width: 910px;
-  height: 31px;
+  height: 50px;
   flex-shrink: 0;
   border: 1px solid #000;
   margin-bottom: 20px;
   padding: 5px 19px 6px 19px;
+  font-size: 22px;
+  font-weight: 400;
 }
 .EventPeriodDetailElement .EventLinkInput {
   display: flex;
   align-items: center;
   width: 910px;
-  height: 31px;
+  height: 50px;
   flex-shrink: 0;
   border: 1px solid #000;
-  margin-bottom: 20px;
 }
 .EventPeriodDetailElement .EventLinkInput input {
   width: 92%;
@@ -283,6 +293,15 @@
   line-height: 28px;
   margin-bottom: 50px;
 }
+.EventPurposeInput > div:last-child > img,
+.EventExplanationsInput > div:last-child > img {
+  width: 50px;
+  height: 50px;
+}
+.EventPurposeInput > div:last-child > img:hover,
+.EventExplanationsInput > div:last-child > img:hover {
+  content: url("../../../../public/assets/images/addform_hover.svg");
+}
 
 .EventLocationSearch {
   display: flex;
@@ -320,6 +339,13 @@
   font-weight: 600;
   line-height: 28px;
   margin-bottom: 12px;
+}
+.EventGalleryInput > div:last-child > img {
+  width: 50px;
+  height: 50px;
+}
+.EventGalleryInput > div:last-child > img:hover {
+  content: url("../../../../public/assets/images/addform_hover.svg");
 }
 
 .EventCardLayout {

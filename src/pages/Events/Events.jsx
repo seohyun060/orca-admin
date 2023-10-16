@@ -93,8 +93,16 @@ const Events = () => {
   useEffect(() => {
     if (isFormOpen) {
       setArticleTitle(EventDummyData.data[isFormOpen - 1].title);
-      setEventStartDate(moment(EventDummyData.data[isFormOpen - 1].eventDate.startDate).format("YYYY-MM-DD"));
-      setEventEndDate(moment(EventDummyData.data[isFormOpen - 1].eventDate.endDate).format("YYYY-MM-DD"));
+      setEventStartDate(
+        moment(EventDummyData.data[isFormOpen - 1].eventDate.startDate).format(
+          "YYYY-MM-DD"
+        )
+      );
+      setEventEndDate(
+        moment(EventDummyData.data[isFormOpen - 1].eventDate.endDate).format(
+          "YYYY-MM-DD"
+        )
+      );
     }
   }, [isFormOpen]);
 
@@ -166,7 +174,11 @@ const Events = () => {
             <div className="ArticleTitle">이벤트 날짜</div>
             <div className="EventPeriodSetting">
               <div className="EventStartDate">
-                <div onClick={() => setIsStartDateClick(!isStartDateClick)}>
+                <div
+                  className="clickLayout"
+                  onClick={() => setIsStartDateClick(!isStartDateClick)}
+                >
+                  <img src={images.smallcalendar} />
                   시작날짜: {eventStartDate}
                 </div>
                 {isStartDateClick ? (
@@ -180,7 +192,11 @@ const Events = () => {
                 )}
               </div>
               <div className="EventEndDate">
-                <div onClick={() => setIsEndDateClick(!isEndDateClick)}>
+                <div
+                  className="clickLayout"
+                  onClick={() => setIsEndDateClick(!isEndDateClick)}
+                >
+                  <img src={images.smallcalendar} />
                   종료날짜: {eventEndDate}
                 </div>
                 {isEndDateClick ? (
@@ -194,9 +210,6 @@ const Events = () => {
                 )}
               </div>
               <div className="EventDateAllday">
-                {/* <button>
-                <img src={images.checkbox} />
-              </button> */}
                 {!isAlldayChecked ? (
                   <input
                     type="checkbox"
@@ -218,13 +231,19 @@ const Events = () => {
                 <div className="title">Venue</div>
                 <input />
               </div>
-              <div className="EventPeriodDetailElement">
-                <div className="title">Opening Hours</div>
-                <div className="EventPeriodDetailTime">
-                  <input placeholder="Hour" />
-                  <input placeholder="Minute" />
+
+              {!isAlldayChecked ? (
+                <div className="EventPeriodDetailElement">
+                  <div className="title">Opening Hours</div>
+                  <div className="EventPeriodDetailTime">
+                    <input placeholder="Hour" />
+                    <input placeholder="Minute" />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <></>
+              )}
+
               <div className="EventPeriodDetailElement">
                 <div className="title">Related Website</div>
                 <div className="EventLinkInput">
@@ -264,8 +283,8 @@ const Events = () => {
                 </label>
                 {input.id !== eventDetailImg[eventDetailImg.length - 1].id ? (
                   <img
-                    // src={images.removeform}
-                    onClick={() => removeDetailButtonClick(input.id)}
+                    src={images.removeform}
+                    onClick={() => removeDetailButtonClick(input.id)}F
                   />
                 ) : (
                   <img
@@ -305,7 +324,7 @@ const Events = () => {
                   {input.id !==
                   eventGalleryImg[eventGalleryImg.length - 1].id ? (
                     <img
-                      src={images.addform}
+                      src={images.removeform}
                       onClick={() => removeGalleryButtonClick(input.id)}
                     />
                   ) : (

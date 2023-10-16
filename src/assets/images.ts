@@ -3,7 +3,9 @@ const images = {
 	link: '/assets/images/link.svg',
 	backwithletter: '/assets/images/backwithletter.svg',
 	addform: '/assets/images/addform.svg',
+	addform_hover: '/assets/images/addform_hover.svg',
 	removeform: '/assets/images/removeform.svg',
+	removeform_hover: '/assets/images/removeform_hover.svg',
 	paging_dot_dark: '/assets/images/paging_dot_dark.svg',
 	paging_dot_medium: '/assets/images/paging_dot_medium.svg',
 	search: '/assets/images/search.svg',
@@ -25,7 +27,8 @@ const images = {
 	next: '/assets/images/next.svg',
 	previous: '/assets/images/previous.svg',
 	reload: '/assets/images/reload.svg',
-	checkbox: '/assets/images/checkbox.svg'
+	checkbox: '/assets/images/checkbox.svg',
+	smallcalendar: '/assets/images/smallcalendar.svg',
 };
 
 export default images;

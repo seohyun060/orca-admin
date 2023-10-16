@@ -33,6 +33,7 @@
     padding: 7px;
     &:hover {
       background: none;
+      cursor: default !important;
     }
     &:focus {
       background: none;
@@ -110,7 +111,7 @@
   .react-calendar__tile--active {
     background: none;
     color: inherit;
-    :first-child {
+    abbr {
       display:flex;
       align-items: center;
       justify-content: center;
