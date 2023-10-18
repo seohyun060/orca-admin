@@ -31,7 +31,13 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 	const onAddClicked = useCallback(() => {
 		setPdfListEdit((prevList) => [...prevList, '']);
 	}, [pdfListEdit]);
-
+	const onSubClicked = (index: number) => {
+		setPdfListEdit((prevList) => {
+			// 배열에서 index 위치의 요소를 제외한 새 배열 생성
+			const updatedList = prevList.filter((item, i) => i !== index);
+			return updatedList;
+		});
+	};
 	const uploadPdfHandler = useCallback(
 		(event: ChangeEvent<HTMLInputElement>, index: number) => {
 			const file = event.target.files?.[0];
@@ -114,6 +120,7 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 			selectedType={selectedType}
 			onApplyClicked={onApplyClicked}
 			edit={edit}
+			onSubClicked={onSubClicked}
 		/>
 	);
 };

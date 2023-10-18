@@ -20,6 +20,7 @@ type Props = {
 	selectedType: string;
 	onApplyClicked: OnApplyInsight;
 	edit: boolean;
+	onSubClicked: (index: number) => void;
 };
 
 const InsightInfo = ({
@@ -36,6 +37,7 @@ const InsightInfo = ({
 	selectedType,
 	onApplyClicked,
 	edit,
+	onSubClicked,
 }: Props) => {
 	const insightTypes: string[] = [
 		'White paper',
@@ -105,56 +107,44 @@ const InsightInfo = ({
 						<img className='add' src={images.add} onClick={onAddClicked}></img>
 					</div>
 				) : (
-					pdfListEdit.map((pdf, index) => {
-						if (index === pdfListEdit.length - 1) {
-							return (
-								<div key={index} className='lastitem'>
-									<div className='box'>
-										<label htmlFor={`mainInput-${index}`}>
-											<img src={images.download} alt='Upload' />
-											<div className='text'>Upload PDF</div>
+					pdfListEdit.map((pdf, index) => (
+						<div key={index} className='lastitem'>
+							<div className='box'>
+								<label htmlFor={`mainInput-${index}`}>
+									<img src={images.download} alt='Upload' />
+									<div className='text'>Upload PDF</div>
 
-											<p>{pdf}</p>
+									<p>{pdf}</p>
 
-											<input
-												type='file'
-												id={`mainInput-${index}`}
-												onChange={(e) => {
-													uploadPdfHandler(e, index);
-												}}
-												style={{ display: 'none' }}
-											/>
-										</label>
-									</div>
-									<img
-										className='add'
-										src={images.add}
-										onClick={onAddClicked}
-									></img>
-								</div>
-							);
-						} else {
-							return (
-								<div key={index} className='box'>
-									<label htmlFor='mainInput'>
-										<img src={images.download} alt='Upload' />
-										<div className='text'>Upload PDF</div>
-
-										<p>{pdf}</p>
-
-										<input
-											type='file'
-											id='mainInput'
-											onChange={(e) => {
-												uploadPdfHandler(e, index);
-											}}
-											style={{ display: 'none' }}
-										/>
-									</label>
-								</div>
-							);
-						}
-					})
+									<input
+										type='file'
+										id={`mainInput-${index}`}
+										onChange={(e) => {
+											uploadPdfHandler(e, index);
+										}}
+										style={{ display: 'none' }}
+									/>
+								</label>
+							</div>
+							{index === pdfListEdit.length - 1 ? (
+								<img
+									className='add'
+									src={images.add}
+									onClick={() => {
+										onAddClicked();
+									}}
+								></img>
+							) : (
+								<img
+									className='sub'
+									src={images.sub}
+									onClick={() => {
+										onSubClicked(index);
+									}}
+								></img>
+							)}
+						</div>
+					))
 				)}
 			</div>
 			<div className='insightinfo-text'>
