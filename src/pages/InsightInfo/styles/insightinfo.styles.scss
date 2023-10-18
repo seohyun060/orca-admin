@@ -139,7 +139,7 @@
 		height: fit-content;
 
 		margin: auto;
-		margin-top: 56px;
+		margin-top: 46px;
 		.box {
 			display: flex;
 			flex-direction: row;
@@ -192,6 +192,7 @@
 			align-items: center;
 			position: relative;
 			width: 1496px;
+			margin-top: 10px;
 			//height: 54px;
 			.box {
 				position: relative;
@@ -237,8 +238,18 @@
 				}
 			}
 			.add {
-				height: 54px;
+				height: 50px;
 				margin-left: 16px;
+			}
+			.add:hover {
+				content: url('/public/assets/images/add-h.svg');
+				cursor: pointer;
+			}
+			.sub {
+				@extend .add;
+			}
+			.sub:hover {
+				content: url('/public/assets/images/sub-h.svg');
 			}
 		}
 	}
@@ -539,10 +550,6 @@
 					img {
 						margin-left: 19px;
 					}
-				}
-				.add {
-					height: 54px;
-					margin-left: 16px;
 				}
 			}
 		}

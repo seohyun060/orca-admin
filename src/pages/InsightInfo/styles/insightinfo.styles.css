@@ -131,7 +131,7 @@
   height: -moz-fit-content;
   height: fit-content;
   margin: auto;
-  margin-top: 56px;
+  margin-top: 46px;
 }
 .insightinfo-pdf .box {
   display: flex;
@@ -181,6 +181,7 @@
   align-items: center;
   position: relative;
   width: 1496px;
+  margin-top: 10px;
 }
 .insightinfo-pdf .lastitem .box {
   position: relative;
@@ -221,9 +222,16 @@
 .insightinfo-pdf .lastitem .box img {
   margin-left: 19px;
 }
-.insightinfo-pdf .lastitem .add {
-  height: 54px;
+.insightinfo-pdf .lastitem .add, .insightinfo-pdf .lastitem .sub {
+  height: 50px;
   margin-left: 16px;
+}
+.insightinfo-pdf .lastitem .add:hover, .insightinfo-pdf .lastitem .sub:hover {
+  content: url("/public/assets/images/add-h.svg");
+  cursor: pointer;
+}
+.insightinfo-pdf .lastitem .sub:hover {
+  content: url("/public/assets/images/sub-h.svg");
 }
 .insightinfo-text {
   display: flex;
@@ -505,10 +513,6 @@
   }
   .insightinfo-pdf .lastitem .box img {
     margin-left: 19px;
-  }
-  .insightinfo-pdf .lastitem .add {
-    height: 54px;
-    margin-left: 16px;
   }
   .insightinfo-text {
     display: flex;
