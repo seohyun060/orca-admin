@@ -17,7 +17,7 @@ import {
 	Route,
 	Routes,
 } from 'react-router-dom';
-import { ResearcherList } from '@typedef/types';
+import { ResearcherList, Researchers } from '@typedef/types';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import './styles/rootnavigation.style.css';
 import { Insights } from '@typedef/types';
@@ -52,7 +52,7 @@ const RootNavigation = () => {
 		console.log(researcherList);
 		const updatedList = [];
 		for (let j = 0; j < 20; j++) {
-			const researcher = {
+			const researcher: Researchers = {
 				id: j + 1,
 				name: `${j}Name`,
 				department: 'Radiology Department',
@@ -63,7 +63,18 @@ const RootNavigation = () => {
 				link: 'https://ca70-221-166-133-218.ngrok-free.app',
 				twitter: `${j}twitter`,
 				biography: 'Biography of researcher',
-				publications: ['Publication1', 'Publication2', 'Publication3'],
+				publications: [
+					{
+						link: 'www.bodybuilding.com',
+						title: 'Olympia',
+						author: 'Chris, Bumstead',
+						year: '2023',
+						journal: 'Classic',
+						conference: 'Physique',
+						ho: 'Grand Prix',
+						editable: false,
+					},
+				],
 			};
 			updatedList.push(researcher);
 		}

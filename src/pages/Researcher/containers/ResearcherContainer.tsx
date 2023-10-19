@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Researcher from '../Researcher';
-import { ResearcherList, EChange } from '@typedef/types';
+import { ResearcherList, EChange, Publication } from '@typedef/types';
 import { useNavigate } from 'react-router-dom';
 type Props = {
 	researcherList: ResearcherList;
@@ -73,7 +73,7 @@ const ResearcherContainer = ({ researcherList, setResearcherList }: Props) => {
 			link: string,
 			twitter: string,
 			biography: string,
-			publications: string[],
+			publications: Publication[],
 		) => {
 			//setEdit(index);
 

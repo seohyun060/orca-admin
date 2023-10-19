@@ -1,3 +1,14 @@
+export type Publication = {
+	link: string;
+	title: string;
+	author: string;
+	year: string;
+	journal: string;
+	conference: string;
+	ho: string;
+	editable: boolean;
+};
+
 export type Researchers = {
 	id: number;
 	name: string;
@@ -9,7 +20,7 @@ export type Researchers = {
 	link: string;
 	twitter: string;
 	biography: string;
-	publications: string[];
+	publications: Publication[];
 };
 
 export type GNBTableTypes = {
@@ -45,7 +56,7 @@ export type OnSetEdit = (
 	link: string,
 	twitter: string,
 	biography: string,
-	publications: string[],
+	publications: Publication[],
 ) => void;
 
 export type OnApplyClicked = (
@@ -59,7 +70,7 @@ export type OnApplyClicked = (
 	linkEdit: string,
 	twitterEdit: string,
 	biographyEdit: string,
-	publicationEdit: string[],
+	publicationEdit: Publication[],
 ) => void;
 
 export type OnApplyInsight = (
