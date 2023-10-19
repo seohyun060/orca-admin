@@ -35,6 +35,8 @@ const images = {
 	reload: '/assets/images/reload.svg',
 	checkbox: '/assets/images/checkbox.svg',
 	smallcalendar: '/assets/images/smallcalendar.svg',
+	pen_b: '/assets/images/pen-b.svg',
+	pen_w: '/assets/images/pen-w.svg',
 };
 
 export default images;

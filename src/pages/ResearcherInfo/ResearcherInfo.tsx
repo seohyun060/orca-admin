@@ -2,7 +2,7 @@ import React, { ChangeEvent, ChangeEventHandler } from 'react';
 import './styles/researcherinfo.styles.css';
 import Map from './components/Map';
 import images from 'src/assets/images';
-import { EChange, OnApplyClicked } from '@typedef/types';
+import { EChange, OnApplyClicked, Publication } from '@typedef/types';
 import { useNavigate } from 'react-router-dom';
 type Props = {
 	edit: boolean;
@@ -26,12 +26,16 @@ type Props = {
 	onChangeLinkEdit: (e: EChange) => void;
 	onChangeTwitterEdit: (e: EChange) => void;
 	onChangeBiographyEdit: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-	publicationEdit: string[];
-	onChangePublicationEdit: (e: EChange, index: number) => void;
+	publicationEdit: Publication[];
+	//onChangePublicationEdit: (e: EChange, index: number) => void;
 	locationEdit: number;
 	onLocationClicked: (mapNumber: number) => void;
 	onAddClicked: () => void;
 	onApplyClicked: OnApplyClicked;
+	onChangePubEdit: (e: EChange, index: number, type: number) => void;
+	pubEdit: boolean;
+	onClickPubEdit: (index: number) => void;
+	onSubClicked: (index: number) => void;
 };
 
 const ResearcherInfo = ({
@@ -57,11 +61,15 @@ const ResearcherInfo = ({
 	onChangeTwitterEdit,
 	onChangeBiographyEdit,
 	publicationEdit,
-	onChangePublicationEdit,
+	//onChangePublicationEdit,
 	locationEdit,
 	onLocationClicked,
 	onAddClicked,
 	onApplyClicked,
+	onChangePubEdit,
+	pubEdit,
+	onClickPubEdit,
+	onSubClicked,
 }: Props) => {
 	const mapItems = Array.from({ length: 32 }, (_, index) => index + 1);
 	const navigate = useNavigate();
@@ -210,57 +218,221 @@ const ResearcherInfo = ({
 				<div className='publication'>
 					<div className='head'>Publications</div>
 					{publicationEdit.length === 0 ? (
-						<div className='lastitem'>
-							<div className='box'>
-								<img src={images.link} />
-								<input
-									onChange={(e) => {
-										onChangePublicationEdit(e, 0);
-									}}
-									value={''}
-								></input>
+						<div className='container'>
+							<div className='linkbox'>
+								<div className='linkbox-input'>
+									<img src={images.link} />
+									<input
+										className='body'
+										onChange={(e) => onChangePubEdit(e, 0, 0)}
+										value={''}
+										disabled={true}
+									/>
+								</div>
+								<img
+									className='add'
+									src={images.add}
+									onClick={onAddClicked}
+								></img>
+								<div className='info'>
+									<div className='info-title'>
+										<div className='header'>논문제목</div>
+										<div className='stroke'></div>
+										<input
+											className='body'
+											onChange={(e) => onChangePubEdit(e, 0, 1)}
+											value={''}
+											disabled={!publicationEdit[0].editable}
+										/>
+									</div>
+									<div className='info-author'>
+										<div className='header'>저자명</div>
+										<div className='stroke'></div>
+										<input
+											className='body'
+											onChange={(e) => onChangePubEdit(e, 0, 2)}
+											value={''}
+											disabled={!publicationEdit[0].editable}
+										/>
+										<img
+											src={
+												publicationEdit[0].editable
+													? images.pen_w
+													: images.pen_b
+											}
+											onClick={() => {
+												onClickPubEdit(0);
+											}}
+										/>
+									</div>
+									<div className='info-yjc'>
+										<div className='y'>
+											<div className='header'>출판연도</div>
+											<div className='stroke'></div>
+											<input
+												className='body'
+												onChange={(e) => {
+													const inputValue = e.target.value;
+													// 숫자 형태의 문자열만 허용하는 정규식
+													const numericRegex = /^\d*$/;
+
+													if (numericRegex.test(inputValue)) {
+														// 입력값이 숫자 형태의 문자열이라면 onChange 호출
+														onChangePubEdit(e, 0, 3);
+													}
+												}}
+												value={''}
+												disabled={!publicationEdit[0].editable}
+											/>
+										</div>
+										<div className='j'>
+											<div className='header'>저널</div>
+											<div className='stroke'></div>
+											<input
+												className='body'
+												onChange={(e) => onChangePubEdit(e, 0, 4)}
+												value={''}
+												disabled={!publicationEdit[0].editable}
+											/>
+										</div>
+										<div className='c'>
+											<div className='header'>컨퍼런스 명</div>
+											<div className='stroke'></div>
+											<input
+												className='body'
+												onChange={(e) => onChangePubEdit(e, 0, 5)}
+												value={''}
+												disabled={!publicationEdit[0].editable}
+											/>
+										</div>
+									</div>
+									<div className='info-ho'>
+										<div className='header'>권 (호)</div>
+										<div className='stroke'></div>
+										<input
+											className='body'
+											onChange={(e) => onChangePubEdit(e, 0, 6)}
+											value={''}
+											disabled={!publicationEdit[0].editable}
+										/>
+									</div>
+								</div>
 							</div>
-							<img
-								className='add'
-								src={images.add}
-								onClick={onAddClicked}
-							></img>
 						</div>
 					) : (
-						publicationEdit.map((publication, index) => {
-							if (index === publicationEdit.length - 1) {
-								return (
-									<div key={index} className='lastitem'>
-										<div className='box'>
-											<img src={images.link} />
-											<input
-												onChange={(e) => {
-													onChangePublicationEdit(e, index);
-												}}
-												value={publicationEdit[index]}
-											></input>
-										</div>
+						publicationEdit.map((publication, index) => (
+							<div key={index} className='container'>
+								<div className='linkbox'>
+									<div className='linkbox-input'>
+										<img src={images.link} />
+										<input
+											className='body'
+											onChange={(e) => onChangePubEdit(e, index, 0)}
+											value={publicationEdit[index].link}
+											disabled={!publicationEdit[index].editable}
+										/>
+									</div>
+									{index === publicationEdit.length - 1 ? (
 										<img
 											className='add'
 											src={images.add}
 											onClick={onAddClicked}
 										></img>
-									</div>
-								);
-							} else {
-								return (
-									<div key={index} className='box'>
-										<img src={images.link} />
-										<input
-											onChange={(e) => {
-												onChangePublicationEdit(e, index);
+									) : (
+										<img
+											className='sub'
+											src={images.sub}
+											onClick={() => {
+												onSubClicked(index);
 											}}
-											value={publicationEdit[index]}
-										></input>
+										></img>
+									)}
+								</div>
+								<div className='info'>
+									<div className='info-title'>
+										<div className='header'>논문제목</div>
+										<div className='stroke'></div>
+										<input
+											className='body'
+											onChange={(e) => onChangePubEdit(e, index, 1)}
+											value={publicationEdit[index].title}
+											disabled={!publicationEdit[index].editable}
+										/>
 									</div>
-								);
-							}
-						})
+									<div className='info-author'>
+										<div className='header'>저자명</div>
+										<div className='stroke'></div>
+										<input
+											className='body'
+											onChange={(e) => onChangePubEdit(e, index, 2)}
+											value={publicationEdit[index].author}
+											disabled={!publicationEdit[index].editable}
+										/>
+										<img
+											src={
+												publicationEdit[index].editable
+													? images.pen_w
+													: images.pen_b
+											}
+											onClick={() => {
+												onClickPubEdit(index);
+											}}
+										/>
+									</div>
+									<div className='info-yjc'>
+										<div className='y'>
+											<div className='header'>출판연도</div>
+											<div className='stroke'></div>
+											<input
+												className='body'
+												onChange={(e) => {
+													const inputValue = e.target.value;
+													// 숫자 형태의 문자열만 허용하는 정규식
+													const numericRegex = /^\d*$/;
+
+													if (numericRegex.test(inputValue)) {
+														// 입력값이 숫자 형태의 문자열이라면 onChange 호출
+														onChangePubEdit(e, index, 3);
+													}
+												}}
+												value={publicationEdit[index].year}
+												disabled={!publicationEdit[index].editable}
+											/>
+										</div>
+										<div className='j'>
+											<div className='header'>저널</div>
+											<div className='stroke'></div>
+											<input
+												className='body'
+												onChange={(e) => onChangePubEdit(e, index, 4)}
+												value={publicationEdit[index].journal}
+												disabled={!publicationEdit[index].editable}
+											/>
+										</div>
+										<div className='c'>
+											<div className='header'>컨퍼런스 명</div>
+											<div className='stroke'></div>
+											<input
+												className='body'
+												onChange={(e) => onChangePubEdit(e, index, 5)}
+												value={publicationEdit[index].conference}
+												disabled={!publicationEdit[index].editable}
+											/>
+										</div>
+									</div>
+									<div className='info-ho'>
+										<div className='header'>권 (호)</div>
+										<div className='stroke'></div>
+										<input
+											className='body'
+											onChange={(e) => onChangePubEdit(e, index, 6)}
+											value={publicationEdit[index].ho}
+											disabled={!publicationEdit[index].editable}
+										/>
+									</div>
+								</div>
+							</div>
+						))
 					)}
 				</div>
 			</div>
