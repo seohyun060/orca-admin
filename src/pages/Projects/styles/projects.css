@@ -281,6 +281,39 @@
   margin-bottom: 50px;
 }
 
+.ProjectStartDate,
+.ProjectCompleteDate {
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 28px;
+  border: 1px solid #000;
+  padding: 1px 8px;
+  width: 257px;
+}
+.ProjectStartDate .clickLayout,
+.ProjectCompleteDate .clickLayout {
+  display: flex;
+  align-items: center;
+}
+.ProjectStartDate .clickLayout input,
+.ProjectCompleteDate .clickLayout input {
+  border: none;
+  width: 200px;
+}
+.ProjectStartDate .clickLayout img,
+.ProjectCompleteDate .clickLayout img {
+  width: 25px;
+  height: 24px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.SetEventDateCalendar {
+  width: 400px;
+}
+
 .PeriodInputBox {
   height: 127px;
   width: 377px;
@@ -506,16 +539,17 @@
   line-height: 28px;
   margin-bottom: 12px;
 }
-.CandI .subtitle:last-child {
-  margin: 0px;
+.CandI .CandIFormSet > div:last-child > img {
+  width: 50px;
+  height: 50px;
+}
+.CandI .CandIFormSet > div:last-child > img:hover {
+  content: url("../../../../public/assets/images/addform_hover.svg");
 }
 
 .CandIInputSet {
   display: flex;
   margin-bottom: 20px;
-}
-.CandIInputSet:last-child {
-  margin-bottom: 50px;
 }
 .CandIInputSet input {
   height: 54px;
@@ -529,6 +563,13 @@
 .CandIInputSet .link {
   width: 592px;
 }
+.CandIInputSet > img {
+  width: 50px;
+  height: 50px;
+}
+.CandIInputSet > img:hover {
+  content: url("../../../../public/assets/images/removeform_hover.svg");
+}
 
 .Publiciations .title, .Publiciations .Project-body .list .status, .Project-body .list .Publiciations .status {
   color: #000;
@@ -538,6 +579,13 @@
   font-weight: 600;
   line-height: 28px;
   margin-bottom: 14px;
+}
+.Publiciations > div:last-child > img {
+  width: 50px;
+  height: 50px;
+}
+.Publiciations > div:last-child > img:hover {
+  content: url("../../../../public/assets/images/addform_hover.svg");
 }
 
 .PublicationLink {
@@ -559,6 +607,13 @@
   font-style: normal;
   font-weight: 400;
   line-height: 28px;
+}
+.PublicationLink > img {
+  width: 50px;
+  height: 50px;
+}
+.PublicationLink > img:hover {
+  content: url("../../../../public/assets/images/removeform_hover.svg");
 }
 
 .BackImage {
