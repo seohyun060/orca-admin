@@ -62,7 +62,7 @@ const AddForm = (props) => {
         value={inputLink}
         onChange={(e) => setInputLink(e.target.value)}
       />
-      <img src={images.addform} onClick={() => onButtonClick(id)} />
+      <img src={id !== inputData[inputData.length -1 ].id ? images.removeform : images.add} onClick={() => onButtonClick(id)} />
     </div>
   );
 };

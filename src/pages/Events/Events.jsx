@@ -13,6 +13,8 @@ import images from "src/assets/images";
 
 import EventDummyData from "./EventDummyData.json";
 
+import { testAPI } from "src/api/projectsAPI";
+
 const Events = () => {
   const today = moment().format("YYYY-MM-DD");
 
@@ -106,6 +108,8 @@ const Events = () => {
     }
   }, [isFormOpen]);
 
+  console.log(eventDetailImg);
+
   return (
     <div className="Layout">
       <div className="EventUpperBar">
@@ -141,7 +145,9 @@ const Events = () => {
                 예정 이벤트
               </button>
             </div>
-            <button className="SaveButton">적용</button>
+            <button className="SaveButton" onClick={testAPI}>
+              적용
+            </button>
           </div>
           <label className="EventImageInput">
             <div className="UploadImageSpace">
@@ -197,13 +203,13 @@ const Events = () => {
                   onClick={() => setIsEndDateClick(!isEndDateClick)}
                 >
                   <img src={images.smallcalendar} />
-                  종료날짜: {eventEndDate}
+                  종료날짜: {isAlldayChecked ? eventStartDate : eventEndDate}
                 </div>
                 {isEndDateClick ? (
                   <SetEventDateCalendar
-                    setIsClose={setIsEndDateClick}
-                    eventDate={eventEndDate}
-                    setEventDate={setEventEndDate}
+                    setIsClose={isAlldayChecked ? true : setIsEndDateClick}
+                    eventDate={isAlldayChecked ? eventStartDate : eventEndDate}
+                    setEventDate={isAlldayChecked ? null : setEventEndDate}
                   />
                 ) : (
                   <></>
@@ -284,7 +290,8 @@ const Events = () => {
                 {input.id !== eventDetailImg[eventDetailImg.length - 1].id ? (
                   <img
                     src={images.removeform}
-                    onClick={() => removeDetailButtonClick(input.id)}F
+                    onClick={() => removeDetailButtonClick(input.id)}
+                    F
                   />
                 ) : (
                   <img

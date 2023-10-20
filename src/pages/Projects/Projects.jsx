@@ -3,9 +3,13 @@ import { useNavigate } from "react-router-dom";
 import "./styles/projects.css";
 import images from "src/assets/images";
 
+import { getAllProjectData } from "src/api/projectsAPI";
+
 const Project = (props) => {
   const navigate = useNavigate();
+  const [projectData, setProjectData] = useState([]);
   const [projectList, setProjectList] = useState([]);
+
   const [displayedColor, setDisplayedColor] = useState(1);
   const [storedColor, setStoredColor] = useState(0.3);
   const [stored, setStored] = useState(false);
@@ -44,14 +48,10 @@ const Project = (props) => {
     setProjectList(updatedList); // Up
   };
 
-  const onEditClicked = (id, title, pid, category, status) => {
+  const onEditClicked = (id) => {
     navigate("/project/default", {
       state: {
         id: id,
-        title: title,
-        pid: pid,
-        category: category,
-        status: status,
       },
     });
     window.scrollTo(0, 0);
@@ -78,6 +78,11 @@ const Project = (props) => {
       updatedProjects.push(project);
     }
     setProjectList(updatedProjects);
+
+    getAllProjectData().then((data) => {
+      console.log(data.data);
+      setProjectData(data.data);
+    });
   }, []);
 
   useEffect(() => {
@@ -122,13 +127,13 @@ const Project = (props) => {
           {search ? <img src={images.search_b} /> : <img src={images.search} />}
         </div>
         <button
-					disabled={stored ? true : false}
-					className={stored ? 'add' : 'add-active'}
-					style={{
-						color: stored ? '#9E9E9E' : '#fff',
-					}}
+          disabled={stored ? true : false}
+          className={stored ? "add" : "add-active"}
+          style={{
+            color: stored ? "#9E9E9E" : "#fff",
+          }}
           onClick={() => {
-            onEditClicked();
+            onEditClicked(0);
           }}
         >
           프로젝트 추가
@@ -174,13 +179,7 @@ const Project = (props) => {
                 <button
                   className="edit"
                   onClick={() => {
-                    onEditClicked(
-                      project.id,
-                      project.title,
-                      project.pid,
-                      project.category,
-                      project.status
-                    );
+                    onEditClicked(project.id);
                   }}
                 >
                   편집
