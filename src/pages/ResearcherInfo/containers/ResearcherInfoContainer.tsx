@@ -1,40 +1,102 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import ResearcherInfo from '../ResearcherInfo';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { EChange, Researchers } from '@typedef/types';
 import { ResearcherList, Publication } from '@typedef/types';
-type Props = { researcherList: ResearcherList; setResearcherList: any };
+import {
+	putResearchers,
+	getResearcherDetail,
+	postResearchers,
+} from 'src/api/ResearcherAPI';
+import images from 'src/assets/images';
+type Props = {
+	//researcherList: ResearcherList; setResearcherList: any
+};
 
-const ResearcherInfoContainer = ({
-	researcherList,
-	setResearcherList,
-}: Props) => {
+const ResearcherInfoContainer = ({}: // researcherList,
+// setResearcherList,
+Props) => {
 	const location = useLocation();
-	const edit = location.state.Edit;
-	const id = location.state.Id;
-	const name = location.state.Name;
-	const department = location.state.Department;
-	const project = location.state.Project;
-	const mapLocation = location.state.Location;
-	const profile = location.state.Profile;
-	const link = location.state.Link;
-	const twitter = location.state.Twitter;
-	const biography = location.state.Biography;
-	const publications = location.state.Publications;
-
+	//const edit = location.state.Edit;
+	// id = location.state.Id;
+	const params = useParams();
+	const navigate = useNavigate();
+	// const name = location.state.Name;
+	// const department = location.state.Department;
+	// const project = location.state.Project;
+	// const mapLocation = location.state.Location;
+	// //const profile = location.state.Profile;
+	// const link = location.state.Link;
+	// const twitter = location.state.Twitter;
+	// const biography = location.state.Biography;
+	// const publications = location.state.Publications;
+	const [edit, setEdit] = useState(false);
+	const [id, setId] = useState(0);
 	const [mapDisplay, setMapDisplay] = useState(true);
 	const [dropbox, setDropbox] = useState(false);
-	const [nameEdit, setNameEdit] = useState(name);
-	const [departmentEdit, setDepartmentEdit] = useState(department);
-	const [projectEdit, setProjectEdit] = useState(project);
-	const [linkEdit, setLinkEdit] = useState(link);
-	const [twitterEdit, setTwitterEdit] = useState(twitter);
-	const [biographyEdit, setBiographyEdit] = useState(biography);
+	const [nameEdit, setNameEdit] = useState('');
+	const [departmentEdit, setDepartmentEdit] = useState('');
+	const [projectEdit, setProjectEdit] = useState('');
+	const [linkEdit, setLinkEdit] = useState('');
+	const [twitterEdit, setTwitterEdit] = useState('');
+	const [profile, setProfile] = useState('');
+	const [biographyEdit, setBiographyEdit] = useState('');
 	const [selectedProfile, setSelectedProfile] = useState<File | null>(null);
-	const [publicationEdit, setPublicationEdit] =
-		useState<Publication[]>(publications);
-	const [locationEdit, setLocationEdit] = useState(mapLocation);
+	const [publicationEdit, setPublicationEdit] = useState<Publication[]>([
+		{
+			link: 'www.bodybuilding.com',
+			title: 'Olympia',
+			author: 'Chris, Bumstead',
+			year: '2023',
+			journal: 'Classic',
+			conference: 'Physique',
+			ho: 'Grand Prix',
+			editable: false,
+		},
+	]);
+	const [locationEdit, setLocationEdit] = useState(1);
 	const [pubEdit, setPubEdit] = useState(false);
+
+	useEffect(() => {
+		if (params.id != '0') {
+			getResearcherDetail(params.id).then((data) => {
+				console.log(data.data); // 나옴
+				//const updatedList: ResearcherList = [];
+				setId(data.data.id);
+				setLocationEdit(data.data.locationNumber);
+				setNameEdit(data.data.name);
+				setDepartmentEdit(data.data.affiliation);
+				setProjectEdit(data.data.projectType);
+				setProfile(data.data.image);
+				// if (data.data.image) {
+				// 	setProfile(data.data.image);
+				// } else {
+				// 	setProfile(images.orcagroup);
+				// }
+				setLinkEdit(data.data.linkedIn);
+				setTwitterEdit(data.data.twitter);
+				setBiographyEdit(data.data.biography);
+				const pubAPI = data.data.publications;
+				if (data.data.publications.length != 0) {
+					const updatedPublication = [...publicationEdit];
+					for (let i = 0; i < updatedPublication.length; i++) {
+						updatedPublication[i].title = pubAPI[i].title;
+						updatedPublication[i].author = pubAPI[i].author;
+						updatedPublication[i].year = pubAPI[i].pubYear;
+						updatedPublication[i].journal = pubAPI[i].journal;
+						updatedPublication[i].conference = pubAPI[i].conference;
+						updatedPublication[i].ho = pubAPI[i].volume;
+						updatedPublication[i].link = pubAPI[i].link;
+					}
+					setPublicationEdit(updatedPublication);
+				}
+
+				//console.log(researcherList); // 안나옴
+			});
+		}
+
+		//console.log(researcherList); // 안나옴
+	}, []);
 	const onClickPubEdit = useCallback(
 		(index: number) => {
 			const updatedPublication = [...publicationEdit];
@@ -223,7 +285,7 @@ const ResearcherInfoContainer = ({
 
 	const onApplyClicked = useCallback(
 		(
-			edit: boolean,
+			//edit: boolean,
 			id: number,
 			locationEdit: number,
 			nameEdit: string,
@@ -235,7 +297,6 @@ const ResearcherInfoContainer = ({
 			biographyEdit: string,
 			publicationEdit: Publication[],
 		) => {
-			console.log(researcherList[1]);
 			const filteredPublicationEdit = publicationEdit.filter((item, index) => {
 				return (
 					item.link !== '' ||
@@ -260,29 +321,44 @@ const ResearcherInfoContainer = ({
 				});
 			}
 			const createTempResearcher = () => ({
+				affiliation: departmentEdit,
 				id,
+				image: selectedProfile ? selectedProfile : null,
+				locationNumber: locationEdit,
 				name: nameEdit,
-				department: departmentEdit,
-				project: projectEdit,
-				stored: edit
-					? researcherList.find((researcher) => researcher.id === id)?.stored
-					: false,
-				location: locationEdit,
-				profile: selectedProfile ? selectedProfile.name : '',
-				link: linkEdit,
+				projectType: projectEdit,
+
+				linkedIn: linkEdit,
 				twitter: twitterEdit,
 				biography: biographyEdit,
 				publications: filteredPublicationEdit,
 			});
+			console.log(createTempResearcher().name);
+			console.log(id);
 
-			const updatedResearchers = edit
-				? researcherList.map((researcher) =>
-						researcher.id === id ? createTempResearcher() : researcher,
-				  )
-				: [...researcherList, createTempResearcher()];
+			if (id == 0) {
+				console.log('추가중~');
+				postResearchers(createTempResearcher(), selectedProfile);
+			} else {
+				putResearchers(id, createTempResearcher(), selectedProfile);
+			}
+			setEdit(true);
+			navigate('/researcher', {
+				state: {
+					Edit: edit,
+				},
+			});
+			// setTimeout(() => {
 
-			setResearcherList(updatedResearchers);
-			console.log(researcherList[1]);
+			// }, 150);
+			// const updatedResearchers = edit
+			// 	? researcherList.map((researcher) =>
+			// 			researcher.id === id ? createTempResearcher() : researcher,
+			// 	  )
+			// 	: [...researcherList, createTempResearcher()];
+
+			// setResearcherList(updatedResearchers);
+			// console.log(researcherList[1]);
 		},
 		[
 			nameEdit,
@@ -294,8 +370,7 @@ const ResearcherInfoContainer = ({
 			twitterEdit,
 			biographyEdit,
 			publicationEdit,
-			researcherList,
-			setResearcherList,
+			edit,
 		],
 	);
 	useEffect(() => {
@@ -304,7 +379,7 @@ const ResearcherInfoContainer = ({
 
 	return (
 		<ResearcherInfo
-			edit={edit}
+			//edit={edit}
 			id={id}
 			mapDisplay={mapDisplay}
 			onMapDisplayClicked={onMapDisplayClicked}

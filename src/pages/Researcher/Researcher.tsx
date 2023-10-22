@@ -70,19 +70,18 @@ const Researcher = ({
 						color: stored ? '#9E9E9E' : '#fff',
 					}}
 					onClick={() => {
-						onSetEdit(
-							false,
-							researcherList.length + 1,
-							'',
-							'',
-							'',
-							15,
-							'',
-							'',
-							'',
-							'',
-							[],
-						);
+						onSetEdit(false, 0, '', '', '', 15, '', '', '', '', [
+							{
+								link: '',
+								title: '',
+								author: '',
+								year: '',
+								journal: '',
+								conference: '',
+								ho: '',
+								editable: false,
+							},
+						]);
 					}}
 				>
 					사용자 추가
