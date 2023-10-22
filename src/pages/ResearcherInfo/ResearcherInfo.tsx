@@ -5,7 +5,7 @@ import images from 'src/assets/images';
 import { EChange, OnApplyClicked, Publication } from '@typedef/types';
 import { useNavigate } from 'react-router-dom';
 type Props = {
-	edit: boolean;
+	//edit: boolean;
 	id: number;
 	mapDisplay: boolean;
 	onMapDisplayClicked: () => void;
@@ -39,7 +39,7 @@ type Props = {
 };
 
 const ResearcherInfo = ({
-	edit,
+	//edit,
 	id,
 	mapDisplay,
 	onMapDisplayClicked,
@@ -80,7 +80,7 @@ const ResearcherInfo = ({
 				<button
 					onClick={() => {
 						onApplyClicked(
-							edit,
+							//edit,
 							id,
 							locationEdit,
 							nameEdit,
@@ -92,7 +92,7 @@ const ResearcherInfo = ({
 							biographyEdit,
 							publicationEdit,
 						);
-						navigate('/researcher');
+
 						window.scrollTo(0, 0);
 					}}
 				>

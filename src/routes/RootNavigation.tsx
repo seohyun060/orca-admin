@@ -11,6 +11,8 @@ import React, { useEffect, useState } from 'react';
 import InsightContainer from 'src/pages/Insight/containers/InsightContainer';
 import OrcagroupContainer from 'src/pages/Orcagroup/containers/OrcagroupContainer';
 import InsightInfoContainer from 'src/pages/InsightInfo/containers/InsightInfoContainer';
+import images from 'src/assets/images';
+import { getResearchers } from 'src/api/ResearcherAPI';
 import {
 	BrowserRouter as Router,
 	useLocation,
@@ -26,7 +28,7 @@ import HelmetHoc from './helmet/HelmetHoc';
 // /* eslint no-restricted-globals: ["off"] */
 const RootNavigation = () => {
 	const [key, setkey] = useState('');
-	const [researcherList, setResearcherList] = useState<ResearcherList>([]);
+	//const [researcherList, setResearcherList] = useState<ResearcherList>([]);
 	const [insightList, setInsightList] = useState<Insights[]>([]);
 
 	useEffect(() => {
@@ -47,41 +49,76 @@ const RootNavigation = () => {
 		setInsightList(updatedInsights);
 	}, [key]);
 	const location = useLocation();
-
-	useEffect(() => {
-		console.log(researcherList);
-		const updatedList = [];
-		for (let j = 0; j < 20; j++) {
-			const researcher: Researchers = {
-				id: j + 1,
-				name: `${j}Name`,
-				department: 'Radiology Department',
-				project: 'CadAI-B projects',
-				stored: j >= 16, // Set stored based on the condition
-				location: j >= 16 ? 10 : 15, // Set location based on the condition
-				profile: `${j}profile.png`,
-				link: 'https://ca70-221-166-133-218.ngrok-free.app',
-				twitter: `${j}twitter`,
-				biography: 'Biography of researcher',
-				publications: [
-					{
-						link: 'www.bodybuilding.com',
-						title: 'Olympia',
-						author: 'Chris, Bumstead',
-						year: '2023',
-						journal: 'Classic',
-						conference: 'Physique',
-						ho: 'Grand Prix',
-						editable: false,
-					},
-				],
-			};
-			updatedList.push(researcher);
-		}
-		setResearcherList(updatedList);
-		console.log(researcherList);
-		return () => {};
-	}, []);
+	// useEffect(() => {
+	// 	getResearchers().then((data) => {
+	// 		//console.log(data.data); // 나옴
+	// 		const updatedList: ResearcherList = [];
+	// 		data.data.map((d: any) => {
+	// 			const tempData: Researchers = {
+	// 				id: d.id,
+	// 				name: d.name,
+	// 				profile: d.image ? d.image : images.orcagroup,
+	// 				location: d.locationNumber,
+	// 				department: d.affiliation,
+	// 				project: d.projectType,
+	// 				stored: false,
+	// 				link: 'https://ca70-221-166-133-218.ngrok-free.app',
+	// 				twitter: `twitter`,
+	// 				biography: 'Biography of researcher',
+	// 				publications: [
+	// 					{
+	// 						link: 'www.bodybuilding.com',
+	// 						title: 'Olympia',
+	// 						author: 'Chris, Bumstead',
+	// 						year: '2023',
+	// 						journal: 'Classic',
+	// 						conference: 'Physique',
+	// 						ho: 'Grand Prix',
+	// 						editable: false,
+	// 					},
+	// 				],
+	// 			};
+	// 			updatedList.push(tempData);
+	// 		});
+	// 		setResearcherList(updatedList);
+	// 		//console.log(researcherList); // 안나옴
+	// 	});
+	// 	//console.log(researcherList); // 안나옴
+	// }, [location]);
+	// useEffect(() => {
+	// 	console.log(researcherList);
+	// 	const updatedList = [];
+	// 	for (let j = 0; j < 20; j++) {
+	// 		const researcher: Researchers = {
+	// 			id: j + 1,
+	// 			name: `${j}Name`,
+	// 			department: 'Radiology Department',
+	// 			project: 'CadAI-B projects',
+	// 			stored: j >= 16, // Set stored based on the condition
+	// 			location: j >= 16 ? 10 : 15, // Set location based on the condition
+	// 			profile: `${j}profile.png`,
+	// 			link: 'https://ca70-221-166-133-218.ngrok-free.app',
+	// 			twitter: `${j}twitter`,
+	// 			biography: 'Biography of researcher',
+	// 			publications: [
+	// 				{
+	// 					link: 'www.bodybuilding.com',
+	// 					title: 'Olympia',
+	// 					author: 'Chris, Bumstead',
+	// 					year: '2023',
+	// 					journal: 'Classic',
+	// 					conference: 'Physique',
+	// 					ho: 'Grand Prix',
+	// 					editable: false,
+	// 				},
+	// 			],
+	// 		};
+	// 		updatedList.push(researcher);
+	// 	}
+	// 	setResearcherList(updatedList);
+	// 	console.log(researcherList);
+	// 	return () => {};
+	// }, []);
 
 	return (
 		<>
@@ -96,22 +133,14 @@ const RootNavigation = () => {
 					}
 				/>
 
-				<Route
-					path='/researcher'
-					element={
-						<ResearcherContainer
-							researcherList={researcherList}
-							setResearcherList={setResearcherList}
-						/>
-					}
-				/>
+				<Route path='/researcher' element={<ResearcherContainer />} />
 
 				<Route
-					path='/researcherinfo'
+					path='/researcherinfo/:id'
 					element={
 						<ResearcherInfoContainer
-							researcherList={researcherList}
-							setResearcherList={setResearcherList}
+						// researcherList={researcherList}
+						// setResearcherList={setResearcherList}
 						/>
 					}
 				/>

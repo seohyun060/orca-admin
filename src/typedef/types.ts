@@ -60,7 +60,7 @@ export type OnSetEdit = (
 ) => void;
 
 export type OnApplyClicked = (
-	edit: boolean,
+	//∂edit: boolean,
 	id: number,
 	locationEdit: number,
 	nameEdit: string,

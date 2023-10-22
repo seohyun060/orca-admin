@@ -1,20 +1,30 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Researcher from '../Researcher';
-import { ResearcherList, EChange, Publication } from '@typedef/types';
-import { useNavigate } from 'react-router-dom';
-type Props = {
-	researcherList: ResearcherList;
-	setResearcherList: any;
-};
-const ResearcherContainer = ({ researcherList, setResearcherList }: Props) => {
+import {
+	ResearcherList,
+	EChange,
+	Publication,
+	Researchers,
+} from '@typedef/types';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getResearchers, deleteResearcher } from 'src/api/ResearcherAPI';
+import images from 'src/assets/images';
+type Props = {};
+const ResearcherContainer = ({}: Props) => {
 	const navigate = useNavigate();
+	const [researcherList, setResearcherList] = useState<ResearcherList>([]);
+	const location = useLocation();
 	const [search, setSearch] = useState('');
 	const [stored, setStored] = useState(false);
 	const [filteredList, setFilteredList] =
 		useState<ResearcherList>(researcherList);
 	const [displayedColor, setDisplayedColor] = useState(1);
+	const [edit, setEdit] = useState(false);
 	const [storedColor, setStoredColor] = useState(0.3);
-	const [edit, setEdit] = useState(0);
+
+	if (location.state) {
+		console.log(location.state);
+	}
 	const onDisplayedClick = useCallback(() => {
 		if (stored) {
 			setStored(false);
@@ -52,6 +62,12 @@ const ResearcherContainer = ({ researcherList, setResearcherList }: Props) => {
 				);
 				return updatedList;
 			});
+			deleteResearcher(id).then((data) => {
+				//console.log(data.data); // 나옴
+
+				console.log(data);
+				//console.log(researcherList); // 안나옴
+			});
 		},
 		[researcherList],
 	);
@@ -77,7 +93,7 @@ const ResearcherContainer = ({ researcherList, setResearcherList }: Props) => {
 		) => {
 			//setEdit(index);
 
-			navigate('/researcherinfo', {
+			navigate(`/researcherinfo/${id}`, {
 				state: {
 					Edit: edit,
 					Id: id,
@@ -98,6 +114,39 @@ const ResearcherContainer = ({ researcherList, setResearcherList }: Props) => {
 	);
 
 	useEffect(() => {
+		getResearchers().then((data) => {
+			//console.log(data.data); // 나옴
+			const updatedList: ResearcherList = [];
+			data.data.map((d: any) => {
+				const tempData: Researchers = {
+					id: d.id,
+					name: d.name,
+					profile: d.image ? d.image : images.orcagroup,
+					location: d.locationNumber,
+					department: d.affiliation,
+					project: d.projectType,
+					stored: false,
+					link: 'https://ca70-221-166-133-218.ngrok-free.app',
+					twitter: `twitter`,
+					biography: 'Biography of researcher',
+					publications: [
+						{
+							link: 'www.bodybuilding.com',
+							title: 'Olympia',
+							author: 'Chris, Bumstead',
+							year: '2023',
+							journal: 'Classic',
+							conference: 'Physique',
+							ho: 'Grand Prix',
+							editable: false,
+						},
+					],
+				};
+				updatedList.push(tempData);
+			});
+			setResearcherList(updatedList);
+			//console.log(researcherList); // 안나옴
+		});
 		setFilteredList(
 			researcherList.filter(
 				(researcher) => researcher.name.indexOf(search) !== -1,
