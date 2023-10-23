@@ -134,10 +134,10 @@ const ResearcherContainer = ({}: Props) => {
 							link: 'www.bodybuilding.com',
 							title: 'Olympia',
 							author: 'Chris, Bumstead',
-							year: '2023',
+							pubYear: 2023,
 							journal: 'Classic',
 							conference: 'Physique',
-							ho: 'Grand Prix',
+							volume: 'Grand Prix',
 							editable: false,
 						},
 					],
@@ -147,13 +147,20 @@ const ResearcherContainer = ({}: Props) => {
 			setResearcherList(updatedList);
 			//console.log(researcherList); // 안나옴
 		});
-		setFilteredList(
-			researcherList.filter(
-				(researcher) => researcher.name.indexOf(search) !== -1,
-			),
-		);
+
 		return () => {};
-	}, [search, researcherList]);
+	}, []);
+	useEffect(() => {
+		setTimeout(() => {
+			setFilteredList(
+				researcherList.filter(
+					(researcher) => researcher.name.indexOf(search) !== -1,
+				),
+			);
+		}, 150);
+
+		return () => {};
+	}, [researcherList, search]);
 
 	return (
 		<Researcher

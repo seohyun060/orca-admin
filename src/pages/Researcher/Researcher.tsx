@@ -75,10 +75,10 @@ const Researcher = ({
 								link: '',
 								title: '',
 								author: '',
-								year: '',
+								pubYear: 2023,
 								journal: '',
 								conference: '',
-								ho: '',
+								volume: '',
 								editable: false,
 							},
 						]);

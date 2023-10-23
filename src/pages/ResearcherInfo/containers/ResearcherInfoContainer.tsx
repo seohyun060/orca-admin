@@ -44,13 +44,13 @@ Props) => {
 	const [selectedProfile, setSelectedProfile] = useState<File | null>(null);
 	const [publicationEdit, setPublicationEdit] = useState<Publication[]>([
 		{
-			link: 'www.bodybuilding.com',
-			title: 'Olympia',
-			author: 'Chris, Bumstead',
-			year: '2023',
-			journal: 'Classic',
-			conference: 'Physique',
-			ho: 'Grand Prix',
+			link: '',
+			title: '',
+			author: '',
+			pubYear: 2023,
+			journal: '',
+			conference: '',
+			volume: '',
 			editable: false,
 		},
 	]);
@@ -68,28 +68,27 @@ Props) => {
 				setDepartmentEdit(data.data.affiliation);
 				setProjectEdit(data.data.projectType);
 				setProfile(data.data.image);
-				// if (data.data.image) {
-				// 	setProfile(data.data.image);
-				// } else {
-				// 	setProfile(images.orcagroup);
-				// }
 				setLinkEdit(data.data.linkedIn);
 				setTwitterEdit(data.data.twitter);
 				setBiographyEdit(data.data.biography);
 				const pubAPI = data.data.publications;
-				if (data.data.publications.length != 0) {
-					const updatedPublication = [...publicationEdit];
-					for (let i = 0; i < updatedPublication.length; i++) {
-						updatedPublication[i].title = pubAPI[i].title;
-						updatedPublication[i].author = pubAPI[i].author;
-						updatedPublication[i].year = pubAPI[i].pubYear;
-						updatedPublication[i].journal = pubAPI[i].journal;
-						updatedPublication[i].conference = pubAPI[i].conference;
-						updatedPublication[i].ho = pubAPI[i].volume;
-						updatedPublication[i].link = pubAPI[i].link;
-					}
-					setPublicationEdit(updatedPublication);
-				}
+				console.log(pubAPI);
+				setPublicationEdit(pubAPI);
+				console.log(publicationEdit);
+				// if (data.data.publications.length != 0) {
+				// 	const updatedPublication = [...publicationEdit];
+				// 	for (let i = 0; i < pubAPI.length; i++) {
+				// 		updatedPublication[i].title = pubAPI[i].title;
+				// 		updatedPublication[i].author = pubAPI[i].author;
+				// 		updatedPublication[i].year = pubAPI[i].pubYear;
+				// 		updatedPublication[i].journal = pubAPI[i].journal;
+				// 		updatedPublication[i].conference = pubAPI[i].conference;
+				// 		updatedPublication[i].ho = pubAPI[i].volume;
+				// 		updatedPublication[i].link = pubAPI[i].link;
+				// 	}
+				// 	setPublicationEdit(updatedPublication);
+				// 	console.log(updatedPublication);
+				// }
 
 				//console.log(researcherList); // 안나옴
 			});
@@ -138,7 +137,10 @@ Props) => {
 					updatedPublication[index].author = e.target.value;
 					break;
 				case 3:
-					updatedPublication[index].year = e.target.value;
+					updatedPublication[index].pubYear = parseInt(e.target.value);
+					console.log(e.target.value);
+					console.log(updatedPublication[index].pubYear);
+
 					break;
 				case 4:
 					updatedPublication[index].journal = e.target.value;
@@ -147,7 +149,7 @@ Props) => {
 					updatedPublication[index].conference = e.target.value;
 					break;
 				case 6:
-					updatedPublication[index].ho = e.target.value;
+					updatedPublication[index].volume = e.target.value;
 					break;
 			}
 			setPublicationEdit(updatedPublication);
@@ -217,10 +219,10 @@ Props) => {
 				link: '',
 				title: '',
 				author: '',
-				year: '',
+				pubYear: 2023,
 				journal: '',
 				conference: '',
-				ho: '',
+				volume: '',
 				editable: false,
 			},
 		]);
@@ -302,10 +304,10 @@ Props) => {
 					item.link !== '' ||
 					item.title !== '' ||
 					item.author !== '' ||
-					item.year !== '' ||
+					item.pubYear !== 2023 ||
 					item.journal !== '' ||
 					item.conference !== '' ||
-					item.ho !== ''
+					item.volume !== ''
 				);
 			});
 			if (filteredPublicationEdit.length == 0) {
@@ -313,10 +315,10 @@ Props) => {
 					link: '',
 					title: '',
 					author: '',
-					year: '',
+					pubYear: 2023,
 					journal: '',
 					conference: '',
-					ho: '',
+					volume: '',
 					editable: false,
 				});
 			}
@@ -348,17 +350,6 @@ Props) => {
 					Edit: edit,
 				},
 			});
-			// setTimeout(() => {
-
-			// }, 150);
-			// const updatedResearchers = edit
-			// 	? researcherList.map((researcher) =>
-			// 			researcher.id === id ? createTempResearcher() : researcher,
-			// 	  )
-			// 	: [...researcherList, createTempResearcher()];
-
-			// setResearcherList(updatedResearchers);
-			// console.log(researcherList[1]);
 		},
 		[
 			nameEdit,
@@ -376,7 +367,7 @@ Props) => {
 	useEffect(() => {
 		return () => {};
 	}, []);
-
+	console.log(publicationEdit);
 	return (
 		<ResearcherInfo
 			//edit={edit}

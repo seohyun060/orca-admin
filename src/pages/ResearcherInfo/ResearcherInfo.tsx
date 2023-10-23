@@ -395,7 +395,11 @@ const ResearcherInfo = ({
 														onChangePubEdit(e, index, 3);
 													}
 												}}
-												value={publicationEdit[index].year}
+												value={
+													publicationEdit[index].pubYear
+														? publicationEdit[index].pubYear
+														: ''
+												}
 												disabled={!publicationEdit[index].editable}
 											/>
 										</div>
@@ -426,7 +430,7 @@ const ResearcherInfo = ({
 										<input
 											className='body'
 											onChange={(e) => onChangePubEdit(e, index, 6)}
-											value={publicationEdit[index].ho}
+											value={publicationEdit[index].volume}
 											disabled={!publicationEdit[index].editable}
 										/>
 									</div>
