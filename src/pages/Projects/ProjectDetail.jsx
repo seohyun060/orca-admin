@@ -12,10 +12,9 @@ import SetEventDateCalendar from "../Events/components/SetEventDateCalendar";
 import ProjectDummy from "./ProjectDummy";
 
 import {
-  testAPI,
   getOneProjectData,
   postNewProjectData,
-  deleteOneProjectData,
+  putOneProjectData,
 } from "src/api/projectsAPI";
 
 const ProjectDetail = () => {
@@ -42,6 +41,7 @@ const ProjectDetail = () => {
 
   const [projectEnrollment, setProjectEnrollment] = useState();
   const [projectStudyType, setProjectStudyType] = useState();
+  const [projectId, setProjectId] = useState();
   const [projectOtherStudyId, setProjectOtherStudyId] = useState();
 
   const [projectOverview, setProjectOverview] = useState();
@@ -81,27 +81,26 @@ const ProjectDetail = () => {
   const [projectPrimaryOutcome, setProjectPrimaryOutcome] = useState([]);
   const [projectSecondaryOutcome, setProjectSecondaryOutcome] = useState([]);
 
-  const [projectPi, setProjectPi] = useState();
+  const [projectPis, setProjectPis] = useState();
   const [projectCollaborators, setProjectCollaborators] = useState();
   const [projectPublications, setProjectPublications] = useState();
 
   const onPiButtonClick = (id) => {
-    console.log(projectPi);
-    const lastIndex = projectPi[projectPi.length - 1].id;
+    console.log(projectPis);
+    const lastIndex = projectPis[projectPis.length - 1].id;
     if (id === lastIndex) {
-      setProjectPi([
-        ...projectPi,
+      setProjectPis([
+        ...projectPis,
         { id: lastIndex + 1, name: "", affiliation: "", link: "" },
       ]);
     } else {
-      setProjectPi((prevInputs) =>
+      setProjectPis((prevInputs) =>
         prevInputs.filter((input) => input.id !== id)
       );
     }
   };
 
   const onCollaboratorsButtonClick = (id) => {
-    console.log(projectCollaborators);
     console.log(projectCollaborators);
     const lastIndex = projectCollaborators[projectCollaborators.length - 1].id;
     if (id === lastIndex) {
@@ -121,7 +120,16 @@ const ProjectDetail = () => {
     if (id === lastIndex) {
       setProjectPublications([
         ...projectPublications,
-        { id: lastIndex + 1, link: "" },
+        {
+          id: lastIndex + 1,
+          title: "",
+          author: "",
+          pubYear: 2023,
+          journal: "",
+          conference: "",
+          volume: "",
+          link: "",
+        },
       ]);
     } else {
       setProjectPublications((prevInputs) =>
@@ -161,9 +169,9 @@ const ProjectDetail = () => {
     }
   };
 
-  const initPi = () => {
+  const initPi = (pis, links) => {
     let piArray = [];
-    if (projectPi == null) {
+    if (pis[0] == null) {
       piArray = [
         {
           id: 0,
@@ -173,27 +181,22 @@ const ProjectDetail = () => {
         },
       ];
     } else {
-      projectPi.map((data, idx) => {
-        const pi = { id: idx, ...data };
+      pis.map((data, idx) => {
+        const pi = {
+          id: idx,
+          name: data.name,
+          affiliation: data.affiliation,
+          link: links[idx],
+        };
         piArray.push(pi);
       });
-      piArray = [
-        ...piArray,
-        {
-          id: piArray[piArray.length - 1].id + 1,
-          name: "",
-          affiliation: "",
-          link: "",
-        },
-      ];
     }
-    console.log("piArray", piArray);
-    setProjectPi(piArray);
+    setProjectPis(piArray);
   };
 
-  const initCollaborators = () => {
+  const initCollaborators = (collaborators, links) => {
     let collaboratorsArray = [];
-    if (projectCollaborators == null) {
+    if (collaborators[0] == null) {
       collaboratorsArray = [
         {
           id: 0,
@@ -203,51 +206,55 @@ const ProjectDetail = () => {
         },
       ];
     } else {
-      projectCollaborators.map((data, idx) => {
-        const pi = { id: idx, ...data };
-        collaboratorsArray.push(pi);
+      collaborators.map((data, idx) => {
+        const collaborator = {
+          id: idx,
+          name: data.name,
+          affiliation: data.affiliation,
+          link: links[idx],
+        };
+        collaboratorsArray.push(collaborator);
       });
-      collaboratorsArray = [
-        ...collaboratorsArray,
-        {
-          id: collaboratorsArray[collaboratorsArray.length - 1].id + 1,
-          name: "",
-          affiliation: "",
-          link: "",
-        },
-      ];
     }
     setProjectCollaborators(collaboratorsArray);
   };
 
-  const initPublications = () => {
+  const initPublications = (publications) => {
     let publicationsArray = [];
-    if (projectPublications == null) {
+    if (publications.length == 0) {
       publicationsArray = [
         {
           id: 0,
+          title: "",
+          author: "",
+          pubYear: 2023,
+          journal: "",
+          conference: "",
+          volume: "",
           link: "",
         },
       ];
     } else {
-      projectPublications.map((data, idx) => {
-        const pi = { id: idx, ...data };
-        publicationsArray.push(pi);
+      publications.map((data, idx) => {
+        const publication = {
+          id: idx,
+          title: data.title,
+          author: data.author,
+          pubYear: data.pubYear,
+          journal: data.journal,
+          conference: data.conference,
+          volume: data.volume,
+          link: data.link,
+        };
+        publicationsArray.push(publication);
       });
-      publicationsArray = [
-        ...publicationsArray,
-        {
-          id: publicationsArray[publicationsArray.length - 1].id + 1,
-          link: "",
-        },
-      ];
     }
     setProjectPublications(publicationsArray);
   };
 
-  const initProject = () => {
+  const initProject = async () => {
     if (id !== 0) {
-      getOneProjectData(id).then((data) => {
+      await getOneProjectData(id).then((data) => {
         console.log(data);
 
         const project = data.data;
@@ -257,8 +264,9 @@ const ProjectDetail = () => {
         setProjectStartDate(project.startDate);
         setProjectCompleteDate(project.completeDate);
         setProjectEnrollment(project.enrollment);
-        setProjectStudyType(project.studyType)
-        setProjectOtherStudyId(project.otherStudyId)
+        setProjectStudyType(project.studyType);
+        setProjectId(project.projectId)
+        setProjectOtherStudyId(project.otherStudyId);
         setProjectOverview(project.overview);
         setProjectOfficialTitle(project.officialTitle);
         setProjectConditions(project.conditions);
@@ -277,21 +285,23 @@ const ProjectDetail = () => {
         setProjectInterventionTreatment(project.interventionTreatment);
         setProjectPrimaryOutcome(project.primaryOutcome);
         setProjectSecondaryOutcome(project.secondaryOutcome);
-        initPi();
-        initCollaborators();
-        initPublications();
-
-        return;
+        initPi(project.pis, project.piLinks);
+        initCollaborators(project.collaborators, project.collaboratorLinks);
+        initPublications(project.publications);
       });
+    } else {
+      initPi([null]);
+      initCollaborators([null]);
+      initPublications([]);
     }
-
-    // 새 데이터 입력시
-    initPi();
-    initCollaborators();
-    initPublications();
   };
 
-  const test = (e) => {
+  const onApplyClick = async (e) => {
+    if (projectTitle == null) {
+      return;
+    }
+    e.preventDefault();
+
     const formData = new FormData(document.getElementById("projectForm"));
     formData.append("projectID", "1.23456");
     formData.append("status", statusInPost[isStatusChecked.indexOf(true)]);
@@ -307,27 +317,69 @@ const ProjectDetail = () => {
       console.log(pair[0] + ", " + pair[1]);
     }
 
-    e.preventDefault();
-    postNewProjectData(formData).then((data) => {
-      console.log(data);
+    const jsonObject = {};
+
+    for (const [key, value] of formData) {
+      if (value != "") {
+        jsonObject[key] = value;
+      }
+    }
+
+    jsonObject["primaryOutcome"] = projectPrimaryOutcome;
+    jsonObject["secondaryOutcome"] = projectSecondaryOutcome;
+
+    let pis = [];
+    projectPis.map((pi) => {
+      pis.push(pi.link);
     });
+    jsonObject["pis"] = pis;
 
-    // deleteOneProjectData(11).then((data) => {
-    //   console.log(data);
-    // });
+    let collaborators = [];
+    projectCollaborators.map((collaborator) => {
+      collaborators.push(collaborator.link);
+    });
+    jsonObject["collaborators"] = collaborators;
 
-    // testAPI().then((data) => {
-    //   console.log(data);
-    // });
+    let publications = [];
+    projectPublications.map((publication) => {
+      publications.push(publication);
+    });
+    console.log(publications);
+    jsonObject["publications"] = publications;
+
+    if (id === 0) {
+      await postNewProjectData(jsonObject).then((data) => {
+        console.log(data);
+        if (data.status !== 201) {
+          alert("저장 실패!");
+        } else {
+          alert("저장 성공!");
+        }
+      });
+    } else {
+      await putOneProjectData(id, jsonObject).then((data) => {
+        console.log(data);
+        if (data.status !== 201) {
+          alert("수정 실패!");
+        } else {
+          alert("수정 성공!");
+        }
+      });
+    }
+
+    navigate("/project");
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
     initStatus();
     initProject();
+
+    // 새 데이터 입력시
   }, []);
 
   return (
-    <div className="Layout">
+    <div className="ProjectLayout">
       <form name="projectForm" id="projectForm">
         <section className="ProjectSection">
           <div className="ProjectUpperBar">
@@ -339,7 +391,7 @@ const ProjectDetail = () => {
             <div className="ProjectDetailPageTitle">
               프로젝트 상세 페이지 추가/편집
             </div>
-            <button className="SaveButton" onClick={(e) => test(e)}>
+            <button className="SaveButton" onClick={(e) => onApplyClick(e)}>
               적용
             </button>
           </div>
@@ -360,6 +412,7 @@ const ProjectDetail = () => {
             <div className="ProjectDetailTitle">
               <div className="ArticleTitle">프로젝트 제목</div>
               <textarea
+                type="text"
                 className="ArticleInputArea"
                 name="projectTitle"
                 placeholder="Text"
@@ -428,6 +481,15 @@ const ProjectDetail = () => {
                   name="studyType"
                   value={projectStudyType}
                   onChange={(e) => setProjectStudyType(e.target.value)}
+                />
+              </div>
+              <div className="PeriodInputBox">
+                <div className="title">Project ID</div>
+                <input
+                  placeholder="Text"
+                  name="projectId"
+                  value={projectId}
+                  onChange={(e) => setProjectId(e.target.value)}
                 />
               </div>
               <div className="PeriodInputBox">
@@ -730,16 +792,16 @@ const ProjectDetail = () => {
             <div className="title">Collaborators and Investigators</div>
             <div className="CandIFormSet">
               <div className="subtitle">Principal Investigator</div>
-              {projectPi &&
-                projectPi.map((data) => (
+              {projectPis &&
+                projectPis.map((data) => (
                   <AddForm
                     id={data.id}
                     name={data.name}
                     affiliation={data.affiliation}
                     link={data.link}
                     onButtonClick={onPiButtonClick}
-                    inputData={projectPi}
-                    changeInputData={setProjectPi}
+                    inputData={projectPis}
+                    changeInputData={setProjectPis}
                   ></AddForm>
                 ))}
             </div>
@@ -767,6 +829,12 @@ const ProjectDetail = () => {
               projectPublications.map((data) => (
                 <PublicationForm
                   id={data.id}
+                  title={data.title}
+                  author={data.author}
+                  pubYear={data.pubYear}
+                  journal={data.journal}
+                  conference={data.conference}
+                  volume={data.volume}
                   link={data.link}
                   onButtonClick={onPublicationsButtonClick}
                   inputData={projectPublications}

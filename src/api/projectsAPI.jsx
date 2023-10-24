@@ -21,21 +21,42 @@ export async function getOneProjectData(id) {
 }
 
 export async function postNewProjectData(data) {
-  const jsonObject = {};
-
-  for (const [key, value] of data) {
-    if (value != "") {
-      jsonObject[key] = value;
-    }
-  }
-
-  console.log(data);
-  console.log(JSON.stringify(jsonObject));
-  const jsonData = JSON.stringify(jsonObject);
-  console.log(jsonData);
+  const jsonData = JSON.stringify(data);
 
   return fetch(`http://43.202.46.227/api/projects`, {
     method: "POST",
+    body: jsonData,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      return data;
+    });
+}
+
+export async function putChangeStoredProjectData(id, isStored) {
+  const jsonData = JSON.stringify([]);
+
+  return fetch(`http://43.202.46.227/api/projects/${id}?store=${isStored}`, {
+    method: "PUT",
+    // body: jsonData,
+    // headers: {
+    //   "Content-Type": "application/json",
+    // },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      return data;
+    });
+}
+
+export async function putOneProjectData(id, data) {
+  const jsonData = JSON.stringify(data);
+
+  return fetch(`http://43.202.46.227/api/projects/${id}`, {
+    method: "PUT",
     body: jsonData,
     headers: {
       "Content-Type": "application/json",
