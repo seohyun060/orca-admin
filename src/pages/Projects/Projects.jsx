@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import "./styles/projects.css";
 import images from "src/assets/images";
 
-import { getAllProjectData } from "src/api/projectsAPI";
+import {
+  getAllProjectData,
+  putChangeStoredProjectData,
+  deleteOneProjectData,
+} from "src/api/projectsAPI";
 
 const Project = (props) => {
   const navigate = useNavigate();
@@ -11,25 +15,24 @@ const Project = (props) => {
   const [projectList, setProjectList] = useState([]);
 
   const [displayedColor, setDisplayedColor] = useState(1);
-  const [storedColor, setStoredColor] = useState(0.3);
-  const [stored, setStored] = useState(false);
+  const [isStoredColor, setIsStoredColor] = useState(0.3);
+  const [isStored, setIsStored] = useState(false);
   const [edit, setEdit] = useState(0);
   const [search, setSearch] = useState("");
-  const [filteredList, setFilteredList] = useState(projectList);
 
   const onDisplayedClick = () => {
-    if (stored) {
-      setStored(false);
+    if (isStored) {
+      setIsStored(false);
       setDisplayedColor(1);
-      setStoredColor(0.3);
+      setIsStoredColor(0.3);
     }
   };
 
-  const onStoredClick = () => {
-    if (!stored) {
-      setStored(true);
+  const onisStoredClick = () => {
+    if (!isStored) {
+      setIsStored(true);
       setDisplayedColor(0.3);
-      setStoredColor(1);
+      setIsStoredColor(1);
     }
   };
 
@@ -37,15 +40,18 @@ const Project = (props) => {
     setSearch(e.target.value);
   };
 
-  const onStoredisplayClick = (projectList, id) => {
-    const updatedList = [...projectList]; // Create a copy of the list
-    for (let i = 0; i < updatedList.length; i++) {
-      if (updatedList[i].id == id) {
-        updatedList[i].stored = !updatedList[i].stored;
-        break;
-      }
-    }
-    setProjectList(updatedList); // Up
+  const onisStoredisplayClick = async (id) => {
+    // 로직 수정필요
+    const targetIndex = projectList.findIndex((data) => data.id == id);
+
+    const isStored = !projectList[targetIndex].isStored;
+    await putChangeStoredProjectData(id, isStored).then((data) => {
+      console.log(data);
+    });
+    let temp = [...projectList];
+
+    temp[targetIndex].isStored = !temp[targetIndex].isStored;
+    setProjectList(temp);
   };
 
   const onEditClicked = (id) => {
@@ -57,70 +63,39 @@ const Project = (props) => {
     window.scrollTo(0, 0);
   };
 
-  const onTrashClick = (id) => {
-    setProjectList((prevList) => {
-      const updatedList = prevList.filter((insight) => insight.id !== id);
-      return updatedList;
+  const onTrashClick = async (id) => {
+    await deleteOneProjectData(id).then((data) => {
+      console.log(data);
+    });
+    setProjectList(projectList.filter((data) => data.id != id));
+  };
+
+  const initData = async () => {
+    await getAllProjectData().then((data) => {
+      console.log(data.data);
+      setProjectData(data.data);
+
+      const updatedProjects = [];
+
+      data.data.map((data, i) => {
+        updatedProjects.push(data);
+      });
+      setProjectList(updatedProjects);
     });
   };
 
   useEffect(() => {
-    const updatedProjects = [];
-    for (let i = 0; i < 10; i++) {
-      const project = {
-        id: i + 1,
-        title: "Project name",
-        pid: "1234sd6879ds4fd",
-        category: "CadAI-B/T",
-        status: "Completed",
-        stored: false,
-      };
-      updatedProjects.push(project);
-    }
-    setProjectList(updatedProjects);
-
-    getAllProjectData().then((data) => {
-      console.log(data.data);
-      setProjectData(data.data);
-    });
+    initData();
   }, []);
 
   useEffect(() => {
-    const updatedProjects = [];
-    // for (let i = 0; i < 10; i++) {
-    //   const project = {
-    //     id: i + 1,
-    //     title: "Project name",
-    //     pid: "1234sd6879ds4fd",
-    //     category: "CadAI-B/T",
-    //     status: "Completed",
-    //     stored: false,
-    //   };
-    //   updatedProjects.push(project);
-    // }
-    projectData.map((data, i) => {const project = {
-      id: data.id,
-      title: data.projectTitle,
-      pid: data.projectId,
-      category: data.studyType,
-      status: data.status,
-      stored: false,
-    };
-    updatedProjects.push(project);})
-    setProjectList(updatedProjects);
-    console.log(projectData)
-
-  }, [projectData]);
-
-  useEffect(() => {
-    setFilteredList(
-      // projectList.filter((project) => {
-      //   if (project.title.includes(search)) {
-      //     return true;
-      //   }
-      // })
-    );
-  }, [search, projectList]);
+    const filteredList = projectData.filter((project) => {
+      if (project.projectTitle.includes(search)) {
+        return true;
+      }
+    });
+    setProjectList(filteredList);
+  }, [search]);
 
   return (
     <div className="Project">
@@ -136,9 +111,9 @@ const Project = (props) => {
         </div>
         <div
           className="title"
-          style={{ opacity: storedColor }}
+          style={{ opacity: isStoredColor }}
           onClick={() => {
-            onStoredClick();
+            onisStoredClick();
           }}
         >
           프로젝트 보관 리스트
@@ -154,10 +129,10 @@ const Project = (props) => {
           {search ? <img src={images.search_b} /> : <img src={images.search} />}
         </div>
         <button
-          disabled={stored ? true : false}
-          className={stored ? "add" : "add-active"}
+          disabled={isStored ? true : false}
+          className={isStored ? "add" : "add-active"}
           style={{
-            color: stored ? "#9E9E9E" : "#fff",
+            color: isStored ? "#9E9E9E" : "#fff",
           }}
           onClick={() => {
             onEditClicked(0);
@@ -181,27 +156,28 @@ const Project = (props) => {
             <span>상태</span>
           </div>
         </div>
+        {console.log(projectList)}
         {projectList.map((project, index) =>
-          project.stored == stored ? (
+          project.isStored == isStored ? (
             <div className="list">
               <div className="title">
-                <span>{project.title}</span>
+                <span>{project.projectTitle}</span>
               </div>
               <div className="pid">
-                <span>{project.pid}</span>
+                <span>{project.projectId}</span>
               </div>
               <div className="category">
-                <span>{project.category}</span>
+                <span>{project.studyType}</span>
               </div>
               <div className="status">
                 <span>{project.status}</span>
                 <button
                   className="store"
                   onClick={() => {
-                    onStoredisplayClick(projectList, project.id);
+                    onisStoredisplayClick(project.id);
                   }}
                 >
-                  {stored ? "게시" : "보관"}
+                  {isStored ? "게시" : "보관"}
                 </button>
                 <button
                   className="edit"
