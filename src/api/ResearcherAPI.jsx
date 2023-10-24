@@ -39,7 +39,10 @@ export async function putResearchers(id, researcher, image) {
 	const infoJson = JSON.stringify(info);
 
 	data.append('info', new Blob([infoJson], { type: 'application/json' }));
-	data.append('image', image);
+	if (image) {
+		data.append('image', image);
+		console.log('이미지 변경함');
+	}
 	console.log(data);
 
 	return fetch(`http://43.202.46.227/api/researchers/${id}`, {
@@ -81,7 +84,10 @@ export async function postResearchers(researcher, image) {
 	const infoJson = JSON.stringify(info);
 
 	data.append('info', new Blob([infoJson], { type: 'application/json' }));
-	data.append('image', image);
+	if (image) {
+		data.append('image', image);
+	}
+
 	console.log(data);
 
 	return fetch(`http://43.202.46.227/api/researchers/`, {

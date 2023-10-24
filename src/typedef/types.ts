@@ -38,6 +38,13 @@ export type Insights = {
 	stored: boolean;
 };
 
+export type InsightApi = {
+	id: number;
+	createDate: Date;
+	title: string;
+	category: string;
+	isStored: boolean;
+};
 export type Newsletters = {
 	id: number;
 	email: string;
@@ -74,10 +81,9 @@ export type OnApplyClicked = (
 ) => void;
 
 export type OnApplyInsight = (
-	edit: boolean,
 	id: number,
 	type: string,
-	pdfList: string[],
+	selectedFiles: File[],
 	text: string,
 ) => void;
 

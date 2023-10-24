@@ -184,7 +184,7 @@ const ResearcherInfo = ({
 					<label htmlFor='mainInput'>
 						<img src={images.download} alt='Upload' />
 						<div className='text'>User profile Image</div>
-						{selectedProfile ? <p>{selectedProfile.name}</p> : <p>{profile}</p>}
+						{selectedProfile ? <p>{selectedProfile.name}</p> : ''}
 						<input
 							type='file'
 							id='mainInput'

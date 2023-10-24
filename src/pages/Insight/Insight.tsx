@@ -1,10 +1,10 @@
 import React from 'react';
-import { Insights } from '@typedef/types';
+import { Insights, InsightApi } from '@typedef/types';
 import images from 'src/assets/images';
 import './styles/insight.styles.css';
 import { EChange } from '@typedef/types';
 type Props = {
-	insightList: Insights[];
+	insightList: InsightApi[];
 	displayedColor: number;
 	onDisplayedClick: () => void;
 	storedColor: number;
@@ -12,16 +12,11 @@ type Props = {
 	search: string;
 	onSetSearch: (e: EChange) => void;
 	stored: boolean;
-	filteredList: Insights[];
-	onStoredisplayClick: (filteredList: Insights[], index: number) => void;
+	filteredList: InsightApi[];
+	onStoredisplayClick: (filteredList: InsightApi[], index: number) => void;
 	onTrashClick: (index: number) => void;
-	onEditClicked: (
-		edit: boolean,
-		id: number,
-		type: string,
-		pdfList: string[],
-		text: string,
-	) => void;
+	onEditClicked: (id: number) => void;
+	formatDate: (date: Date) => string;
 };
 
 const Insight = ({
@@ -37,6 +32,7 @@ const Insight = ({
 	onStoredisplayClick,
 	onTrashClick,
 	onEditClicked,
+	formatDate,
 }: Props) => {
 	return (
 		<div className='insight'>
@@ -76,7 +72,7 @@ const Insight = ({
 						color: stored ? '#9E9E9E' : '#fff',
 					}}
 					onClick={() => {
-						onEditClicked(false, insightList.length + 1, 'White paper', [], '');
+						onEditClicked(0);
 					}}
 				>
 					인사이트 추가
@@ -95,16 +91,16 @@ const Insight = ({
 					</div>
 				</div>
 				{filteredList.map((insight, index) =>
-					insight.stored == stored ? (
+					insight.isStored == stored ? (
 						<div className='list'>
 							<div className='type'>
-								<span>{insight.type}</span>
+								<span>{insight.category}</span>
 							</div>
 							<div className='title'>
 								<span>{insight.title}</span>
 							</div>
 							<div className='date'>
-								<span>{insight.date}</span>
+								<span>{formatDate(insight.createDate)}</span>
 								<button
 									className='store'
 									onClick={() => {
@@ -116,13 +112,7 @@ const Insight = ({
 								<button
 									className='edit'
 									onClick={() => {
-										onEditClicked(
-											true,
-											insight.id,
-											insight.type,
-											insight.pdfList,
-											insight.title,
-										);
+										onEditClicked(insight.id);
 									}}
 								>
 									편집

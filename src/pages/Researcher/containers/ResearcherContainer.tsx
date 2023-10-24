@@ -114,50 +114,57 @@ const ResearcherContainer = ({}: Props) => {
 	);
 
 	useEffect(() => {
-		getResearchers().then((data) => {
-			//console.log(data.data); // 나옴
-			const updatedList: ResearcherList = [];
-			data.data.map((d: any) => {
-				const tempData: Researchers = {
-					id: d.id,
-					name: d.name,
-					profile: d.image ? d.image : images.orcagroup,
-					location: d.locationNumber,
-					department: d.affiliation,
-					project: d.projectType,
-					stored: false,
-					link: 'https://ca70-221-166-133-218.ngrok-free.app',
-					twitter: `twitter`,
-					biography: 'Biography of researcher',
-					publications: [
-						{
-							link: 'www.bodybuilding.com',
-							title: 'Olympia',
-							author: 'Chris, Bumstead',
-							pubYear: 2023,
-							journal: 'Classic',
-							conference: 'Physique',
-							volume: 'Grand Prix',
-							editable: false,
-						},
-					],
-				};
-				updatedList.push(tempData);
+		setTimeout(() => {
+			getResearchers().then((data) => {
+				//console.log(data.data); // 나옴
+				const updatedList: ResearcherList = [];
+				data.data.map((d: any) => {
+					const tempData: Researchers = {
+						id: d.id,
+						name: d.name,
+						profile: d.image ? d.image : images.orcagroup,
+						location: d.locationNumber,
+						department: d.affiliation,
+						project: d.projectType,
+						stored: false,
+						link: 'https://ca70-221-166-133-218.ngrok-free.app',
+						twitter: `twitter`,
+						biography: 'Biography of researcher',
+						publications: [
+							{
+								link: 'www.bodybuilding.com',
+								title: 'Olympia',
+								author: 'Chris, Bumstead',
+								pubYear: 2023,
+								journal: 'Classic',
+								conference: 'Physique',
+								volume: 'Grand Prix',
+								editable: false,
+							},
+						],
+					};
+					updatedList.push(tempData);
+				});
+				setResearcherList(updatedList);
+				//console.log(researcherList); // 안나옴
 			});
-			setResearcherList(updatedList);
-			//console.log(researcherList); // 안나옴
-		});
+		}, 200);
 
 		return () => {};
 	}, []);
 	useEffect(() => {
-		setTimeout(() => {
-			setFilteredList(
-				researcherList.filter(
-					(researcher) => researcher.name.indexOf(search) !== -1,
-				),
-			);
-		}, 150);
+		setFilteredList(
+			researcherList.filter(
+				(researcher) => researcher.name.indexOf(search) !== -1,
+			),
+		);
+		// setTimeout(() => {
+		// 	setFilteredList(
+		// 		researcherList.filter(
+		// 			(researcher) => researcher.name.indexOf(search) !== -1,
+		// 		),
+		// 	);
+		// }, 300);
 
 		return () => {};
 	}, [researcherList, search]);
