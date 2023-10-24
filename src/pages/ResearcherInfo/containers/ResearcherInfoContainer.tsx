@@ -68,6 +68,7 @@ Props) => {
 				setDepartmentEdit(data.data.affiliation);
 				setProjectEdit(data.data.projectType);
 				setProfile(data.data.image);
+				//setSelectedProfile(data.data.image);
 				setLinkEdit(data.data.linkedIn);
 				setTwitterEdit(data.data.twitter);
 				setBiographyEdit(data.data.biography);
@@ -322,10 +323,11 @@ Props) => {
 					editable: false,
 				});
 			}
+			console.log(selectedProfile);
 			const createTempResearcher = () => ({
 				affiliation: departmentEdit,
 				id,
-				image: selectedProfile ? selectedProfile : null,
+
 				locationNumber: locationEdit,
 				name: nameEdit,
 				projectType: projectEdit,
@@ -335,7 +337,7 @@ Props) => {
 				biography: biographyEdit,
 				publications: filteredPublicationEdit,
 			});
-			console.log(createTempResearcher().name);
+
 			console.log(id);
 
 			if (id == 0) {

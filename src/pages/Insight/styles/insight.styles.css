@@ -99,7 +99,7 @@
   line-height: 40px;
 }
 .insight-body .label .title, .insight-body .label .list .date, .insight-body .list .label .date {
-  width: 714px;
+  width: 713px;
   margin-right: 1px;
   background-color: black;
 }
@@ -294,7 +294,7 @@
     line-height: 40px;
   }
   .insight-body .label .title, .insight-body .label .list .date, .insight-body .list .label .date {
-    width: 349px;
+    width: 348px;
     margin-right: 1px;
     background-color: black;
   }

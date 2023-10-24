@@ -144,27 +144,11 @@ const RootNavigation = () => {
 						/>
 					}
 				/>
-				<Route
-					path='/insight'
-					element={
-						<InsightContainer
-							insightList={insightList}
-							setInsightList={setInsightList}
-						/>
-					}
-				/>
+				<Route path='/insight' element={<InsightContainer />} />
 				<Route path='/project' element={<Project />} />
 				<Route path='/project/default' element={<ProjectDetail />} />
 				<Route path='/event' element={<Events />} />
-				<Route
-					path='/insightinfo'
-					element={
-						<InsightInfoContainer
-							insightList={insightList}
-							setInsightList={setInsightList}
-						/>
-					}
-				/>
+				<Route path='/insightinfo/:id' element={<InsightInfoContainer />} />
 				<Route path='/newsletter' element={<NewsletterContainer />} />
 				<Route path='/orcagroup' element={<OrcagroupContainer />} />
 			</Routes>

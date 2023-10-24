@@ -1,21 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Insight from '../Insight';
-import { Insights, ResearcherList } from '@typedef/types';
+import { Insights, ResearcherList, InsightApi } from '@typedef/types';
 import { EChange } from '@typedef/types';
 import { useNavigate } from 'react-router-dom';
-type Props = {
-	insightList: Insights[];
-	setInsightList: any;
-};
+import { getInsights, deleteInsight, storeInsight } from 'src/api/InsightAPI';
+type Props = {};
 
-const InsightContainer = ({ insightList, setInsightList }: Props) => {
+const InsightContainer = ({}: Props) => {
 	const navigate = useNavigate();
 	const [displayedColor, setDisplayedColor] = useState(1);
 	const [storedColor, setStoredColor] = useState(0.3);
+	const [insightList, setInsightList] = useState<InsightApi[]>([]);
 	const [stored, setStored] = useState(false);
 	const [edit, setEdit] = useState(0);
 	const [search, setSearch] = useState('');
-	const [filteredList, setFilteredList] = useState<Insights[]>(insightList);
+	const [filteredList, setFilteredList] = useState<InsightApi[]>(insightList);
 
 	const onDisplayedClick = useCallback(() => {
 		if (stored) {
@@ -38,11 +37,17 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 		[search],
 	);
 	const onStoredisplayClick = useCallback(
-		(insightList: Insights[], id: number) => {
+		(insightList: InsightApi[], id: number) => {
 			const updatedList = [...insightList]; // Create a copy of the list
 			for (let i = 0; i < updatedList.length; i++) {
 				if (updatedList[i].id == id) {
-					updatedList[i].stored = !updatedList[i].stored;
+					updatedList[i].isStored = !updatedList[i].isStored;
+					storeInsight(id, updatedList[i].isStored).then((data) => {
+						//console.log(data.data); // 나옴
+
+						console.log(data);
+						//console.log(researcherList); // 안나옴
+					});
 					break;
 				}
 			}
@@ -52,38 +57,65 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 	);
 	const onTrashClick = useCallback(
 		(id: number) => {
-			setInsightList((prevList: Insights[]) => {
+			setInsightList((prevList: InsightApi[]) => {
 				const updatedList = prevList.filter((insight) => insight.id !== id);
 				return updatedList;
+			});
+			deleteInsight(id).then((data) => {
+				//console.log(data.data); // 나옴
+
+				console.log(data);
+				//console.log(researcherList); // 안나옴
 			});
 		},
 		[insightList],
 	);
 	const onEditClicked = useCallback(
-		(
-			edit: boolean,
-			id: number,
-			type: string,
-			pdfList: string[],
-			title: string,
-		) => {
-			navigate('/insightinfo', {
-				state: {
-					Edit: edit,
-					Id: id,
-					Type: type,
-					PdfList: pdfList,
-					Title: title,
-				},
-			});
+		(id: number) => {
+			navigate(`/insightinfo/${id}`);
 			window.scrollTo(0, 0);
 		},
 		[edit],
 	);
+	function formatDate(date: Date) {
+		const year = date.getFullYear().toString().substr(-2); // 년도의 마지막 두 자리
+		const month = date.getMonth() + 1; // 월을 문자열로 변환
+		const day = date.getDate(); // 일
+
+		return `${day}.${month}.${year}`;
+	}
+	useEffect(() => {
+		setTimeout(() => {
+			getInsights().then((data) => {
+				console.log(data.data); // 나옴
+				const updatedList: InsightApi[] = [];
+				data.data.map((d: any) => {
+					const tempData: InsightApi = {
+						id: d.id,
+						createDate: new Date(d.createDate),
+						category: d.category,
+						title: d.title,
+						isStored: d.isStored,
+					};
+					updatedList.push(tempData);
+				});
+				setInsightList(updatedList);
+				console.log(insightList); // 안나옴
+			});
+		}, 200);
+
+		return () => {};
+	}, []);
 	useEffect(() => {
 		setFilteredList(
 			insightList.filter((insight) => insight.title.indexOf(search) !== -1),
 		);
+		// setTimeout(() => {
+		// 	setFilteredList(
+		// 		insightList.filter((insight) => insight.title.indexOf(search) !== -1),
+		// 	);
+		// }, 300);
+
 		return () => {};
 	}, [search, insightList]);
 
@@ -101,6 +133,7 @@ const InsightContainer = ({ insightList, setInsightList }: Props) => {
 			onStoredisplayClick={onStoredisplayClick}
 			onTrashClick={onTrashClick}
 			onEditClicked={onEditClicked}
+			formatDate={formatDate}
 		/>
 	);
 };

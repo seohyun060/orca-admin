@@ -1,21 +1,28 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import InsightInfo from '../InsightInfo';
 import { Insights } from '@typedef/types';
-import { useLocation, useNavigate } from 'react-router-dom';
-type Props = { insightList: Insights[]; setInsightList: any };
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+	getInsightDetail,
+	postInsights,
+	putInsights,
+} from 'src/api/InsightAPI';
+type Props = {};
 
-const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
+const InsightInfoContainer = ({}: Props) => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const edit = location.state.Edit;
-	const id = location.state.Id;
+	//const edit = location.state.Edit;
+	//const id = location.state.Id;
+	const params = useParams();
+	const [id, setId] = useState(0);
 
 	const [dropbox, setDropbox] = useState(false);
-	const [selectedType, setSelectedType] = useState(location.state.Type);
-	const [titleEdit, setTitleEdit] = useState(location.state.Title);
-	const [pdfListEdit, setPdfListEdit] = useState<string[]>(
-		location.state.PdfList,
-	); // 넘겨받은 pdf url을 관리할 배열 state
+	const [selectedType, setSelectedType] = useState('');
+	const [titleEdit, setTitleEdit] = useState('');
+	const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+
+	const [pdfListEdit, setPdfListEdit] = useState<string[]>([]); // 넘겨받은 pdf url을 관리할 배열 state
 
 	const onDropboxClicked = useCallback(() => {
 		setDropbox((prev) => !prev);
@@ -41,15 +48,18 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 	const uploadPdfHandler = useCallback(
 		(event: ChangeEvent<HTMLInputElement>, index: number) => {
 			const file = event.target.files?.[0];
+			console.log(file);
 			if (file) {
 				const url = URL.createObjectURL(file);
 				const updatedUrlList = [...pdfListEdit];
 				updatedUrlList[index] = url;
 				setPdfListEdit(updatedUrlList);
+				setSelectedFiles([...selectedFiles, file]);
 			}
 		},
 		[pdfListEdit, setPdfListEdit],
 	);
+	console.log(selectedFiles);
 	const onChangeTitleEdit = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 			setTitleEdit(e.target.value);
@@ -61,50 +71,73 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 		window.scrollTo(0, 0);
 	}, []);
 	const onApplyClicked = useCallback(
-		(
-			edit: boolean,
-			id: number,
-			type: string,
-			pdfList: string[],
-			title: string,
-		) => {
-			const filteredUrlList = pdfList.filter((item) => item !== '');
+		(id: number, type: string, selectedFiles: File[], title: string) => {
+			const filteredUrlList = selectedFiles.filter((item) => item !== null);
 			const createTempInsight = () => ({
 				id: id,
-				type: type,
-				text: edit
-					? insightList.find((insight) => insight.id === id)?.text
-					: '',
-				date: edit
-					? insightList.find((insight) => insight.id === id)?.date
-					: '',
-				pdfList: filteredUrlList,
+				category: type,
 				title: title,
-				stored: edit
-					? insightList.find((insight) => insight.id === id)?.stored
-					: false,
+				files: selectedFiles,
 			});
+			console.log(createTempInsight());
+			// const updatedInsights = edit
+			// 	? insightList.map((insight) =>
+			// 			insight.id === id ? createTempInsight() : insight,
+			// 	  )
+			// 	: [...insightList, createTempInsight()];
 
-			const updatedInsights = edit
-				? insightList.map((insight) =>
-						insight.id === id ? createTempInsight() : insight,
-				  )
-				: [...insightList, createTempInsight()];
+			// setInsightList(updatedInsights);
+			if (id == 0) {
+				console.log('제발요');
+				postInsights(createTempInsight());
+			} else {
+				putInsights(id, createTempInsight());
+			}
 
-			setInsightList(updatedInsights);
 			navigate('/insight');
 			window.scrollTo(0, 0);
 		},
 		[
-			edit,
-			id,
+			// edit,
+			// id,
 			selectedType,
 			pdfListEdit,
 			titleEdit,
-			insightList,
-			setInsightList,
+			// insightList,
+			// setInsightList,
 		],
 	);
+	useEffect(() => {
+		if (params.id != '0') {
+			getInsightDetail(params.id).then((data) => {
+				console.log(data.data); // 나옴
+				//const updatedList: ResearcherList = [];
+				setId(data.data.id);
+				setSelectedType(data.data.category);
+				setPdfListEdit(data.data.files);
+				setTitleEdit(data.data.title);
+				// if (data.data.publications.length != 0) {
+				// 	const updatedPublication = [...publicationEdit];
+				// 	for (let i = 0; i < pubAPI.length; i++) {
+				// 		updatedPublication[i].title = pubAPI[i].title;
+				// 		updatedPublication[i].author = pubAPI[i].author;
+				// 		updatedPublication[i].year = pubAPI[i].pubYear;
+				// 		updatedPublication[i].journal = pubAPI[i].journal;
+				// 		updatedPublication[i].conference = pubAPI[i].conference;
+				// 		updatedPublication[i].ho = pubAPI[i].volume;
+				// 		updatedPublication[i].link = pubAPI[i].link;
+				// 	}
+				// 	setPublicationEdit(updatedPublication);
+				// 	console.log(updatedPublication);
+				// }
+
+				//console.log(researcherList); // 안나옴
+			});
+		}
+
+		return () => {};
+	}, []);
+
 	return (
 		<InsightInfo
 			dropbox={dropbox}
@@ -116,11 +149,13 @@ const InsightInfoContainer = ({ insightList, setInsightList }: Props) => {
 			onChangeTitleEdit={onChangeTitleEdit}
 			onBackClicked={onBackClicked}
 			pdfListEdit={pdfListEdit}
-			id={id}
+			//id={id}
 			selectedType={selectedType}
 			onApplyClicked={onApplyClicked}
-			edit={edit}
+			//edit={edit}
 			onSubClicked={onSubClicked}
+			id={id}
+			selectedFiles={selectedFiles}
 		/>
 	);
 };

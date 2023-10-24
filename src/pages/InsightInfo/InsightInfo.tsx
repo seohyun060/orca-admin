@@ -16,11 +16,13 @@ type Props = {
 	onChangeTitleEdit: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	onBackClicked: any;
 	pdfListEdit: string[];
-	id: number;
+
 	selectedType: string;
 	onApplyClicked: OnApplyInsight;
-	edit: boolean;
+
 	onSubClicked: (index: number) => void;
+	id: number;
+	selectedFiles: File[];
 };
 
 const InsightInfo = ({
@@ -33,17 +35,19 @@ const InsightInfo = ({
 	onChangeTitleEdit,
 	onBackClicked,
 	pdfListEdit,
-	id,
+
 	selectedType,
 	onApplyClicked,
-	edit,
+
 	onSubClicked,
+	id,
+	selectedFiles,
 }: Props) => {
 	const insightTypes: string[] = [
-		'White paper',
-		'Publicaiton',
-		'News',
-		'Education',
+		'WHITE_PAPER',
+		'PUBLICATION',
+		'NEWS',
+		'EDUCATION',
 	];
 	return (
 		<div className='insightinfo'>
@@ -56,7 +60,7 @@ const InsightInfo = ({
 				<div
 					className='upload'
 					onClick={() => {
-						onApplyClicked(edit, id, selectedType, pdfListEdit, titleEdit);
+						onApplyClicked(id, selectedType, selectedFiles, titleEdit);
 					}}
 				>
 					올리기
