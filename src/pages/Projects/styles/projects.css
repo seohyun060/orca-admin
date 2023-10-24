@@ -140,6 +140,9 @@
   font-size: 22px;
   font-style: normal;
   font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .Project-body .list .title, .Project-body .list .status {
   width: 377px;
@@ -301,6 +304,7 @@
 .ProjectCompleteDate .clickLayout input {
   border: none;
   width: 200px;
+  caret-color: transparent;
 }
 .ProjectStartDate .clickLayout img,
 .ProjectCompleteDate .clickLayout img {
