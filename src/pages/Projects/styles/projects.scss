@@ -148,6 +148,9 @@
           font-size: 22px;
           font-style: normal;
           font-weight: 400;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          white-space:nowrap;
         }
       }
       .title {
@@ -324,6 +327,7 @@
     input {
       border: none;
       width: 200px;
+      caret-color: transparent;
     }
     img {
       width: 25px;

@@ -11,7 +11,12 @@ import SetEventDateCalendar from "../Events/components/SetEventDateCalendar";
 
 import ProjectDummy from "./ProjectDummy";
 
-import { testAPI, getOneProjectData } from "src/api/projectsAPI";
+import {
+  testAPI,
+  getOneProjectData,
+  postNewProjectData,
+  deleteOneProjectData,
+} from "src/api/projectsAPI";
 
 const ProjectDetail = () => {
   const navigate = useNavigate();
@@ -21,6 +26,7 @@ const ProjectDetail = () => {
   const [projectData, setProjectData] = useState([]);
 
   const status = ["Active", "Completed", "Terminated"];
+  const statusInPost = ["ACTIVE", "COMPLETED", "TERMINATED"];
   const [isStatusChecked, setIsStatusChecked] = useState([false, false, false]);
   const [projectTitle, setProjectTitle] = useState();
 
@@ -52,9 +58,11 @@ const ProjectDetail = () => {
 
   const [projectAgeEligible, setProjectAgeEligible] = useState();
   const sexes = ["Female", "Male", "-"];
+  const sexesInPost = ["FEMALE", "MALE", "ALL"];
   const [isSexesChecked, setIsSexesChecked] = useState([true, false, false]);
   const [projectSexEligible, setProjectSexEligible] = useState("Female");
   const Volunteers = ["Yes", "No", "-"];
+  const VolunteersInPost = ["YES", "NO", "NOT_SPECIFIED"];
   const [isVolunteersChecked, setIsVolunteersChecked] = useState([
     true,
     false,
@@ -78,6 +86,7 @@ const ProjectDetail = () => {
   const [projectPublications, setProjectPublications] = useState();
 
   const onPiButtonClick = (id) => {
+    console.log(projectPi);
     const lastIndex = projectPi[projectPi.length - 1].id;
     if (id === lastIndex) {
       setProjectPi([
@@ -92,6 +101,7 @@ const ProjectDetail = () => {
   };
 
   const onCollaboratorsButtonClick = (id) => {
+    console.log(projectCollaborators);
     console.log(projectCollaborators);
     const lastIndex = projectCollaborators[projectCollaborators.length - 1].id;
     if (id === lastIndex) {
@@ -238,11 +248,17 @@ const ProjectDetail = () => {
   const initProject = () => {
     if (id !== 0) {
       getOneProjectData(id).then((data) => {
+        console.log(data);
+
         const project = data.data;
         setProjectData(project);
-        setProjectTitle(project.title);
+        onStatusButtonClick(statusInPost.indexOf(project.status));
+        setProjectTitle(project.projectTitle);
         setProjectStartDate(project.startDate);
         setProjectCompleteDate(project.completeDate);
+        setProjectEnrollment(project.enrollment);
+        setProjectStudyType(project.studyType)
+        setProjectOtherStudyId(project.otherStudyId)
         setProjectOverview(project.overview);
         setProjectOfficialTitle(project.officialTitle);
         setProjectConditions(project.conditions);
@@ -276,15 +292,33 @@ const ProjectDetail = () => {
   };
 
   const test = (e) => {
-    // testAPI();
     const formData = new FormData(document.getElementById("projectForm"));
-    console.log(formData);
+    formData.append("projectID", "1.23456");
+    formData.append("status", statusInPost[isStatusChecked.indexOf(true)]);
+
+    formData.append("sexEligible", sexesInPost[isSexesChecked.indexOf(true)]);
+    formData.append(
+      "acceptedHealthy",
+      VolunteersInPost[isVolunteersChecked.indexOf(true)]
+    );
+
     let entries = formData.entries();
     for (const pair of entries) {
       console.log(pair[0] + ", " + pair[1]);
     }
 
     e.preventDefault();
+    postNewProjectData(formData).then((data) => {
+      console.log(data);
+    });
+
+    // deleteOneProjectData(11).then((data) => {
+    //   console.log(data);
+    // });
+
+    // testAPI().then((data) => {
+    //   console.log(data);
+    // });
   };
 
   useEffect(() => {
@@ -331,6 +365,7 @@ const ProjectDetail = () => {
                 placeholder="Text"
                 value={projectTitle}
                 onChange={(e) => setProjectTitle(e.target.value)}
+                required
               />
             </div>
             <div className="ProjectDetailPeriod">
@@ -728,15 +763,16 @@ const ProjectDetail = () => {
         <article className="divideSector">
           <div className="Publiciations">
             <div className="title">Publications</div>
-            {projectPublications && projectPublications.map((data) => (
-              <PublicationForm
-                id={data.id}
-                link={data.link}
-                onButtonClick={onPublicationsButtonClick}
-                inputData={projectPublications}
-                changeInputData={setProjectPublications}
-              />
-            ))}
+            {projectPublications &&
+              projectPublications.map((data) => (
+                <PublicationForm
+                  id={data.id}
+                  link={data.link}
+                  onButtonClick={onPublicationsButtonClick}
+                  inputData={projectPublications}
+                  changeInputData={setProjectPublications}
+                />
+              ))}
           </div>
         </article>
       </form>

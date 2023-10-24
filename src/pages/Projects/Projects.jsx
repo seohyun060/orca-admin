@@ -86,12 +86,39 @@ const Project = (props) => {
   }, []);
 
   useEffect(() => {
+    const updatedProjects = [];
+    // for (let i = 0; i < 10; i++) {
+    //   const project = {
+    //     id: i + 1,
+    //     title: "Project name",
+    //     pid: "1234sd6879ds4fd",
+    //     category: "CadAI-B/T",
+    //     status: "Completed",
+    //     stored: false,
+    //   };
+    //   updatedProjects.push(project);
+    // }
+    projectData.map((data, i) => {const project = {
+      id: data.id,
+      title: data.projectTitle,
+      pid: data.projectId,
+      category: data.studyType,
+      status: data.status,
+      stored: false,
+    };
+    updatedProjects.push(project);})
+    setProjectList(updatedProjects);
+    console.log(projectData)
+
+  }, [projectData]);
+
+  useEffect(() => {
     setFilteredList(
-      projectList.filter((project) => {
-        if (project.title.includes(search)) {
-          return true;
-        }
-      })
+      // projectList.filter((project) => {
+      //   if (project.title.includes(search)) {
+      //     return true;
+      //   }
+      // })
     );
   }, [search, projectList]);
 
