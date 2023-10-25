@@ -8,18 +8,16 @@ import {
 
 import images from "src/assets/images";
 
+MapContainer.MAP_LIBRARIES = ["places"];
+
 function MapContainer(props) {
-  const { latitude, longitude } = props;
-  console.log(props);
+  const { latitude, longitude, location, setLocation } = props;
 
   const [searchBox, setSearchBox] = useState(null);
   const [center, setCenter] = useState({
     lat: latitude, // 위도
     lng: longitude, // 경도
   });
-  const [location, setLocation] = useState();
-
-  const libraries = ["places"];
 
   const containerStyle = {
     width: "1496px",
@@ -60,7 +58,7 @@ function MapContainer(props) {
   return (
     <LoadScript
       googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
-      libraries={libraries}
+      libraries={MapContainer.MAP_LIBRARIES}
     >
       <div className="EventLocationInput">
         <div className="ArticleTitle">Location</div>

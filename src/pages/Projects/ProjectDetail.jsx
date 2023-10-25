@@ -295,7 +295,7 @@ const ProjectDetail = () => {
   };
 
   const onApplyClick = async (e) => {
-    if (projectTitle == null) {
+    if (projectTitle == null || projectTitle == "") {
       return;
     }
     e.preventDefault();

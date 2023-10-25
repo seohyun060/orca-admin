@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-
 import EventsDashboard from "./components/EventsDashboard";
 import MapContainer from "./components/MapContainer";
 
@@ -11,11 +9,11 @@ import SetEventDateCalendar from "./components/SetEventDateCalendar";
 import "./styles/events.css";
 import images from "src/assets/images";
 
-import EventDummyData from "./EventDummyData.json";
-
 import {
   getAllEventData,
   getOneEventData,
+  postNewEventData,
+  putOneEventData,
   deleteOneEventData,
 } from "src/api/eventsAPI";
 
@@ -29,7 +27,7 @@ const Events = () => {
   const [eventsData, setEventsData] = useState();
 
   const [selectedMain, setSelectedMain] = useState(null);
-  const [articleTitle, setArticleTitle] = useState();
+  const [eventTitle, setEventTitle] = useState();
   const [isStartDateClick, setIsStartDateClick] = useState(false);
   const [eventStartDate, setEventStartDate] = useState(today);
   const [isEndDateClick, setIsEndDateClick] = useState(false);
@@ -42,6 +40,7 @@ const Events = () => {
 
   const [eventPurpose, setEventPurpose] = useState();
   const [eventExplanation, setEventExplanation] = useState();
+  const [eventLocation, setEventLocation] = useState();
   const [eventLatitude, setEventLatitude] = useState();
   const [eventLongitude, setEventLongitude] = useState();
 
@@ -49,8 +48,6 @@ const Events = () => {
   const [eventGalleryImg, setEventGalleryImg] = useState([
     { id: 1, file: null },
   ]);
-
-  console.log("id:", isFormOpen);
 
   const initEventdata = () => {
     getAllEventData().then((data) => {
@@ -114,20 +111,82 @@ const Events = () => {
     );
   };
 
+  const onApplyEvent = async (e) => {
+    if (eventTitle == null || eventTitle == "") {
+      return;
+    }
+    e.preventDefault();
+
+    const formData = new FormData(document.getElementById("eventForm"));
+
+    formData.append("isEnded", isPast);
+    console.log(selectedMain);
+    if (selectedMain != null) {
+      formData.append("thumbnail", selectedMain);
+    }
+
+    formData.append("isAllDay", isAlldayChecked);
+    const openingHour =
+      eventOpeningHoursHour >= 0 &&
+      eventOpeningHoursHour <= 24 &&
+      eventOpeningHoursMinute >= 0 &&
+      eventOpeningHoursMinute <= 60
+        ? moment()
+            .add(eventOpeningHoursHour, "h")
+            .add(eventOpeningHoursMinute, "m")
+            .format("HH:mm")
+        : "00:00";
+    formData.append("openingHour", openingHour);
+
+    console.log(eventDetailImg);
+    eventDetailImg.map((data) => {
+      if (data.file != null) {
+        formData.append("mainImages", data.file);
+      }
+    });
+
+    formData.append("location", eventLocation);
+    formData.append("latitude", eventLatitude);
+    formData.append("longitude", eventLongitude);
+
+    console.log(eventGalleryImg);
+    eventGalleryImg.map((data) => {
+      if (data.file != null) {
+        formData.append("galleries", data.file);
+      }
+    });
+
+    let entries = formData.entries();
+    for (const pair of entries) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    if (isFormOpen === -1) {
+      postNewEventData(formData).then((data) => {
+        console.log(data);
+        window.location.reload();
+      });
+    } else if (isFormOpen > 0) {
+      // putOneEventData();
+    }
+  };
+
   useEffect(() => {
     initEventdata();
   }, []);
 
   useEffect(() => {
-    if (isFormOpen) {
+    if (isFormOpen > 0) {
       console.log(isFormOpen);
       getOneEventData(isFormOpen).then((data) => {
         console.log(data);
         const eventData = data.data;
 
         setIsPast(eventData.isEnded);
-        setSelectedMain({ name: eventData.thumbnail });
-        setArticleTitle(eventData.title);
+        setSelectedMain(
+          eventData.thumbnail ? { name: eventData.thumbnail } : null
+        );
+        setEventTitle(eventData.title);
         const startDate = moment(eventData.startDate).format("YYYY-MM-DD");
         setEventStartDate(startDate);
         const endDate = moment(eventData.endDate).format("YYYY-MM-DD");
@@ -135,6 +194,7 @@ const Events = () => {
         if (startDate !== endDate) {
           setIsAlldayChecked(false);
         }
+        setIsAlldayChecked(eventData.isAllDay);
         setEventVenue(eventData.venue);
         setEventOpeningHoursHour(eventData.openingHour.split(":")[0]);
         setEventOpeningHoursMinute(eventData.openingHour.split(":")[1]);
@@ -162,6 +222,24 @@ const Events = () => {
         setEventLatitude(eventData.latitude);
         setEventLongitude(eventData.longitude);
       });
+    } else {
+      setIsPast(false);
+      setSelectedMain();
+      setEventTitle();
+      setEventStartDate(today);
+      setEventEndDate(today);
+      setIsAlldayChecked(true);
+      setEventVenue();
+      setEventOpeningHoursHour();
+      setEventOpeningHoursMinute();
+      setRelatedWebsite();
+      setEventPurpose();
+      setEventExplanation();
+      // 지도 초기 props값 세팅
+      setEventLatitude(35.9552);
+      setEventLongitude(128.566);
+      setEventDetailImg([{ id: 1, file: null }]);
+      setEventGalleryImg([{ id: 1, file: null }]);
     }
   }, [isFormOpen]);
 
@@ -171,15 +249,12 @@ const Events = () => {
     }
   };
 
-  console.log(selectedMain);
-  console.log(eventDetailImg);
-
   return (
     <div className="Layout">
       <div className="EventUpperBar">
         <div className="title semi24">이벤트 페이지</div>
         {!isFormOpen ? (
-          <button className="ApplyButton" onClick={() => setIsFormOpen(true)}>
+          <button className="ApplyButton" onClick={() => setIsFormOpen(-1)}>
             새로 추가
           </button>
         ) : (
@@ -192,17 +267,19 @@ const Events = () => {
         <EventsDashboard eventData={eventsData} setIsFormOpen={setIsFormOpen} />
       )}
       {isFormOpen ? (
-        <form onsubmit="return false">
+        <form id="eventForm">
           <div className="EventInputLayout">
             <div className="EventInputLayoutUpperBar">
               <div className="EventSelectButtonSet">
                 <button
+                  type="button"
                   className={isPast.toString()}
                   onClick={() => setIsPast(true)}
                 >
                   종료된 이벤트
                 </button>
                 <button
+                  type="button"
                   className={(!isPast).toString()}
                   onClick={() => setIsPast(false)}
                 >
@@ -211,10 +288,8 @@ const Events = () => {
               </div>
               <button
                 className="SaveButton"
-                onClick={() => {
-                  for (let i = 25; i <= 84; i++) {
-                    deleteOneEventData(i);
-                  }
+                onClick={(e) => {
+                  onApplyEvent(e);
                 }}
               >
                 적용
@@ -245,8 +320,9 @@ const Events = () => {
                 name="title"
                 className="ArticleInputArea"
                 placeholder="Text"
-                value={articleTitle}
-                onChange={(e) => setArticleTitle(e.target.value)}
+                value={eventTitle}
+                onChange={(e) => setEventTitle(e.target.value)}
+                required
               />
             </div>
             <div className="EventPeriodInput">
@@ -334,10 +410,8 @@ const Events = () => {
                     <div className="title">Opening Hours</div>
                     <div className="EventPeriodDetailTime">
                       <input
-                        type="number"
+                        maxLength={2}
                         placeholder="Hour"
-                        min="0"
-                        max="23"
                         value={eventOpeningHoursHour}
                         onChange={(e) =>
                           setEventOpeningHoursHour(e.target.value)
@@ -345,10 +419,8 @@ const Events = () => {
                         onKeyDown={handleKeyDown}
                       />
                       <input
-                        type="number"
+                        maxLength={2}
                         placeholder="Minute"
-                        min="0"
-                        max="59"
                         value={eventOpeningHoursMinute}
                         onChange={(e) =>
                           setEventOpeningHoursMinute(e.target.value)
@@ -435,6 +507,8 @@ const Events = () => {
               <MapContainer
                 latitude={eventLatitude}
                 longitude={eventLongitude}
+                location={eventLocation}
+                setLocation={setEventLocation}
               />
             )}
             {isPast ? (
