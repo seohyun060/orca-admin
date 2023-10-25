@@ -37,14 +37,8 @@ export async function postNewProjectData(data) {
 }
 
 export async function putChangeStoredProjectData(id, isStored) {
-  const jsonData = JSON.stringify([]);
-
   return fetch(`http://43.202.46.227/api/projects/${id}?store=${isStored}`, {
     method: "PUT",
-    // body: jsonData,
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
   })
     .then((res) => res.json())
     .then((data) => {

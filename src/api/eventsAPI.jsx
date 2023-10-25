@@ -1,7 +1,17 @@
-import client from "./client.js";
 
 export async function getAllEventData() {
-  return fetch(`http://43.202.46.227/api/events`, {
+  return await fetch(`http://43.202.46.227/api/events`, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      return data;
+    });
+}
+
+export async function getOneEventData(id) {
+  return await fetch(`http://43.202.46.227/api/events/${id}`, {
     method: "GET",
   })
     .then((res) => res.json())
@@ -10,12 +20,13 @@ export async function getAllEventData() {
     });
 }
 
-export async function getOneEventData(id) {
-  return fetch(`http://43.202.46.227/api/events/${id}`, {
-    method: "GET",
+export async function deleteOneEventData(id) {
+  return await fetch(`http://43.202.46.227/api/events/${id}`, {
+    method: "DELETE",
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log(data)
       return data;
     });
 }

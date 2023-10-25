@@ -160,6 +160,7 @@
   }
 
   .imagePath {
+    width: 1375px;
     padding: 11px 5px;
     color: #000;
     font-family: Pretendard;
@@ -167,6 +168,9 @@
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -191,7 +195,8 @@
 
 .EventStartDate,
 .EventEndDate {
-  width: 350px;
+  width: 250px;
+  margin-right: 100px;
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
@@ -206,6 +211,15 @@
       height: 24px;
       margin-left: 10px;
       margin-right: 10px;
+    }
+    input {
+      width: 120px;
+      font-family: Pretendard;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 37px;
+      caret-color: transparent;
     }
   }
 }

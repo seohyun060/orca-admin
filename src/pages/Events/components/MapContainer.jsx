@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   GoogleMap,
   LoadScript,
@@ -8,12 +8,16 @@ import {
 
 import images from "src/assets/images";
 
-function MapContainer() {
+function MapContainer(props) {
+  const { latitude, longitude } = props;
+  console.log(props);
+
   const [searchBox, setSearchBox] = useState(null);
   const [center, setCenter] = useState({
-    lat: 35.955, // 위도
-    lng: 128.5657, // 경도
+    lat: latitude, // 위도
+    lng: longitude, // 경도
   });
+  const [location, setLocation] = useState();
 
   const libraries = ["places"];
 
@@ -35,6 +39,24 @@ function MapContainer() {
     setCenter({ lat: lat, lng: lng });
   };
 
+  useEffect(() => {
+    fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "OK") {
+          setLocation(data.results[0].formatted_address);
+        }
+      });
+  }, []);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Enter 키 이벤트를 무시하도록 기본 동작을 막음
+    }
+  };
+
   return (
     <LoadScript
       googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
@@ -47,7 +69,13 @@ function MapContainer() {
             onLoad={onSearchBoxLoad}
             onPlacesChanged={onPlacesChanged}
           >
-            <input type="text" placeholder="Text" />
+            <input
+              type="text"
+              placeholder="Text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
           </StandaloneSearchBox>
           <img src={images.search} />
         </div>

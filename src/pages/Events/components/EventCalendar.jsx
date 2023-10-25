@@ -28,17 +28,17 @@ const EventCalendar = (props) => {
 
   // onActiveStartDateChange 함수를 사용하여 활성 날짜 범위 변경 이벤트를 처리합니다.
   const changeMonth = (data) => {
-    onEventDataChange(data.activeStartDate.getMonth());
+    onEventDataChange(data.activeStartDate);
   };
 
   const tileContent = (date) => {
     let html = [];
     // 현재 날짜가 post 작성한 날짜 배열에 있다면, dot div 추가
-    eventData.data.map((data) => {
+    eventData.map((data) => {
       if (
-        moment(data.eventDate.startDate).format("YYYY-MM-DD") <=
+        moment(data.startDate).format("YYYY-MM-DD") <=
           moment(date).format("YYYY-MM-DD") &&
-        moment(data.eventDate.endDate).format("YYYY-MM-DD") >=
+        moment(data.endDate).format("YYYY-MM-DD") >=
           moment(date).format("YYYY-MM-DD")
       ) {
         html.push(<div className="dot"></div>);
