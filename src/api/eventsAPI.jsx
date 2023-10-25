@@ -30,8 +30,8 @@ export async function postNewEventData(data) {
     });
 }
 
-export async function putOneEventData(data) {
-  return await fetch(`http://43.202.46.227/api/events`, {
+export async function putOneEventData(id, data) {
+  return await fetch(`http://43.202.46.227/api/events/${id}`, {
     method: "PUT",
     body: data,
   })

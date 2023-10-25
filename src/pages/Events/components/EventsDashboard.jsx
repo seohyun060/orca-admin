@@ -19,7 +19,6 @@ const EventsDashboard = (props) => {
   const cardSize = 810 + 30;
 
   const onEventDataChange = (targetDate) => {
-    console.log(eventData);
     const targetYear = targetDate.getFullYear();
     const targetMonth = targetDate.getMonth();
     setMonthData(

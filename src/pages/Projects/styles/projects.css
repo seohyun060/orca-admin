@@ -729,6 +729,9 @@
   float: right;
   cursor: pointer;
 }
+.SaveButton:hover {
+  background: #093F71;
+}
 
 .ArticleTitle {
   display: inline-flex;

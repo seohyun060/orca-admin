@@ -164,11 +164,37 @@ const Events = () => {
     if (isFormOpen === -1) {
       postNewEventData(formData).then((data) => {
         console.log(data);
+        if (data.status !== 201) {
+          alert("저장 실패!");
+        } else {
+          alert("저장 성공!");
+        }
         window.location.reload();
       });
     } else if (isFormOpen > 0) {
-      // putOneEventData();
+      putOneEventData(isFormOpen, formData).then((data) => {
+        console.log(data);
+        if (data.status !== 201) {
+          alert("수정 실패!");
+        } else {
+          alert("수정 성공!");
+        }
+        window.location.reload();
+      });
     }
+  };
+
+  const deleteEvent = (e) => {
+    e.preventDefault();
+    deleteOneEventData(isFormOpen).then((data) => {
+      console.log(data);
+      if (data.status !== 200) {
+        alert("삭제 실패!");
+      } else {
+        alert("삭제 성공!");
+      }
+      window.location.reload();
+    });
   };
 
   useEffect(() => {
@@ -183,9 +209,9 @@ const Events = () => {
         const eventData = data.data;
 
         setIsPast(eventData.isEnded);
-        setSelectedMain(
-          eventData.thumbnail ? { name: eventData.thumbnail } : null
-        );
+        // setSelectedMain(
+        //   eventData.thumbnail ? { name: eventData.thumbnail } : null
+        // );
         setEventTitle(eventData.title);
         const startDate = moment(eventData.startDate).format("YYYY-MM-DD");
         setEventStartDate(startDate);
@@ -203,21 +229,21 @@ const Events = () => {
         setEventPurpose(eventData.purpose);
         setEventExplanation(eventData.explanation);
 
-        if (eventData.mainImages.length !== 0) {
-          const imageArray = [];
-          eventData.mainImages.map((data, idx) => {
-            imageArray.push({ id: idx, file: { name: data } });
-          });
-          setEventDetailImg(imageArray);
-        }
+        // if (eventData.mainImages.length !== 0) {
+        //   const imageArray = [];
+        //   eventData.mainImages.map((data, idx) => {
+        //     imageArray.push({ id: idx, file: { name: data } });
+        //   });
+        //   setEventDetailImg(imageArray);
+        // }
 
-        if (eventData.galleries.length !== 0) {
-          const imageArray = [];
-          eventData.galleries.map((data, idx) => {
-            imageArray.push({ id: idx, file: { name: data } });
-          });
-          setEventGalleryImg(imageArray);
-        }
+        // if (eventData.galleries.length !== 0) {
+        //   const imageArray = [];
+        //   eventData.galleries.map((data, idx) => {
+        //     imageArray.push({ id: idx, file: { name: data } });
+        //   });
+        //   setEventGalleryImg(imageArray);
+        // }
 
         setEventLatitude(eventData.latitude);
         setEventLongitude(eventData.longitude);
@@ -248,6 +274,27 @@ const Events = () => {
       e.preventDefault(); // Enter 키 이벤트를 무시하도록 기본 동작을 막음
     }
   };
+
+  // useEffect(() => {
+  //   const imageUrl =
+  //     "https://s3-orca-test.s3.ap-northeast-2.amazonaws.com/orcaFiles/events/1697675843996/43fac4af-87f6-4a53-bc66-8d50033124721.jpg";
+
+  //   // 이미지를 가져와 Blob으로 변환
+  //   fetch(imageUrl)
+  //     .then((response) => response.blob())
+  //     .then((imageBlob) => {
+  //       // Blob을 파일로 생성
+  //       const imageFile = new File([imageBlob], "image.jpg", {
+  //         type: "image/jpeg",
+  //       });
+
+  //       // 이제 imageFile을 사용하거나 다운로드할 수 있음
+  //       console.log(imageFile);
+  //     })
+  //     .catch((error) => {
+  //       console.error("이미지를 가져오는 중 오류 발생: ", error);
+  //     });
+  // }, []);
 
   return (
     <div className="Layout">
@@ -286,14 +333,24 @@ const Events = () => {
                   예정 이벤트
                 </button>
               </div>
-              <button
-                className="SaveButton"
-                onClick={(e) => {
-                  onApplyEvent(e);
-                }}
-              >
-                적용
-              </button>
+              <div>
+                <button
+                  className="SaveButton"
+                  onClick={(e) => {
+                    onApplyEvent(e);
+                  }}
+                >
+                  적용
+                </button>
+                {isFormOpen !== -1 && (
+                  <button
+                    className="DeleteButton"
+                    onClick={(e) => deleteEvent(e)}
+                  >
+                    삭제
+                  </button>
+                )}
+              </div>
             </div>
             <label className="EventImageInput">
               <div className="UploadImageSpace">
