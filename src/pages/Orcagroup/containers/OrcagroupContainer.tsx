@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Orcagroup from '../Orcagroup';
 import { Newsletters } from '@typedef/types';
+import { getOrcaMembers, deleteOrcaMember } from 'src/api/OrcaMemberAPI';
+
 import * as XLSX from 'xlsx';
 
 type Props = {};
@@ -33,21 +35,31 @@ const OrcagroupContainer = (props: Props) => {
 				const updatedList = prevList.filter((orcagroup) => orcagroup.id !== id);
 				return updatedList;
 			});
+			deleteOrcaMember(id);
 		},
 		[orcagroupList],
 	);
 	useEffect(() => {
-		const updatedList = [];
-		for (let i = 0; i < 8; i++) {
-			const orcagroup = {
-				id: i + 1,
-				email: 'fjal;k@asfmdal.o.kr',
-			};
-			updatedList.push(orcagroup);
-		}
-		setOrcagroupList(updatedList);
+		getOrcaMembers().then((data) => {
+			console.log(data.data); // 나옴
+			const updatedList = data.data;
+			setOrcagroupList(updatedList);
+		});
+
 		return () => {};
 	}, []);
+	// useEffect(() => {
+	// 	const updatedList = [];
+	// 	for (let i = 0; i < 8; i++) {
+	// 		const orcagroup = {
+	// 			id: i + 1,
+	// 			email: 'fjal;k@asfmdal.o.kr',
+	// 		};
+	// 		updatedList.push(orcagroup);
+	// 	}
+	// 	setOrcagroupList(updatedList);
+	// 	return () => {};
+	// }, []);
 
 	return (
 		<Orcagroup

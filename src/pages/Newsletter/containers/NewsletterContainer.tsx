@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Newsletter from '../Newsletter';
 import { Newsletters } from '@typedef/types';
+import { getNewsletters, deleteNewsletter } from 'src/api/NewsletterAPI';
 import * as XLSX from 'xlsx';
+import { setMaxListeners } from 'events';
 type Props = {};
 
 const NewsletterContainer = (props: Props) => {
@@ -34,21 +36,31 @@ const NewsletterContainer = (props: Props) => {
 				);
 				return updatedList;
 			});
+			deleteNewsletter(id);
 		},
 		[newsletterList],
 	);
 	useEffect(() => {
-		const updatedList = [];
-		for (let i = 0; i < 8; i++) {
-			const newsletter = {
-				id: i + 1,
-				email: 'fjal;k@asfmdal.o.kr',
-			};
-			updatedList.push(newsletter);
-		}
-		setNewsletterList(updatedList);
+		getNewsletters().then((data) => {
+			console.log(data.data); // 나옴
+			const updatedList = data.data;
+			setNewsletterList(updatedList);
+		});
+
 		return () => {};
 	}, []);
+	// useEffect(() => {
+	// 	const updatedList = [];
+	// 	for (let i = 0; i < 8; i++) {
+	// 		const newsletter = {
+	// 			id: i + 1,
+	// 			email: 'fjal;k@asfmdal.o.kr',
+	// 		};
+	// 		updatedList.push(newsletter);
+	// 	}
+	// 	setNewsletterList(updatedList);
+	// 	return () => {};
+	// }, []);
 
 	return (
 		<Newsletter
