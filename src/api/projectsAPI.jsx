@@ -1,5 +1,3 @@
-import client from './client.js';
-
 export async function getAllProjectData() {
 	return fetch(`http://43.202.46.227/api/projects`, {
 		method: 'GET',
