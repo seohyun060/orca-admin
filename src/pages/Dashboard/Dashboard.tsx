@@ -1,6 +1,8 @@
 import React from 'react';
 import images from 'src/assets/images';
 import './styles/dashboard.styles.css';
+import LineGraph from './components/LineGraph';
+import Table from './components/Table';
 import { StatisticsList } from '@typedef/types';
 type Props = {
 	statisticsList: StatisticsList | undefined;
@@ -30,7 +32,10 @@ const Dashboard = ({ statisticsList, downloadStatisticsAsExcel }: Props) => {
 					Excel download
 				</div>
 			</div>
-			<div className='dashboard-analystic'></div>
+			<div className='dashboard-analystic'>
+				<LineGraph />
+				<Table />
+			</div>
 			<div className='dashboard-statistic'>
 				<div className='dashboard-statistic-head'>
 					<div className='title'>통계 리스트</div>

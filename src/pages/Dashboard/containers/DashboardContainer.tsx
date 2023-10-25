@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from '../Dashboard';
 import * as XLSX from 'xlsx';
 import { StatisticsList } from '@typedef/types';
+import { getGraph } from 'src/api/DashboardAPI';
 
 type Props = {};
 
 const DashboardContainer = (props: Props) => {
 	const [statisticsList, setStatisticsList] = useState<StatisticsList>();
+	const [dayList, setDayList] = useState([]);
+
 	const downloadStatisticsAsExcel = () => {
 		// CSV 데이터 생성
 		const csvData = [
@@ -30,6 +33,7 @@ const DashboardContainer = (props: Props) => {
 		XLSX.utils.book_append_sheet(wb, ws, 'Statistics');
 		XLSX.writeFile(wb, 'statistics.xlsx');
 	};
+
 	useEffect(() => {
 		const updatedList: StatisticsList = {
 			researcherNumber: 14,
