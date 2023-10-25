@@ -574,6 +574,12 @@
 .dashboard-statistic-body .document .project-body .terminated-nonzero {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 76px;
+  border-radius: 9px;
+  background: var(--Light-gray, #f0f0f0);
 }
 .dashboard-statistic-body .document .project-body .terminated-nonzero .number {
   color: #000;
@@ -586,6 +592,7 @@
 }
 .dashboard-statistic-body .document .project-body .terminated-nonzero .unit {
   color: #000;
+  margin-top: 20px;
   /* web. semi.30 */
   font-family: Pretendard;
   font-size: 30px;
@@ -744,6 +751,7 @@
 }
 .dashboard-statistic-body .document .event-body .upcoming-nonzero .unit {
   color: #000;
+  margin-top: 20px;
   /* web. semi.30 */
   font-family: Pretendard;
   font-size: 30px;

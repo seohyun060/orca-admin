@@ -7,9 +7,22 @@ import { StatisticsList } from '@typedef/types';
 type Props = {
 	statisticsList: StatisticsList | undefined;
 	downloadStatisticsAsExcel: () => void;
+	graphList: any;
+	onRangeClick: () => void;
+	onGraphReload: () => void;
+	onTableReload: () => void;
+	range: string;
 };
 
-const Dashboard = ({ statisticsList, downloadStatisticsAsExcel }: Props) => {
+const Dashboard = ({
+	statisticsList,
+	downloadStatisticsAsExcel,
+	graphList,
+	onRangeClick,
+	onGraphReload,
+	onTableReload,
+	range,
+}: Props) => {
 	return (
 		<div className='dashboard'>
 			<div className='dashboard-head'>
@@ -17,7 +30,8 @@ const Dashboard = ({ statisticsList, downloadStatisticsAsExcel }: Props) => {
 				<div
 					className='reload'
 					onClick={() => {
-						window.location.reload();
+						//window.location.reload();
+						onGraphReload();
 					}}
 				>
 					<img src={images.reload} />
@@ -33,7 +47,11 @@ const Dashboard = ({ statisticsList, downloadStatisticsAsExcel }: Props) => {
 				</div>
 			</div>
 			<div className='dashboard-analystic'>
-				<LineGraph />
+				<LineGraph
+					graphList={graphList}
+					onRangeClick={onRangeClick}
+					range={range}
+				/>
 				<Table />
 			</div>
 			<div className='dashboard-statistic'>
@@ -42,7 +60,8 @@ const Dashboard = ({ statisticsList, downloadStatisticsAsExcel }: Props) => {
 					<div
 						className='reload'
 						onClick={() => {
-							window.location.reload();
+							//window.location.reload();
+							onTableReload();
 						}}
 					>
 						<img src={images.reload} />

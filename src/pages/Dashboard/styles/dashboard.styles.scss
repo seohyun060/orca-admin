@@ -612,6 +612,12 @@
 							&-nonzero {
 								display: flex;
 								flex-direction: row;
+								justify-content: center;
+								align-items: center;
+								width: 200px;
+								height: 76px;
+								border-radius: 9px;
+								background: var(--Light-gray, #f0f0f0);
 								.number {
 									color: #000;
 
@@ -625,7 +631,7 @@
 								}
 								.unit {
 									color: #000;
-
+									margin-top: 20px;
 									/* web. semi.30 */
 									font-family: Pretendard;
 									font-size: 30px;
@@ -788,7 +794,7 @@
 								}
 								.unit {
 									color: #000;
-
+									margin-top: 20px;
 									/* web. semi.30 */
 									font-family: Pretendard;
 									font-size: 30px;

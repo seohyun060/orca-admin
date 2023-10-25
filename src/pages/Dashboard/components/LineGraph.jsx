@@ -11,10 +11,10 @@ import {
 	Legend,
 } from 'recharts';
 
-const LineGraph = () => {
-	const [graphList, setGraphList] = useState([]);
+const LineGraph = (props) => {
+	const { graphList, onRangeClick, range } = props;
 	const [maxRange, setMaxRange] = useState(0);
-	const [range, setRange] = useState('month');
+	//const [range, setRange] = useState('month');
 	const [chartWidth, setChartWidth] = useState(calculateChartWidth);
 
 	function calculateChartWidth() {
@@ -27,51 +27,7 @@ const LineGraph = () => {
 	const handleResize = useCallback(() => {
 		setChartWidth(calculateChartWidth());
 	}, []);
-	const onRangeClick = useCallback(() => {
-		if (range === 'month') {
-			setRange('week');
-		} else {
-			setRange('month');
-		}
-	}, [range]);
 
-	useEffect(() => {
-		getGraph(range).then((data) => {
-			const monthNames = [
-				'Jan',
-				'Feb',
-				'Mar',
-				'Apr',
-				'May',
-				'Jun',
-				'Jul',
-				'Aug',
-				'Sep',
-				'Oct',
-				'Nov',
-				'Dec',
-			];
-
-			// 각 요소를 수정하여 날짜 부분을 변경
-			const modifyMonth = data.data.map((item) => {
-				const date = item[0];
-				const month = parseInt(date.slice(4, 6)); // 월 숫자 추출
-				const day = date.slice(6); // 일 추출
-				const modifiedDate = monthNames[month - 1] + day; // 월 이름과 일을 합침
-				return [modifiedDate, ...item.slice(1)]; // 수정된 날짜와 나머지 부분을 합침
-			});
-			const convertData = modifyMonth.map((item) => ({
-				date: item[0],
-
-				web: item[1] == 'web' ? parseInt(item[2]) : 0,
-				mobile: item[1] == 'mobile' ? parseInt(item[2]) : 0,
-			}));
-
-			setGraphList(convertData);
-		});
-
-		return () => {};
-	}, [range]);
 	useEffect(() => {
 		window.addEventListener('resize', handleResize);
 		return () => {
