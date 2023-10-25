@@ -10,7 +10,29 @@ export async function getInsights() {
 			return data;
 		});
 }
+export async function getMainInsights() {
+	return fetch('http://43.202.46.227/api/insights?select=true', {
+		method: 'GET',
+	})
+		.then((res) => res.json())
 
+		.then((data) => {
+			console.log(data);
+
+			return data;
+		});
+}
+export async function putMainInsights(urls) {
+	let data = new FormData();
+	console.log(urls);
+	data.append('urls', urls);
+	return fetch(`http://43.202.46.227/api/insights`, {
+		method: 'PUT',
+		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
+	})
+		.then((res) => res.json())
+		.then((data) => {});
+}
 export async function getInsightDetail(id) {
 	return fetch(`http://43.202.46.227/api/insights/${id}`, {
 		method: 'GET',

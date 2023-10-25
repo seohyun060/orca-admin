@@ -84,12 +84,23 @@
 			margin-top: 14px;
 
 			div {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
 				width: 1648px;
 				height: 70px;
 				border: 1px solid #000;
 				img {
-					margin-top: 21px;
+					//margin-top: 21px;
 					margin-left: 21px;
+					margin-right: 20px;
+				}
+				input {
+					width: 1200px;
+					font-size: 20px;
+					margin-top: 5px;
+					line-height: 10px;
+					//text-align: center;
 				}
 			}
 		}
