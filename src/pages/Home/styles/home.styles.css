@@ -82,13 +82,22 @@
   margin-top: 14px;
 }
 .home.project.body div, .home.body.insight div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   width: 1648px;
   height: 70px;
   border: 1px solid #000;
 }
 .home.project.body div img, .home.body.insight div img {
-  margin-top: 21px;
   margin-left: 21px;
+  margin-right: 20px;
+}
+.home.project.body div input, .home.body.insight div input {
+  width: 1200px;
+  font-size: 20px;
+  margin-top: 5px;
+  line-height: 10px;
 }
 .home.insight {
   height: 352px;
