@@ -17,13 +17,13 @@
   padding: 5px;
 }
 .SetEventDateCalendar .react-calendar__year-view__months__month {
-  padding: 25px;
+  padding: 24.9px;
 }
 .SetEventDateCalendar .react-calendar__decade-view__years__year {
-  padding: 25px;
+  padding: 24.9px;
 }
 .SetEventDateCalendar .react-calendar__century-view__decades__decade {
-  padding: 17px;
+  padding: 16.9px;
 }
 .SetEventDateCalendar .react-calendar__tile:disabled {
   font-size: 0px;

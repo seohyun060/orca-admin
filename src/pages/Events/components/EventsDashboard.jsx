@@ -18,12 +18,20 @@ const EventsDashboard = (props) => {
 
   const cardSize = 810 + 30;
 
-  const onEventDataChange = (targetMonth) => {
+  const onEventDataChange = (targetDate) => {
+    console.log(eventData);
+    const targetYear = targetDate.getFullYear();
+    const targetMonth = targetDate.getMonth();
     setMonthData(
-      eventData.data.filter((data) => {
-        const startMonth = new Date(data.eventDate.startDate).getMonth();
-        const endMonth = new Date(data.eventDate.endDate).getMonth();
-        if (startMonth == targetMonth || endMonth == targetMonth) {
+      eventData.filter((data) => {
+        const startYear = new Date(data.startDate).getFullYear();
+        const endYear = new Date(data.endDate).getFullYear();
+        const startMonth = new Date(data.startDate).getMonth();
+        const endMonth = new Date(data.endDate).getMonth();
+        if (
+          (startYear == targetYear && startMonth == targetMonth) ||
+          (endYear == targetYear && endMonth == targetMonth)
+        ) {
           return true;
         }
       })
@@ -72,7 +80,7 @@ const EventsDashboard = (props) => {
 
   useEffect(() => {
     eventSlideRef.current.style.transition = "transform 0.4s ease-in-out";
-    onEventDataChange(new Date().getMonth());
+    onEventDataChange(new Date());
   }, []);
 
   useEffect(() => {
@@ -93,10 +101,7 @@ const EventsDashboard = (props) => {
           <div className="EventsCarousel">
             <div className="EventsSlide" ref={eventSlideRef}>
               {monthData.map((data) => (
-                <EventCard
-                  data={data}
-                  setIsFormOpen={setIsFormOpen}
-                />
+                <EventCard data={data} setIsFormOpen={setIsFormOpen} />
               ))}
             </div>
           </div>

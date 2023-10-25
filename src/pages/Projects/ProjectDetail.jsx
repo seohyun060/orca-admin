@@ -9,8 +9,6 @@ import AddForm from "./components/AddForm";
 import PublicationForm from "./components/PublicationForm";
 import SetEventDateCalendar from "../Events/components/SetEventDateCalendar";
 
-import ProjectDummy from "./ProjectDummy";
-
 import {
   getOneProjectData,
   postNewProjectData,
@@ -265,7 +263,7 @@ const ProjectDetail = () => {
         setProjectCompleteDate(project.completeDate);
         setProjectEnrollment(project.enrollment);
         setProjectStudyType(project.studyType);
-        setProjectId(project.projectId)
+        setProjectId(project.projectId);
         setProjectOtherStudyId(project.otherStudyId);
         setProjectOverview(project.overview);
         setProjectOfficialTitle(project.officialTitle);
@@ -378,6 +376,12 @@ const ProjectDetail = () => {
     // 새 데이터 입력시
   }, []);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Enter 키 이벤트를 무시하도록 기본 동작을 막음
+    }
+  };
+
   return (
     <div className="ProjectLayout">
       <form name="projectForm" id="projectForm">
@@ -430,7 +434,11 @@ const ProjectDetail = () => {
                     onClick={() => setIsStartDateClick(!isStartDateClick)}
                   >
                     <img src={images.smallcalendar} />
-                    <input name="startDate" value={projectStartDate} />
+                    <input
+                      name="startDate"
+                      value={projectStartDate}
+                      onKeyDown={handleKeyDown}
+                    />
                   </div>
                 </div>
                 {isStartDateClick ? (
@@ -452,7 +460,11 @@ const ProjectDetail = () => {
                     onClick={() => setIsCompleteDateClick(!isCompleteDateClick)}
                   >
                     <img src={images.smallcalendar} />
-                    <input name="completeDate" value={projectCompleteDate} />
+                    <input
+                      name="completeDate"
+                      value={projectCompleteDate}
+                      onKeyDown={handleKeyDown}
+                    />
                   </div>
                 </div>
                 {isCompleteDateClick ? (
@@ -472,6 +484,7 @@ const ProjectDetail = () => {
                   name="enrollment"
                   value={projectEnrollment}
                   onChange={(e) => setProjectEnrollment(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
               <div className="PeriodInputBox">
@@ -481,6 +494,7 @@ const ProjectDetail = () => {
                   name="studyType"
                   value={projectStudyType}
                   onChange={(e) => setProjectStudyType(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
               <div className="PeriodInputBox">
@@ -490,6 +504,7 @@ const ProjectDetail = () => {
                   name="projectId"
                   value={projectId}
                   onChange={(e) => setProjectId(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
               <div className="PeriodInputBox">
@@ -499,6 +514,7 @@ const ProjectDetail = () => {
                   name="otherStudyId"
                   value={projectOtherStudyId}
                   onChange={(e) => setProjectOtherStudyId(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
             </div>
@@ -529,6 +545,7 @@ const ProjectDetail = () => {
                 name="conditions"
                 value={projectConditions}
                 onChange={(e) => setProjectConditions(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
             </div>
           </article>
@@ -543,6 +560,7 @@ const ProjectDetail = () => {
                   name="name"
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
                 <div className="subject">Number</div>
                 <input
@@ -551,6 +569,7 @@ const ProjectDetail = () => {
                   name="phoneNumber"
                   value={projectPhoneNumber}
                   onChange={(e) => setProjectPhoneNumber(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
                 <div className="subject">Email</div>
                 <input
@@ -559,6 +578,7 @@ const ProjectDetail = () => {
                   name="email"
                   value={projectEmail}
                   onChange={(e) => setProjectEmail(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
               <div className="inputForm">
@@ -569,6 +589,7 @@ const ProjectDetail = () => {
                   name="location"
                   value={projectLocation}
                   onChange={(e) => setProjectLocation(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
             </div>
@@ -603,6 +624,7 @@ const ProjectDetail = () => {
                   name="ageEligible"
                   value={projectAgeEligible}
                   onChange={(e) => setProjectAgeEligible(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 ></input>
               </div>
               <div className="PeriodInputBox">
@@ -642,6 +664,7 @@ const ProjectDetail = () => {
                   name="samplingMethod"
                   value={projectSamplingMethod}
                   onChange={(e) => setProjectSamplingMethod(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
             </div>
@@ -660,6 +683,7 @@ const ProjectDetail = () => {
                 onChange={(e) =>
                   setProjectObservationalModelMethod(e.target.value)
                 }
+                onKeyDown={handleKeyDown}
               />
               <div className="subject">Time Perspective</div>
               <input
@@ -670,6 +694,7 @@ const ProjectDetail = () => {
                 onChange={(e) =>
                   setProjectTimePerspectiveMethod(e.target.value)
                 }
+                onKeyDown={handleKeyDown}
               />
             </div>
             <div className="ArticleTitle">Intervention / Treatment</div>

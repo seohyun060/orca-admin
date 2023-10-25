@@ -5,9 +5,9 @@ const EventCard = (props) => {
 
   // console.log(eventDate)
 
-  const startDate = new Date(data.eventDate.startDate);
+  const startDate = new Date(data.startDate);
   const startDateForm = startDate.getMonth() + 1 + "." + startDate.getDate();
-  const endDate = new Date(data.eventDate.endDate);
+  const endDate = new Date(data.endDate);
   const endDateForm = endDate.getMonth() + 1 + "." + endDate.getDate();
 
   return (
