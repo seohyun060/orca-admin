@@ -29,3 +29,16 @@ export async function getTable(range) {
 			return data;
 		});
 }
+
+export async function getStatistic() {
+	return fetch(`http://43.202.46.227/api/admins/analytics/statistic`, {
+		method: 'GET',
+	})
+		.then((res) => res.json())
+
+		.then((data) => {
+			console.log(data);
+
+			return data;
+		});
+}
