@@ -99,3 +99,15 @@ export async function postResearchers(researcher, image) {
 
 		.then((data) => {});
 }
+export async function storeResearcher(id, isStored) {
+	return fetch(`http://43.202.46.227/api/researchers/${id}?store=${isStored}`, {
+		method: 'PUT',
+	})
+		.then((res) => res.json())
+
+		.then((data) => {
+			console.log(data);
+			//data = researcher;
+			return data;
+		});
+}

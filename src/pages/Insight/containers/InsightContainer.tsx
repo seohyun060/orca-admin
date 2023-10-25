@@ -42,12 +42,7 @@ const InsightContainer = ({}: Props) => {
 			for (let i = 0; i < updatedList.length; i++) {
 				if (updatedList[i].id == id) {
 					updatedList[i].isStored = !updatedList[i].isStored;
-					storeInsight(id, updatedList[i].isStored).then((data) => {
-						//console.log(data.data); // 나옴
-
-						console.log(data);
-						//console.log(researcherList); // 안나옴
-					});
+					storeInsight(id, updatedList[i].isStored).then((data) => {});
 					break;
 				}
 			}
