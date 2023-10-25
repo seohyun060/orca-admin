@@ -230,15 +230,18 @@
 .researcherinfo-body .info {
   display: flex;
   flex-direction: row;
+  padding: 0 0;
   width: 1496px;
   height: 54px;
   margin: auto;
   margin-top: 24px;
+  border: 0px;
 }
 .researcherinfo-body .info .name, .researcherinfo-body .info .project, .researcherinfo-body .info .department {
   display: flex;
   flex-direction: row;
   width: 280px;
+  height: 54px;
 }
 .researcherinfo-body .info .name .text, .researcherinfo-body .info .project .text, .researcherinfo-body .info .department .text {
   /* 레이아웃 관련 속성 */

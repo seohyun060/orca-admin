@@ -7,7 +7,11 @@ import {
 	Researchers,
 } from '@typedef/types';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getResearchers, deleteResearcher } from 'src/api/ResearcherAPI';
+import {
+	getResearchers,
+	deleteResearcher,
+	storeResearcher,
+} from 'src/api/ResearcherAPI';
 import images from 'src/assets/images';
 type Props = {};
 const ResearcherContainer = ({}: Props) => {
@@ -47,6 +51,7 @@ const ResearcherContainer = ({}: Props) => {
 			for (let i = 0; i < updatedList.length; i++) {
 				if (updatedList[i].id == id) {
 					updatedList[i].stored = !updatedList[i].stored;
+					storeResearcher(id, updatedList[i].stored).then((data) => {});
 					break;
 				}
 			}
@@ -116,7 +121,7 @@ const ResearcherContainer = ({}: Props) => {
 	useEffect(() => {
 		setTimeout(() => {
 			getResearchers().then((data) => {
-				//console.log(data.data); // 나옴
+				console.log(data.data); // 나옴
 				const updatedList: ResearcherList = [];
 				data.data.map((d: any) => {
 					const tempData: Researchers = {
@@ -126,7 +131,7 @@ const ResearcherContainer = ({}: Props) => {
 						location: d.locationNumber,
 						department: d.affiliation,
 						project: d.projectType,
-						stored: false,
+						stored: d.isStored,
 						link: 'https://ca70-221-166-133-218.ngrok-free.app',
 						twitter: `twitter`,
 						biography: 'Biography of researcher',
