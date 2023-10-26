@@ -287,7 +287,7 @@ Props) => {
 	);
 
 	const onApplyClicked = useCallback(
-		(
+		async (
 			//edit: boolean,
 			id: number,
 			locationEdit: number,
@@ -342,9 +342,9 @@ Props) => {
 
 			if (id == 0) {
 				console.log('추가중~');
-				postResearchers(createTempResearcher(), selectedProfile);
+				await postResearchers(createTempResearcher(), selectedProfile);
 			} else {
-				putResearchers(id, createTempResearcher(), selectedProfile);
+				await putResearchers(id, createTempResearcher(), selectedProfile);
 			}
 			setEdit(true);
 			navigate('/researcher', {

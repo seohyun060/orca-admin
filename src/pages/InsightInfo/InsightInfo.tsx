@@ -23,6 +23,7 @@ type Props = {
 	onSubClicked: (index: number) => void;
 	id: number;
 	selectedFiles: File[];
+	onDeletePdf: (index: number) => void;
 };
 
 const InsightInfo = ({
@@ -42,6 +43,7 @@ const InsightInfo = ({
 	onSubClicked,
 	id,
 	selectedFiles,
+	onDeletePdf,
 }: Props) => {
 	const insightTypes: string[] = [
 		'WHITE_PAPER',
@@ -92,64 +94,64 @@ const InsightInfo = ({
 				)}
 			</div>
 			<div className='insightinfo-pdf'>
-				{pdfListEdit.length === 0 ? (
-					<div className='lastitem'>
+				{/* {pdfListEdit.length === 0 ? ( */}
+
+				{/* ) : ( */}
+				{selectedFiles.map((file, index) => (
+					<div key={index} className='lastitem'>
 						<div className='box'>
-							<label htmlFor='mainInput'>
+							<label htmlFor={`mainInput-${index}`}>
 								<img src={images.download} alt='Upload' />
 								<div className='text'>Upload PDF</div>
+
+								<p>{file.name}</p>
+
 								<input
 									type='file'
-									id='mainInput'
+									id={`mainInput-${index}`}
 									onChange={(e) => {
-										uploadPdfHandler(e, 0);
+										uploadPdfHandler(e, index);
 									}}
 									style={{ display: 'none' }}
 								/>
 							</label>
 						</div>
-						<img className='add' src={images.add} onClick={onAddClicked}></img>
+						{index === selectedFiles.length - 1 ? (
+							<img
+								className='sub'
+								src={images.sub}
+								onClick={() => {
+									onSubClicked(index);
+								}}
+							></img>
+						) : (
+							<img
+								className='sub'
+								src={images.sub}
+								onClick={() => {
+									onSubClicked(index);
+								}}
+							></img>
+						)}
 					</div>
-				) : (
-					pdfListEdit.map((pdf, index) => (
-						<div key={index} className='lastitem'>
-							<div className='box'>
-								<label htmlFor={`mainInput-${index}`}>
-									<img src={images.download} alt='Upload' />
-									<div className='text'>Upload PDF</div>
-
-									<p>{pdf}</p>
-
-									<input
-										type='file'
-										id={`mainInput-${index}`}
-										onChange={(e) => {
-											uploadPdfHandler(e, index);
-										}}
-										style={{ display: 'none' }}
-									/>
-								</label>
-							</div>
-							{index === pdfListEdit.length - 1 ? (
-								<img
-									className='add'
-									src={images.add}
-									onClick={() => {
-										onAddClicked();
-									}}
-								></img>
-							) : (
-								<img
-									className='sub'
-									src={images.sub}
-									onClick={() => {
-										onSubClicked(index);
-									}}
-								></img>
-							)}
-						</div>
-					))
-				)}
+				))}
+				<div className='lastitem'>
+					<div className='box'>
+						<label htmlFor='mainInput'>
+							<img src={images.download} alt='Upload' />
+							<div className='text'>Upload PDF</div>
+							<input
+								type='file'
+								id='mainInput'
+								onChange={(e) => {
+									uploadPdfHandler(e, 0);
+								}}
+								style={{ display: 'none' }}
+							/>
+						</label>
+					</div>
+					<img className='add' src={images.add} onClick={onAddClicked}></img>
+				</div>
 			</div>
 			<div className='insightinfo-text'>
 				<div className='head'>인사이드 제목</div>

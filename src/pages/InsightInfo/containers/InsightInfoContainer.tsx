@@ -22,8 +22,25 @@ const InsightInfoContainer = ({}: Props) => {
 	const [titleEdit, setTitleEdit] = useState('');
 	const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-	const [pdfListEdit, setPdfListEdit] = useState<string[]>([]); // 넘겨받은 pdf url을 관리할 배열 state
-
+	const [pdfListEdit, setPdfListEdit] = useState<string[]>(['']); // 넘겨받은 pdf url을 관리할 배열 state
+	function createFileFromPath(filePath: string) {
+		return new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			xhr.open('GET', filePath);
+			xhr.responseType = 'blob';
+			xhr.onload = () => {
+				if (xhr.status === 200) {
+					const blob = xhr.response;
+					const fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
+					const file = new File([blob], fileName, { type: blob.type });
+					resolve(file);
+				} else {
+					reject(new Error('파일을 읽을 수 없습니다.'));
+				}
+			};
+			xhr.send();
+		});
+	}
 	const onDropboxClicked = useCallback(() => {
 		setDropbox((prev) => !prev);
 	}, [dropbox]);
@@ -35,6 +52,14 @@ const InsightInfoContainer = ({}: Props) => {
 		},
 		[selectedType, dropbox],
 	);
+	const onDeletePdf = useCallback(
+		(index: number) => {
+			const updatedList = [...selectedFiles];
+			updatedList.splice(index, 1);
+			setSelectedFiles(updatedList);
+		},
+		[selectedFiles],
+	);
 	const onAddClicked = useCallback(() => {
 		setPdfListEdit((prevList) => [...prevList, '']);
 	}, [pdfListEdit]);
@@ -44,6 +69,7 @@ const InsightInfoContainer = ({}: Props) => {
 			const updatedList = prevList.filter((item, i) => i !== index);
 			return updatedList;
 		});
+		onDeletePdf(index);
 	};
 	const uploadPdfHandler = useCallback(
 		(event: ChangeEvent<HTMLInputElement>, index: number) => {
@@ -59,7 +85,6 @@ const InsightInfoContainer = ({}: Props) => {
 		},
 		[pdfListEdit, setPdfListEdit],
 	);
-	console.log(selectedFiles);
 	const onChangeTitleEdit = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 			setTitleEdit(e.target.value);
@@ -70,8 +95,9 @@ const InsightInfoContainer = ({}: Props) => {
 		navigate('/insight');
 		window.scrollTo(0, 0);
 	}, []);
+
 	const onApplyClicked = useCallback(
-		(id: number, type: string, selectedFiles: File[], title: string) => {
+		async (id: number, type: string, selectedFiles: File[], title: string) => {
 			const filteredUrlList = selectedFiles.filter((item) => item !== null);
 			const createTempInsight = () => ({
 				id: id,
@@ -87,13 +113,13 @@ const InsightInfoContainer = ({}: Props) => {
 			// 	: [...insightList, createTempInsight()];
 
 			// setInsightList(updatedInsights);
+
 			if (id == 0) {
 				console.log('제발요');
-				postInsights(createTempInsight());
+				await postInsights(createTempInsight());
 			} else {
-				putInsights(id, createTempInsight());
+				await putInsights(id, createTempInsight());
 			}
-
 			navigate('/insight');
 			window.scrollTo(0, 0);
 		},
@@ -116,6 +142,7 @@ const InsightInfoContainer = ({}: Props) => {
 				setSelectedType(data.data.category);
 				setPdfListEdit(data.data.files);
 				setTitleEdit(data.data.title);
+
 				// if (data.data.publications.length != 0) {
 				// 	const updatedPublication = [...publicationEdit];
 				// 	for (let i = 0; i < pubAPI.length; i++) {
@@ -137,7 +164,20 @@ const InsightInfoContainer = ({}: Props) => {
 
 		return () => {};
 	}, []);
+	useEffect(() => {
+		const createFilesPromises = pdfListEdit.map(createFileFromPath);
+		Promise.all(createFilesPromises)
+			.then((files: any) => {
+				setSelectedFiles(files);
+				console.log(files);
+			})
+			.catch((error) => {
+				console.error('파일 생성 실패:', error);
+			});
+		return () => {};
+	}, [pdfListEdit]);
 
+	console.log(selectedFiles);
 	return (
 		<InsightInfo
 			dropbox={dropbox}
@@ -156,6 +196,7 @@ const InsightInfoContainer = ({}: Props) => {
 			onSubClicked={onSubClicked}
 			id={id}
 			selectedFiles={selectedFiles}
+			onDeletePdf={onDeletePdf}
 		/>
 	);
 };
