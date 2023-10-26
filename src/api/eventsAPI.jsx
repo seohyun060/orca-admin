@@ -1,5 +1,5 @@
 export async function getAllEventData() {
-  return await fetch(`http://43.202.46.227/api/events`, {
+  return await fetch(`https://api-orca.beamworks.co.kr/api/events`, {
     method: "GET",
   })
     .then((res) => res.json())
@@ -10,7 +10,7 @@ export async function getAllEventData() {
 }
 
 export async function getOneEventData(id) {
-  return await fetch(`http://43.202.46.227/api/events/${id}`, {
+  return await fetch(`https://api-orca.beamworks.co.kr/api/events/${id}`, {
     method: "GET",
   })
     .then((res) => res.json())
@@ -20,7 +20,7 @@ export async function getOneEventData(id) {
 }
 
 export async function postNewEventData(data) {
-  return await fetch(`http://43.202.46.227/api/events`, {
+  return await fetch(`https://api-orca.beamworks.co.kr/api/events`, {
     method: "POST",
     body: data,
   })
@@ -31,7 +31,7 @@ export async function postNewEventData(data) {
 }
 
 export async function putOneEventData(id, data) {
-  return await fetch(`http://43.202.46.227/api/events/${id}`, {
+  return await fetch(`https://api-orca.beamworks.co.kr/api/events/${id}`, {
     method: "PUT",
     body: data,
   })
@@ -42,7 +42,7 @@ export async function putOneEventData(id, data) {
 }
 
 export async function deleteOneEventData(id) {
-  return await fetch(`http://43.202.46.227/api/events/${id}`, {
+  return await fetch(`https://api-orca.beamworks.co.kr/api/events/${id}`, {
     method: "DELETE",
   })
     .then((res) => res.json())

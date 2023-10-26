@@ -498,6 +498,124 @@
   cursor: pointer;
 
   &:hover {
-    background: #093F71;
+    background: #093f71;
+  }
+}
+
+@media (max-width: 1400px) {
+  .Layout {
+    width: 900px;
+  }
+
+  .EventUpperBar {
+    width: 100%;
+  }
+
+  .EventsCalendar {
+    width: 44%;
+  }
+
+  .EventsList {
+    width: 54%;
+  }
+
+  .EventsCarousel {
+    width: 100%;
+  }
+
+  .CarouselProgress {
+    width: 90%;
+  }
+
+  .EventCardLayout {
+    width: 100%;
+  }
+
+  .EventCardTitle {
+    width: 100%;
+  }
+
+  .EventInputLayout {
+    width: 100%;
+  }
+
+  .EventImageInput {
+    width: 100%;
+    .imagePath {
+      width: 800px;
+    }
+  }
+
+  .EventTitleInput {
+    textarea {
+      width: 100%;
+    }
+  }
+
+  .EventPeriodInput {
+    .EventPeriodSetting {
+      width: 100%;
+    }
+  }
+
+  .EventStartDate,
+  .EventEndDate {
+    width: 30%;
+    .clickLayout {
+      width: 100%;
+    }
+  }
+
+  .EventDateAllday {
+    margin-left: 16px;
+  }
+
+  .EventPeriodDetail {
+    width: 100%;
+  }
+
+  .EventPeriodDetailElement {
+    input {
+      width: 80%;
+    }
+    .EventLinkInput {
+      width: 80%;
+      input {
+        width: 90%;
+      }
+    }
+  }
+
+  .EventPurposeInput {
+    textarea {
+      width: 100%;
+    }
+  }
+
+  .EventExplanationsInput {
+    textarea {
+      width: 100%;
+    }
+  }
+
+  .EventImageSet {
+    width: 100%;
+    .EventImageInput {
+      width: 92%;
+    }
+    .imagePath {
+      width: 780px;
+    }
+  }
+
+  .EventLocationSearch {
+    width: 100%;
+    input {
+      width: 850px;
+    }
+  }
+
+  .EventMapContainer {
+    width: 100%;
   }
 }

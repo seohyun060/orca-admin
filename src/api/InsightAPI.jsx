@@ -1,5 +1,5 @@
 export async function getInsights() {
-	return fetch('http://43.202.46.227/api/insights', {
+	return fetch('https://api-orca.beamworks.co.kr/api/insights', {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -11,7 +11,7 @@ export async function getInsights() {
 		});
 }
 export async function getMainInsights() {
-	return fetch('http://43.202.46.227/api/insights?select=true', {
+	return fetch('https://api-orca.beamworks.co.kr/api/insights?select=true', {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -26,7 +26,7 @@ export async function putMainInsights(urls) {
 	let data = new FormData();
 	console.log(urls);
 	data.append('urls', urls);
-	return fetch(`http://43.202.46.227/api/insights`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/insights`, {
 		method: 'PUT',
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
 	})
@@ -34,7 +34,7 @@ export async function putMainInsights(urls) {
 		.then((data) => {});
 }
 export async function getInsightDetail(id) {
-	return fetch(`http://43.202.46.227/api/insights/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/insights/${id}`, {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -46,7 +46,7 @@ export async function getInsightDetail(id) {
 		});
 }
 export async function storeInsight(id, isStored) {
-	return fetch(`http://43.202.46.227/api/insights/${id}?store=${isStored}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/insights/${id}?store=${isStored}`, {
 		method: 'PUT',
 	})
 		.then((res) => res.json())
@@ -69,7 +69,7 @@ export async function putInsights(id, insight) {
 
 	console.log(data);
 
-	return fetch(`http://43.202.46.227/api/insights/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/insights/${id}`, {
 		method: 'PUT',
 
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
@@ -90,7 +90,7 @@ export async function postInsights(insight) {
 
 	console.log(data);
 
-	return fetch(`http://43.202.46.227/api/insights/`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/insights/`, {
 		method: 'POST',
 
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
@@ -101,7 +101,7 @@ export async function postInsights(insight) {
 }
 
 export async function deleteInsight(id) {
-	return fetch(`http://43.202.46.227/api/insights/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/insights/${id}`, {
 		method: 'DELETE',
 	})
 		.then((res) => res.json())

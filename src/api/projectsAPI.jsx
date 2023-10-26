@@ -1,6 +1,6 @@
 
 export async function getAllProjectData() {
-	return fetch(`http://43.202.46.227/api/projects`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/projects`, {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -9,7 +9,7 @@ export async function getAllProjectData() {
 		});
 }
 export async function getMainProjects() {
-	return fetch(`http://43.202.46.227/api/projects?select=true`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/projects?select=true`, {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -21,7 +21,7 @@ export async function putMainProjects(urls) {
 	let data = new FormData();
 	console.log(urls);
 	data.append('urls', urls);
-	return fetch(`http://43.202.46.227/api/projects`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/projects`, {
 		method: 'PUT',
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
 	})
@@ -29,7 +29,7 @@ export async function putMainProjects(urls) {
 		.then((data) => {});
 }
 export async function getOneProjectData(id) {
-	return fetch(`http://43.202.46.227/api/projects/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/projects/${id}`, {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -41,7 +41,7 @@ export async function getOneProjectData(id) {
 export async function postNewProjectData(data) {
 	const jsonData = JSON.stringify(data);
 
-	return fetch(`http://43.202.46.227/api/projects`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/projects`, {
 		method: 'POST',
 		body: jsonData,
 		headers: {
@@ -55,7 +55,7 @@ export async function postNewProjectData(data) {
 }
 
 export async function putChangeStoredProjectData(id, isStored) {
-  return fetch(`http://43.202.46.227/api/projects/${id}?store=${isStored}`, {
+  return fetch(`https://api-orca.beamworks.co.kr/api/projects/${id}?store=${isStored}`, {
     method: "PUT",
   })
     .then((res) => res.json())
@@ -67,7 +67,7 @@ export async function putChangeStoredProjectData(id, isStored) {
 export async function putOneProjectData(id, data) {
 	const jsonData = JSON.stringify(data);
 
-	return fetch(`http://43.202.46.227/api/projects/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/projects/${id}`, {
 		method: 'PUT',
 		body: jsonData,
 		headers: {
@@ -81,7 +81,7 @@ export async function putOneProjectData(id, data) {
 }
 
 export async function deleteOneProjectData(id) {
-	return fetch(`http://43.202.46.227/api/projects/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/projects/${id}`, {
 		method: 'DELETE',
 	})
 		.then((res) => res.json())
@@ -205,7 +205,7 @@ export const testAPI = async () => {
 
 	console.log(testJson);
 
-	fetch('http://43.202.46.227/api/projects', {
+	fetch('https://api-orca.beamworks.co.kr/api/projects', {
 		method: 'POST',
 		body: testJson,
 		headers: {
@@ -213,7 +213,7 @@ export const testAPI = async () => {
 		},
 	}).then((res) => res.json().then((data) => console.log('data', data)));
 
-	fetch('http://43.202.46.227/api/events', {
+	fetch('https://api-orca.beamworks.co.kr/api/events', {
 		method: 'GET',
 	}).then((res) => res.json().then((data) => console.log('data', data)));
 };

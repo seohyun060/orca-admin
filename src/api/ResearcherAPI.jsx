@@ -1,5 +1,5 @@
 export async function getResearchers() {
-	return fetch('http://43.202.46.227/api/researchers', {
+	return fetch('https://api-orca.beamworks.co.kr/api/researchers', {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -11,7 +11,7 @@ export async function getResearchers() {
 		});
 }
 export async function deleteResearcher(id) {
-	return fetch(`http://43.202.46.227/api/researchers/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/${id}`, {
 		method: 'DELETE',
 	})
 		.then((res) => res.json())
@@ -45,7 +45,7 @@ export async function putResearchers(id, researcher, image) {
 	}
 	console.log(data);
 
-	return fetch(`http://43.202.46.227/api/researchers/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/${id}`, {
 		method: 'PUT',
 
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
@@ -56,7 +56,7 @@ export async function putResearchers(id, researcher, image) {
 }
 
 export async function getResearcherDetail(id) {
-	return fetch(`http://43.202.46.227/api/researchers/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/${id}`, {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -90,7 +90,7 @@ export async function postResearchers(researcher, image) {
 
 	console.log(data);
 
-	return fetch(`http://43.202.46.227/api/researchers/`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/`, {
 		method: 'POST',
 
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
@@ -100,7 +100,7 @@ export async function postResearchers(researcher, image) {
 		.then((data) => {});
 }
 export async function storeResearcher(id, isStored) {
-	return fetch(`http://43.202.46.227/api/researchers/${id}?store=${isStored}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/${id}?store=${isStored}`, {
 		method: 'PUT',
 	})
 		.then((res) => res.json())
