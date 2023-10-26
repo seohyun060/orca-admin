@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Insight from '../Insight';
 import { Insights, ResearcherList, InsightApi } from '@typedef/types';
 import { EChange } from '@typedef/types';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getInsights, deleteInsight, storeInsight } from 'src/api/InsightAPI';
 type Props = {};
 
@@ -14,6 +14,7 @@ const InsightContainer = ({}: Props) => {
 	const [stored, setStored] = useState(false);
 	const [edit, setEdit] = useState(0);
 	const [search, setSearch] = useState('');
+	const location = useLocation();
 	const [filteredList, setFilteredList] = useState<InsightApi[]>(insightList);
 
 	const onDisplayedClick = useCallback(() => {
@@ -79,6 +80,7 @@ const InsightContainer = ({}: Props) => {
 
 		return `${day}.${month}.${year}`;
 	}
+
 	useEffect(() => {
 		setTimeout(() => {
 			getInsights().then((data) => {
@@ -93,14 +95,16 @@ const InsightContainer = ({}: Props) => {
 						isStored: d.isStored,
 					};
 					updatedList.push(tempData);
+					console.log(d.title);
 				});
 				setInsightList(updatedList);
 				console.log(insightList); // 안나옴
+				//setCheck(true);
 			});
-		}, 200);
+		}, 0);
 
 		return () => {};
-	}, []);
+	}, [navigate, location]);
 	useEffect(() => {
 		setFilteredList(
 			insightList.filter((insight) => insight.title.indexOf(search) !== -1),
@@ -112,7 +116,7 @@ const InsightContainer = ({}: Props) => {
 		// }, 300);
 
 		return () => {};
-	}, [search, insightList]);
+	}, [search, insightList, location, navigate]);
 
 	return (
 		<Insight

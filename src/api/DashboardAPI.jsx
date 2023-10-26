@@ -1,6 +1,6 @@
 export async function getGraph(range) {
 	return fetch(
-		`http://43.202.46.227/api/admins/analytics/graph?range=${range}`,
+		`https://api-orca.beamworks.co.kr/api/admins/analytics/graph?range=${range}`,
 		{
 			method: 'GET',
 		},

@@ -153,7 +153,7 @@ const ResearcherContainer = ({}: Props) => {
 				setResearcherList(updatedList);
 				//console.log(researcherList); // 안나옴
 			});
-		}, 200);
+		}, 0);
 
 		return () => {};
 	}, []);
