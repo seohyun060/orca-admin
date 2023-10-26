@@ -26,7 +26,7 @@ const Events = () => {
   // Form Data
   const [eventsData, setEventsData] = useState();
 
-  const [selectedMain, setSelectedMain] = useState(null);
+  const [eventThumbnail, setEventThumbnail] = useState(null);
   const [eventTitle, setEventTitle] = useState();
   const [isStartDateClick, setIsStartDateClick] = useState(false);
   const [eventStartDate, setEventStartDate] = useState(today);
@@ -59,7 +59,7 @@ const Events = () => {
   const uploadMainHandler = (event) => {
     const file = event.target.files?.[0];
     if (file) {
-      setSelectedMain(file);
+      setEventThumbnail(file);
     }
   };
 
@@ -120,9 +120,9 @@ const Events = () => {
     const formData = new FormData(document.getElementById("eventForm"));
 
     formData.append("isEnded", isPast);
-    console.log(selectedMain);
-    if (selectedMain != null) {
-      formData.append("thumbnail", selectedMain);
+    console.log(eventThumbnail);
+    if (eventThumbnail != null) {
+      formData.append("thumbnail", eventThumbnail);
     }
 
     formData.append("isAllDay", isAlldayChecked);
@@ -197,21 +197,48 @@ const Events = () => {
     });
   };
 
-  useEffect(() => {
-    initEventdata();
-  }, []);
+  const loadImage = async (imageUrl) => {
+    let imageFile = null;
+    // 이미지를 가져와 Blob으로 변환
+    await fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((imageBlob) => {
+        // Blob을 파일로 생성
+        imageFile = new File([imageBlob], "Thumbnail_Image.jpg", {
+          type: "image/jepg",
+        });
+      })
 
-  useEffect(() => {
+      .catch((error) => {
+        console.error("이미지를 가져오는 중 오류 발생: ", error);
+      });
+    return imageFile;
+  };
+
+  const eventInputLayout = async () => {
     if (isFormOpen > 0) {
       console.log(isFormOpen);
-      getOneEventData(isFormOpen).then((data) => {
+      await getOneEventData(isFormOpen).then((data) => {
         console.log(data);
         const eventData = data.data;
 
         setIsPast(eventData.isEnded);
-        // setSelectedMain(
-        //   eventData.thumbnail ? { name: eventData.thumbnail } : null
-        // );
+        if (eventData.thumbnail) {
+          fetch(eventData.thumbnail)
+            .then((response) => response.blob())
+            .then((imageBlob) => {
+              // Blob을 파일로 생성
+              const imageFile = new File([imageBlob], "Thumbnail_Image.jpg", {
+                type: "image/jepg",
+              });
+              setEventThumbnail(imageFile);
+            })
+
+            .catch((error) => {
+              console.error("이미지를 가져오는 중 오류 발생: ", error);
+            });
+        }
+
         setEventTitle(eventData.title);
         const startDate = moment(eventData.startDate).format("YYYY-MM-DD");
         setEventStartDate(startDate);
@@ -229,28 +256,62 @@ const Events = () => {
         setEventPurpose(eventData.purpose);
         setEventExplanation(eventData.explanation);
 
-        // if (eventData.mainImages.length !== 0) {
-        //   const imageArray = [];
-        //   eventData.mainImages.map((data, idx) => {
-        //     imageArray.push({ id: idx, file: { name: data } });
-        //   });
-        //   setEventDetailImg(imageArray);
-        // }
+        if (eventData.mainImages.length !== 0) {
+          const imageArray = [];
+          eventData.mainImages.map((data, idx) => {
+            console.log(data);
+            fetch(data)
+              .then((response) => response.blob())
+              .then((imageBlob) => {
+                // Blob을 파일로 생성
+                const imageFile = new File(
+                  [imageBlob],
+                  `EventMainImage${idx + 1}.jpg`,
+                  {
+                    type: "image/jepg",
+                  }
+                );
+                imageArray.push({ id: idx, file: imageFile });
+              })
 
-        // if (eventData.galleries.length !== 0) {
-        //   const imageArray = [];
-        //   eventData.galleries.map((data, idx) => {
-        //     imageArray.push({ id: idx, file: { name: data } });
-        //   });
-        //   setEventGalleryImg(imageArray);
-        // }
+              .catch((error) => {
+                console.error("이미지를 가져오는 중 오류 발생: ", error);
+              });
+          });
+          setEventDetailImg(imageArray);
+        }
+
+        if (eventData.galleries.length !== 0) {
+          const imageArray = [];
+          eventData.galleries.map((data, idx) => {
+            console.log(data);
+            fetch(data)
+              .then((response) => response.blob())
+              .then((imageBlob) => {
+                // Blob을 파일로 생성
+                const imageFile = new File(
+                  [imageBlob],
+                  `EventGalleryImage${idx + 1}.jpg`,
+                  {
+                    type: "image/jepg",
+                  }
+                );
+                imageArray.push({ id: idx, file: imageFile });
+              })
+
+              .catch((error) => {
+                console.error("이미지를 가져오는 중 오류 발생: ", error);
+              });
+          });
+          setEventGalleryImg(imageArray);
+        }
 
         setEventLatitude(eventData.latitude);
         setEventLongitude(eventData.longitude);
       });
     } else {
       setIsPast(false);
-      setSelectedMain();
+      setEventThumbnail();
       setEventTitle();
       setEventStartDate(today);
       setEventEndDate(today);
@@ -267,6 +328,14 @@ const Events = () => {
       setEventDetailImg([{ id: 1, file: null }]);
       setEventGalleryImg([{ id: 1, file: null }]);
     }
+  };
+
+  useEffect(() => {
+    initEventdata();
+  }, []);
+
+  useEffect(() => {
+    eventInputLayout();
   }, [isFormOpen]);
 
   const handleKeyDown = (e) => {
@@ -275,26 +344,26 @@ const Events = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const imageUrl =
-  //     "https://s3-orca-test.s3.ap-northeast-2.amazonaws.com/orcaFiles/events/1697675843996/43fac4af-87f6-4a53-bc66-8d50033124721.jpg";
+  useEffect(() => {
+    const imageUrl =
+      "https://s3-orca-test.s3.ap-northeast-2.amazonaws.com/orcaFiles/events/1697675843996/43fac4af-87f6-4a53-bc66-8d50033124721.jpg";
 
-  //   // 이미지를 가져와 Blob으로 변환
-  //   fetch(imageUrl)
-  //     .then((response) => response.blob())
-  //     .then((imageBlob) => {
-  //       // Blob을 파일로 생성
-  //       const imageFile = new File([imageBlob], "image.jpg", {
-  //         type: "image/jpeg",
-  //       });
+    // 이미지를 가져와 Blob으로 변환
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((imageBlob) => {
+        // Blob을 파일로 생성
+        const imageFile = new File([imageBlob], "image.jpg", {
+          type: "image/jpeg",
+        });
 
-  //       // 이제 imageFile을 사용하거나 다운로드할 수 있음
-  //       console.log(imageFile);
-  //     })
-  //     .catch((error) => {
-  //       console.error("이미지를 가져오는 중 오류 발생: ", error);
-  //     });
-  // }, []);
+        // 이제 imageFile을 사용하거나 다운로드할 수 있음
+        console.log(imageFile);
+      })
+      .catch((error) => {
+        console.error("이미지를 가져오는 중 오류 발생: ", error);
+      });
+  }, []);
 
   return (
     <div className="Layout">
@@ -357,8 +426,8 @@ const Events = () => {
                 <img src={images.upload} alt="Upload" />
               </div>
               <div htmlFor="imagePath">
-                {selectedMain ? (
-                  <div className="imagePath">{selectedMain.name}</div>
+                {eventThumbnail ? (
+                  <div className="imagePath">{eventThumbnail.name}</div>
                 ) : (
                   <div className="imagePath">Event Image</div>
                 )}
