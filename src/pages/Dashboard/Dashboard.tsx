@@ -12,6 +12,8 @@ type Props = {
 	onGraphReload: () => void;
 	onTableReload: () => void;
 	range: string;
+	webData: number[];
+	mobileData: number[];
 };
 
 const Dashboard = ({
@@ -22,6 +24,8 @@ const Dashboard = ({
 	onGraphReload,
 	onTableReload,
 	range,
+	webData,
+	mobileData,
 }: Props) => {
 	return (
 		<div className='dashboard'>
@@ -52,7 +56,7 @@ const Dashboard = ({
 					onRangeClick={onRangeClick}
 					range={range}
 				/>
-				<Table />
+				<Table webData={webData} mobileData={mobileData} />
 			</div>
 			<div className='dashboard-statistic'>
 				<div className='dashboard-statistic-head'>

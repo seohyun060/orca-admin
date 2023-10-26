@@ -2,19 +2,46 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Dashboard from '../Dashboard';
 import * as XLSX from 'xlsx';
 import { StatisticsList } from '@typedef/types';
-import { getGraph, getStatistic } from 'src/api/DashboardAPI';
+import { getGraph, getStatistic, getTable } from 'src/api/DashboardAPI';
 
 type Props = {};
 
 const DashboardContainer = (props: Props) => {
 	const [statisticsList, setStatisticsList] = useState<StatisticsList>();
 	const [dayList, setDayList] = useState([]);
-	const [graphList, setGraphList] = useState([]);
+	const [graphList, setGraphList] = useState<any[]>([]);
 	const [range, setRange] = useState('month');
+	const [webData, setWebData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+	const [mobileData, setMobileData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+	const tempWeb = [0, 0, 0, 0, 0, 0, 0, 0];
+	const tempMob = [0, 0, 0, 0, 0, 0, 0, 0];
 
 	const downloadStatisticsAsExcel = () => {
 		// CSV 데이터 생성
+		const graphLabel: string[] = [];
+		const graphWebValue: string[] = [];
+		const graphMobileValue: string[] = [];
+		for (let i = 0; i < graphList.length; i++) {
+			graphLabel.push(graphList[i].date);
+			graphWebValue.push(graphList[i].web);
+			graphMobileValue.push(graphList[i].mobile);
+		}
+		console.log(graphList);
 		const csvData = [
+			graphLabel,
+			graphWebValue,
+			graphMobileValue,
+			['', '', ''],
+			['', 'Web', 'Mobile'],
+			['Today', webData[0], mobileData[0]],
+			['Yesterday', webData[1], mobileData[1]],
+			['Last 7 days', webData[2], mobileData[2]],
+			['Last 30 days', webData[3], mobileData[3]],
+			['Last 60 days', webData[4], mobileData[4]],
+			['Last 90 days', webData[5], mobileData[5]],
+			['Last 12 months', webData[6], mobileData[6]],
+			['This year', webData[7], mobileData[7]],
+			['', '', ''],
 			['Label', 'Value'],
 			['Researcher Number', statisticsList?.researcherNumber],
 			['Newsletter Number', statisticsList?.newsletterNumber],
@@ -97,7 +124,105 @@ const DashboardContainer = (props: Props) => {
 			setStatisticsList(updatedList);
 		});
 	}, [statisticsList]);
-
+	async function setData() {
+		setWebData(tempWeb);
+		setMobileData(tempMob);
+	}
+	async function setAfterGet() {
+		getTable('today').then((data) => {
+			if (data.data.length != 0) {
+				for (let i = 0; i < data.data.length; i++) {
+					if (data.data[i][1] == 'web') {
+						tempWeb[0] = data.data[i][2];
+					} else {
+						tempMob[0] = data.data[i][2];
+					}
+				}
+			}
+		});
+		getTable('yesterday').then((data) => {
+			if (data.data.length != 0) {
+				for (let i = 0; i < data.data.length; i++) {
+					if (data.data[i][1] == 'web') {
+						tempWeb[1] = data.data[i][2];
+					} else {
+						tempMob[1] = data.data[i][2];
+					}
+				}
+			}
+		});
+		getTable('7days').then((data) => {
+			if (data.data.length != 0) {
+				for (let i = 0; i < data.data.length; i++) {
+					if (data.data[i][1] == 'web') {
+						tempWeb[2] = data.data[i][2];
+					} else {
+						tempMob[2] = data.data[i][2];
+					}
+				}
+			}
+		});
+		getTable('30days').then((data) => {
+			if (data.data.length != 0) {
+				for (let i = 0; i < data.data.length; i++) {
+					if (data.data[i][1] == 'web') {
+						tempWeb[3] = data.data[i][2];
+					} else {
+						tempMob[3] = data.data[i][2];
+					}
+				}
+			}
+		});
+		getTable('60days').then((data) => {
+			if (data.data.length != 0) {
+				for (let i = 0; i < data.data.length; i++) {
+					if (data.data[i][1] == 'web') {
+						tempWeb[4] = data.data[i][2];
+					} else {
+						tempMob[4] = data.data[i][2];
+					}
+				}
+			}
+		});
+		getTable('90days').then((data) => {
+			if (data.data.length != 0) {
+				for (let i = 0; i < data.data.length; i++) {
+					if (data.data[i][1] == 'web') {
+						tempWeb[5] = data.data[i][2];
+					} else {
+						tempMob[5] = data.data[i][2];
+					}
+				}
+			}
+		});
+		getTable('1year').then((data) => {
+			if (data.data.length != 0) {
+				for (let i = 0; i < data.data.length; i++) {
+					if (data.data[i][1] == 'web') {
+						tempWeb[6] = data.data[i][2];
+					} else {
+						tempMob[6] = data.data[i][2];
+					}
+				}
+			}
+		});
+		getTable('thisYear').then((data) => {
+			if (data.data.length != 0) {
+				for (let i = 0; i < data.data.length; i++) {
+					if (data.data[i][1] == 'web') {
+						tempWeb[7] = data.data[i][2];
+					} else {
+						tempMob[7] = data.data[i][2];
+					}
+				}
+			}
+		});
+		await setData();
+	}
+	useEffect(() => {
+		setAfterGet();
+		return () => {};
+	}, []);
 	useEffect(() => {
 		getGraph(range).then((data) => {
 			const monthNames = [
@@ -167,6 +292,8 @@ const DashboardContainer = (props: Props) => {
 			onGraphReload={onGraphReload}
 			onTableReload={onTableReload}
 			range={range}
+			webData={webData}
+			mobileData={mobileData}
 		/>
 	);
 };
