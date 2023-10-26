@@ -674,28 +674,32 @@ const ProjectDetail = () => {
           <div className="StudyPlan">
             <div className="title">Study Plan</div>
             <div className="StudyInputSet">
-              <div className="subject">Observational Model</div>
-              <input
-                className="smallInput ObservationalModel"
-                placeholder="Text"
-                name="observationalModel"
-                value={projectObservationalModelMethod}
-                onChange={(e) =>
-                  setProjectObservationalModelMethod(e.target.value)
-                }
-                onKeyDown={handleKeyDown}
-              />
-              <div className="subject">Time Perspective</div>
-              <input
-                className="smallInput TimePerspective"
-                placeholder="Text"
-                name="timePerspective"
-                value={projectTimePerspectiveMethod}
-                onChange={(e) =>
-                  setProjectTimePerspectiveMethod(e.target.value)
-                }
-                onKeyDown={handleKeyDown}
-              />
+              <div style={{ display: "flex" }}>
+                <div className="subject">Observational Model</div>
+                <input
+                  className="smallInput ObservationalModel"
+                  placeholder="Text"
+                  name="observationalModel"
+                  value={projectObservationalModelMethod}
+                  onChange={(e) =>
+                    setProjectObservationalModelMethod(e.target.value)
+                  }
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
+              <div style={{ display: "flex" }}>
+                <div className="subject">Time Perspective</div>
+                <input
+                  className="smallInput TimePerspective"
+                  placeholder="Text"
+                  name="timePerspective"
+                  value={projectTimePerspectiveMethod}
+                  onChange={(e) =>
+                    setProjectTimePerspectiveMethod(e.target.value)
+                  }
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
             </div>
             <div className="ArticleTitle">Intervention / Treatment</div>
             <textarea

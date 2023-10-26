@@ -1,5 +1,5 @@
 export async function getOrcaMembers() {
-	return fetch('http://43.202.46.227/api/orcaMembers', {
+	return fetch('https://api-orca.beamworks.co.kr/api/orcaMembers', {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -12,7 +12,7 @@ export async function getOrcaMembers() {
 }
 
 export async function deleteOrcaMember(id) {
-	return fetch(`http://43.202.46.227/api/orcaMembers/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/orcaMembers/${id}`, {
 		method: 'DELETE',
 	})
 		.then((res) => res.json())

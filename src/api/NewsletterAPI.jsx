@@ -1,5 +1,5 @@
 export async function getNewsletters() {
-	return fetch('http://43.202.46.227/api/newsletters', {
+	return fetch('https://api-orca.beamworks.co.kr/api/newsletters', {
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -12,7 +12,7 @@ export async function getNewsletters() {
 }
 
 export async function deleteNewsletter(id) {
-	return fetch(`http://43.202.46.227/api/newsletters/${id}`, {
+	return fetch(`https://api-orca.beamworks.co.kr/api/newsletters/${id}`, {
 		method: 'DELETE',
 	})
 		.then((res) => res.json())

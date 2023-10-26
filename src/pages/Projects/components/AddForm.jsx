@@ -21,13 +21,13 @@ const AddForm = (props) => {
     let modifyData = [...inputData];
     modifyData.map((data) => {
       if (data.id === id) {
-        data.name = inputName
-        data.affiliation = inputAffiliation
-        data.link = inputLink
+        data.name = inputName;
+        data.affiliation = inputAffiliation;
+        data.link = inputLink;
       }
-    })
-    changeInputData(modifyData)
-  }
+    });
+    changeInputData(modifyData);
+  };
 
   useEffect(() => {
     setInputName(name);
@@ -36,33 +36,52 @@ const AddForm = (props) => {
   }, [name, affiliation, link]);
 
   useEffect(() => {
-    syncParentData()
+    syncParentData();
   }, [inputName, inputAffiliation, inputLink]);
 
   return (
     <div className="CandIInputSet">
-      <div className="subject">이름</div>
-      <input
-        className="smallInput name"
-        placeholder="Text"
-        value={inputName}
-        onChange={(e) => setInputName(e.target.value)}
-      />
-      <div className="subject">소속</div>
-      <input
-        className="smallInput affiliation"
-        placeholder="00"
-        value={inputAffiliation}
-        onChange={(e) => setInputAffiliation(e.target.value)}
-      />
-      <div className="subject">링크</div>
-      <input
-        className="smallInput link"
-        placeholder="Text"
-        value={inputLink}
-        onChange={(e) => setInputLink(e.target.value)}
-      />
-      <img src={id !== inputData[inputData.length -1 ].id ? images.removeform : images.add} onClick={() => onButtonClick(id)} />
+      <div style={{ display: "flex" }}>
+        <div style={{ display: "flex" }}>
+          <div className="subject">이름</div>
+          <input
+            className="smallInput name"
+            placeholder="Text"
+            value={inputName}
+            onChange={(e) => setInputName(e.target.value)}
+          />
+        </div>
+        <div style={{ display: "flex" }}>
+          <div className="subject">소속</div>
+          <input
+            className="smallInput affiliation"
+            placeholder="00"
+            value={inputAffiliation}
+            onChange={(e) => setInputAffiliation(e.target.value)}
+          />
+        </div>
+      </div>
+      <div style={{ display: "flex" }}>
+        <div style={{ display: "flex" }}>
+          <div className="subject">링크</div>
+
+          <input
+            className="smallInput link"
+            placeholder="Text"
+            value={inputLink}
+            onChange={(e) => setInputLink(e.target.value)}
+          />
+        </div>
+
+        <img
+          src={
+            id !== inputData[inputData.length - 1].id
+              ? images.removeform
+              : images.add
+          }
+          onClick={() => onButtonClick(id)}
+        />
+      </div>
     </div>
   );
 };
