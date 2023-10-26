@@ -13,6 +13,19 @@ const EventCalendar = (props) => {
 
   const [eventDate, setEventDate] = useState(new Date());
 
+  const dotColors = [
+    "#FF66B2",
+    "#9370DB",
+    "#00CDCD",
+    "#00FFAE",
+    "#FFDD40",
+    "#A020F0",
+    "#1E90FF",
+    "#FF8C00",
+    "#FF5E5E",
+    "#A9A9A9",
+  ];
+
   const tileDisabled = ({ activeStartDate, date, view }) => {
     if (view === "month") {
       const currentMonth = activeStartDate.getMonth();
@@ -34,14 +47,14 @@ const EventCalendar = (props) => {
   const tileContent = (date) => {
     let html = [];
     // 현재 날짜가 post 작성한 날짜 배열에 있다면, dot div 추가
-    eventData.map((data) => {
+    eventData.map((data, idx) => {
       if (
         moment(data.startDate).format("YYYY-MM-DD") <=
           moment(date).format("YYYY-MM-DD") &&
         moment(data.endDate).format("YYYY-MM-DD") >=
           moment(date).format("YYYY-MM-DD")
       ) {
-        html.push(<div className="dot"></div>);
+        html.push(<div className="dot" style={{backgroundColor: dotColors[idx%10]}}></div>);
       }
     });
 
