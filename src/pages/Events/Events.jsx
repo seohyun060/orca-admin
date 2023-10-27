@@ -197,46 +197,37 @@ const Events = () => {
     });
   };
 
-  const loadImage = async (imageUrl) => {
+  const loadImage = async (imageUrl, name) => {
     let imageFile = null;
     // 이미지를 가져와 Blob으로 변환
     await fetch(imageUrl)
       .then((response) => response.blob())
       .then((imageBlob) => {
         // Blob을 파일로 생성
-        imageFile = new File([imageBlob], "Thumbnail_Image.jpg", {
+        imageFile = new File([imageBlob], name, {
           type: "image/jepg",
         });
       })
-
       .catch((error) => {
         console.error("이미지를 가져오는 중 오류 발생: ", error);
       });
     return imageFile;
   };
 
-  const eventInputLayout = async () => {
+  const eventInputLayout = () => {
     if (isFormOpen > 0) {
       console.log(isFormOpen);
-      await getOneEventData(isFormOpen).then((data) => {
+      getOneEventData(isFormOpen).then((data) => {
         console.log(data);
         const eventData = data.data;
 
         setIsPast(eventData.isEnded);
         if (eventData.thumbnail) {
-          fetch(eventData.thumbnail)
-            .then((response) => response.blob())
-            .then((imageBlob) => {
-              // Blob을 파일로 생성
-              const imageFile = new File([imageBlob], "Thumbnail_Image.jpg", {
-                type: "image/jepg",
-              });
-              setEventThumbnail(imageFile);
-            })
-
-            .catch((error) => {
-              console.error("이미지를 가져오는 중 오류 발생: ", error);
-            });
+          loadImage(eventData.thumbnail, "Thumbnail_Image.jpg").then((data) =>
+            setEventThumbnail(data)
+          );
+        } else {
+          setEventThumbnail();
         }
 
         setEventTitle(eventData.title);
@@ -257,53 +248,30 @@ const Events = () => {
         setEventExplanation(eventData.explanation);
 
         if (eventData.mainImages.length !== 0) {
-          const imageArray = [];
-          eventData.mainImages.map((data, idx) => {
-            console.log(data);
-            fetch(data)
-              .then((response) => response.blob())
-              .then((imageBlob) => {
-                // Blob을 파일로 생성
-                const imageFile = new File(
-                  [imageBlob],
-                  `EventMainImage${idx + 1}.jpg`,
-                  {
-                    type: "image/jepg",
-                  }
-                );
-                imageArray.push({ id: idx, file: imageFile });
-              })
-
-              .catch((error) => {
-                console.error("이미지를 가져오는 중 오류 발생: ", error);
-              });
+          setEventDetailImg([]);
+          eventData.mainImages.map((imageUrl, idx) => {
+            loadImage(imageUrl, `EventMainImage${idx + 1}.jpg`).then((data) => {
+              setEventDetailImg((prev) => [...prev, { id: idx, file: data }]);
+            });
           });
-          setEventDetailImg(imageArray);
+        } else {
+          setEventDetailImg([{ id: 1, file: null }]);
         }
 
         if (eventData.galleries.length !== 0) {
-          const imageArray = [];
-          eventData.galleries.map((data, idx) => {
-            console.log(data);
-            fetch(data)
-              .then((response) => response.blob())
-              .then((imageBlob) => {
-                // Blob을 파일로 생성
-                const imageFile = new File(
-                  [imageBlob],
-                  `EventGalleryImage${idx + 1}.jpg`,
-                  {
-                    type: "image/jepg",
-                  }
-                );
-                imageArray.push({ id: idx, file: imageFile });
-              })
-
-              .catch((error) => {
-                console.error("이미지를 가져오는 중 오류 발생: ", error);
-              });
+          setEventGalleryImg([]);
+          eventData.galleries.map((imageUrl, idx) => {
+            loadImage(imageUrl, `EventGalleryImage${idx + 1}.jpg`).then(
+              (data) => {
+                setEventGalleryImg((prev) => [
+                  ...prev,
+                  { id: idx, file: data },
+                ]);
+              }
+            );
           });
-          setEventGalleryImg(imageArray);
+        } else {
+          setEventGalleryImg([{ id: 1, file: null }]);
         }
 
         setEventLatitude(eventData.latitude);
@@ -328,6 +296,8 @@ const Events = () => {
       setEventDetailImg([{ id: 1, file: null }]);
       setEventGalleryImg([{ id: 1, file: null }]);
     }
+
+    setTimeout(100);
   };
 
   useEffect(() => {
@@ -344,26 +314,7 @@ const Events = () => {
     }
   };
 
-  useEffect(() => {
-    const imageUrl =
-      "https://s3-orca-test.s3.ap-northeast-2.amazonaws.com/orcaFiles/events/1697675843996/43fac4af-87f6-4a53-bc66-8d50033124721.jpg";
-
-    // 이미지를 가져와 Blob으로 변환
-    fetch(imageUrl)
-      .then((response) => response.blob())
-      .then((imageBlob) => {
-        // Blob을 파일로 생성
-        const imageFile = new File([imageBlob], "image.jpg", {
-          type: "image/jpeg",
-        });
-
-        // 이제 imageFile을 사용하거나 다운로드할 수 있음
-        console.log(imageFile);
-      })
-      .catch((error) => {
-        console.error("이미지를 가져오는 중 오류 발생: ", error);
-      });
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="Layout">
@@ -593,55 +544,8 @@ const Events = () => {
                 onChange={(e) => setEventExplanation(e.target.value)}
               />
               {/* 이미지 목록 첨부 필요 */}
-              {eventDetailImg.map((input, index) => (
-                <div className="EventImageSet">
-                  <label className="EventImageInput">
-                    <div className="UploadImageSpace">
-                      <img src={images.upload} alt="Upload" />
-                    </div>
-                    <div htmlFor="imagePath">
-                      {input.file ? (
-                        <div className="imagePath">{input.file.name}</div>
-                      ) : (
-                        <div className="imagePath">Event Image</div>
-                      )}
-                    </div>
-                    <input
-                      type="file"
-                      id="mainInput"
-                      onChange={(e) => uploadDetailHandler(input.id, e)}
-                      style={{ display: "none" }}
-                      onKeyDown={handleKeyDown}
-                    />
-                  </label>
-                  {input.id !== eventDetailImg[eventDetailImg.length - 1].id ? (
-                    <img
-                      src={images.removeform}
-                      onClick={() => removeDetailButtonClick(input.id)}
-                      F
-                    />
-                  ) : (
-                    <img
-                      src={images.addform}
-                      onClick={() => addDetailButtonClick()}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-            {eventLatitude && (
-              <MapContainer
-                latitude={eventLatitude}
-                longitude={eventLongitude}
-                location={eventLocation}
-                setLocation={setEventLocation}
-              />
-            )}
-            {isPast ? (
-              <div className="EventGalleryInput">
-                <div className="title">Gallery</div>
-                {/* 이미지 목록 첨부 필요 */}
-                {eventGalleryImg.map((input, index) => (
+              {eventDetailImg &&
+                eventDetailImg.map((input, index) => (
                   <div className="EventImageSet">
                     <label className="EventImageInput">
                       <div className="UploadImageSpace">
@@ -656,27 +560,77 @@ const Events = () => {
                       </div>
                       <input
                         type="file"
-                        sc
                         id="mainInput"
-                        onChange={(e) => uploadGalleryHandler(input.id, e)}
+                        onChange={(e) => uploadDetailHandler(input.id, e)}
                         style={{ display: "none" }}
                         onKeyDown={handleKeyDown}
                       />
                     </label>
                     {input.id !==
-                    eventGalleryImg[eventGalleryImg.length - 1].id ? (
+                    eventDetailImg[eventDetailImg.length - 1].id ? (
                       <img
                         src={images.removeform}
-                        onClick={() => removeGalleryButtonClick(input.id)}
+                        onClick={() => removeDetailButtonClick(input.id)}
+                        F
                       />
                     ) : (
                       <img
                         src={images.addform}
-                        onClick={() => addGalleryButtonClick()}
+                        onClick={() => addDetailButtonClick()}
                       />
                     )}
                   </div>
                 ))}
+            </div>
+            {eventLatitude && (
+              <MapContainer
+                latitude={eventLatitude}
+                longitude={eventLongitude}
+                location={eventLocation}
+                setLocation={setEventLocation}
+              />
+            )}
+            {isPast ? (
+              <div className="EventGalleryInput">
+                <div className="title">Gallery</div>
+                {/* 이미지 목록 첨부 필요 */}
+                {eventGalleryImg &&
+                  eventGalleryImg.map((input, index) => (
+                    <div className="EventImageSet">
+                      <label className="EventImageInput">
+                        <div className="UploadImageSpace">
+                          <img src={images.upload} alt="Upload" />
+                        </div>
+                        <div htmlFor="imagePath">
+                          {input.file ? (
+                            <div className="imagePath">{input.file.name}</div>
+                          ) : (
+                            <div className="imagePath">Event Image</div>
+                          )}
+                        </div>
+                        <input
+                          type="file"
+                          sc
+                          id="mainInput"
+                          onChange={(e) => uploadGalleryHandler(input.id, e)}
+                          style={{ display: "none" }}
+                          onKeyDown={handleKeyDown}
+                        />
+                      </label>
+                      {input.id !==
+                      eventGalleryImg[eventGalleryImg.length - 1].id ? (
+                        <img
+                          src={images.removeform}
+                          onClick={() => removeGalleryButtonClick(input.id)}
+                        />
+                      ) : (
+                        <img
+                          src={images.addform}
+                          onClick={() => addGalleryButtonClick()}
+                        />
+                      )}
+                    </div>
+                  ))}
               </div>
             ) : (
               <></>
