@@ -18,9 +18,9 @@ const DashboardContainer = (props: Props) => {
 
 	const downloadStatisticsAsExcel = () => {
 		// CSV 데이터 생성
-		const graphLabel: string[] = [];
-		const graphWebValue: string[] = [];
-		const graphMobileValue: string[] = [];
+		const graphLabel: string[] = [''];
+		const graphWebValue: string[] = [''];
+		const graphMobileValue: string[] = [''];
 		for (let i = 0; i < graphList.length; i++) {
 			graphLabel.push(graphList[i].date);
 			graphWebValue.push(graphList[i].web);
