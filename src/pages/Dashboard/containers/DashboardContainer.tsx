@@ -11,36 +11,36 @@ const DashboardContainer = (props: Props) => {
 	const [dayList, setDayList] = useState([]);
 	const [graphList, setGraphList] = useState<any[]>([]);
 	const [range, setRange] = useState('month');
-	const [webData, setWebData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+	const [desktopData, setDesktopData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
 	const [mobileData, setMobileData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
-	const tempWeb = [0, 0, 0, 0, 0, 0, 0, 0];
+	const tempDesktop = [0, 0, 0, 0, 0, 0, 0, 0];
 	const tempMob = [0, 0, 0, 0, 0, 0, 0, 0];
 
 	const downloadStatisticsAsExcel = () => {
 		// CSV 데이터 생성
 		const graphLabel: string[] = [''];
-		const graphWebValue: string[] = [''];
+		const graphDesktopValue: string[] = [''];
 		const graphMobileValue: string[] = [''];
 		for (let i = 0; i < graphList.length; i++) {
 			graphLabel.push(graphList[i].date);
-			graphWebValue.push(graphList[i].web);
+			graphDesktopValue.push(graphList[i].desktop);
 			graphMobileValue.push(graphList[i].mobile);
 		}
 		console.log(graphList);
 		const csvData = [
 			graphLabel,
-			graphWebValue,
+			graphDesktopValue,
 			graphMobileValue,
 			['', '', ''],
-			['', 'Web', 'Mobile'],
-			['Today', webData[0], mobileData[0]],
-			['Yesterday', webData[1], mobileData[1]],
-			['Last 7 days', webData[2], mobileData[2]],
-			['Last 30 days', webData[3], mobileData[3]],
-			['Last 60 days', webData[4], mobileData[4]],
-			['Last 90 days', webData[5], mobileData[5]],
-			['Last 12 months', webData[6], mobileData[6]],
-			['This year', webData[7], mobileData[7]],
+			['', 'Desktop', 'Mobile'],
+			['Today', desktopData[0], mobileData[0]],
+			['Yesterday', desktopData[1], mobileData[1]],
+			['Last 7 days', desktopData[2], mobileData[2]],
+			['Last 30 days', desktopData[3], mobileData[3]],
+			['Last 60 days', desktopData[4], mobileData[4]],
+			['Last 90 days', desktopData[5], mobileData[5]],
+			['Last 12 months', desktopData[6], mobileData[6]],
+			['This year', desktopData[7], mobileData[7]],
 			['', '', ''],
 			['Label', 'Value'],
 			['Researcher Number', statisticsList?.researcherNumber],
@@ -97,7 +97,7 @@ const DashboardContainer = (props: Props) => {
 			const convertData = modifyMonth.map((item: any) => ({
 				date: item[0],
 
-				web: item[1] == 'web' ? parseInt(item[2]) : 0,
+				desktop: item[1] == 'desktop' ? parseInt(item[2]) : 0,
 				mobile: item[1] == 'mobile' ? parseInt(item[2]) : 0,
 			}));
 
@@ -125,15 +125,15 @@ const DashboardContainer = (props: Props) => {
 		});
 	}, [statisticsList]);
 	async function setData() {
-		setWebData(tempWeb);
+		setDesktopData(tempDesktop);
 		setMobileData(tempMob);
 	}
 	async function setAfterGet() {
 		getTable('today').then((data) => {
 			if (data.data.length != 0) {
 				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'web') {
-						tempWeb[0] = data.data[i][2];
+					if (data.data[i][1] == 'desktop') {
+						tempDesktop[0] = data.data[i][2];
 					} else {
 						tempMob[0] = data.data[i][2];
 					}
@@ -143,8 +143,8 @@ const DashboardContainer = (props: Props) => {
 		getTable('yesterday').then((data) => {
 			if (data.data.length != 0) {
 				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'web') {
-						tempWeb[1] = data.data[i][2];
+					if (data.data[i][1] == 'desktop') {
+						tempDesktop[1] = data.data[i][2];
 					} else {
 						tempMob[1] = data.data[i][2];
 					}
@@ -154,8 +154,8 @@ const DashboardContainer = (props: Props) => {
 		getTable('7days').then((data) => {
 			if (data.data.length != 0) {
 				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'web') {
-						tempWeb[2] = data.data[i][2];
+					if (data.data[i][1] == 'desktop') {
+						tempDesktop[2] = data.data[i][2];
 					} else {
 						tempMob[2] = data.data[i][2];
 					}
@@ -165,8 +165,8 @@ const DashboardContainer = (props: Props) => {
 		getTable('30days').then((data) => {
 			if (data.data.length != 0) {
 				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'web') {
-						tempWeb[3] = data.data[i][2];
+					if (data.data[i][1] == 'desktop') {
+						tempDesktop[3] = data.data[i][2];
 					} else {
 						tempMob[3] = data.data[i][2];
 					}
@@ -176,8 +176,8 @@ const DashboardContainer = (props: Props) => {
 		getTable('60days').then((data) => {
 			if (data.data.length != 0) {
 				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'web') {
-						tempWeb[4] = data.data[i][2];
+					if (data.data[i][1] == 'desktop') {
+						tempDesktop[4] = data.data[i][2];
 					} else {
 						tempMob[4] = data.data[i][2];
 					}
@@ -187,8 +187,8 @@ const DashboardContainer = (props: Props) => {
 		getTable('90days').then((data) => {
 			if (data.data.length != 0) {
 				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'web') {
-						tempWeb[5] = data.data[i][2];
+					if (data.data[i][1] == 'desktop') {
+						tempDesktop[5] = data.data[i][2];
 					} else {
 						tempMob[5] = data.data[i][2];
 					}
@@ -198,8 +198,8 @@ const DashboardContainer = (props: Props) => {
 		getTable('1year').then((data) => {
 			if (data.data.length != 0) {
 				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'web') {
-						tempWeb[6] = data.data[i][2];
+					if (data.data[i][1] == 'desktop') {
+						tempDesktop[6] = data.data[i][2];
 					} else {
 						tempMob[6] = data.data[i][2];
 					}
@@ -209,8 +209,8 @@ const DashboardContainer = (props: Props) => {
 		getTable('thisYear').then((data) => {
 			if (data.data.length != 0) {
 				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'web') {
-						tempWeb[7] = data.data[i][2];
+					if (data.data[i][1] == 'desktop') {
+						tempDesktop[7] = data.data[i][2];
 					} else {
 						tempMob[7] = data.data[i][2];
 					}
@@ -225,6 +225,7 @@ const DashboardContainer = (props: Props) => {
 	}, []);
 	useEffect(() => {
 		getGraph(range).then((data) => {
+			console.log(data);
 			const monthNames = [
 				'Jan',
 				'Feb',
@@ -251,7 +252,7 @@ const DashboardContainer = (props: Props) => {
 			const convertData = modifyMonth.map((item: any) => ({
 				date: item[0],
 
-				web: item[1] == 'web' ? parseInt(item[2]) : 0,
+				desktop: item[1] == 'desktop' ? parseInt(item[2]) : 0,
 				mobile: item[1] == 'mobile' ? parseInt(item[2]) : 0,
 			}));
 
@@ -291,7 +292,7 @@ const DashboardContainer = (props: Props) => {
 			onGraphReload={onGraphReload}
 			onTableReload={onTableReload}
 			range={range}
-			webData={webData}
+			desktopData={desktopData}
 			mobileData={mobileData}
 		/>
 	);

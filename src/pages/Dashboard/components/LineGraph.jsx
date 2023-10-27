@@ -73,11 +73,13 @@ const LineGraph = (props) => {
 					domain={[
 						0,
 						Math.max(
-							...graphList.map((item) => Math.max(item.web, item.mobile)),
+							...graphList.map((item) => Math.max(item.desktop, item.mobile)),
 						) +
 							(10 -
 								(Math.max(
-									...graphList.map((item) => Math.max(item.web, item.mobile)),
+									...graphList.map((item) =>
+										Math.max(item.desktop, item.mobile),
+									),
 								) %
 									10)),
 					]}
@@ -88,7 +90,7 @@ const LineGraph = (props) => {
 				<Legend align='right' verticalAlign='top' />
 				<Line
 					type='monotone'
-					dataKey='web'
+					dataKey='desktop'
 					stroke='rgba(0, 0, 0, 0.30)'
 					activeDot={{ r: 8 }}
 				/>

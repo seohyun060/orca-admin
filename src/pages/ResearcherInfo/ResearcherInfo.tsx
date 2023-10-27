@@ -36,6 +36,7 @@ type Props = {
 	pubEdit: boolean;
 	onClickPubEdit: (index: number) => void;
 	onSubClicked: (index: number) => void;
+	onEnterKeyPress: any;
 };
 
 const ResearcherInfo = ({
@@ -70,6 +71,7 @@ const ResearcherInfo = ({
 	pubEdit,
 	onClickPubEdit,
 	onSubClicked,
+	onEnterKeyPress,
 }: Props) => {
 	const mapItems = Array.from({ length: 32 }, (_, index) => index + 1);
 	const navigate = useNavigate();
@@ -213,6 +215,7 @@ const ResearcherInfo = ({
 						onChange={onChangeBiographyEdit}
 						required
 						value={biographyEdit}
+						style={{ whiteSpace: 'pre-line' }}
 					></textarea>
 				</div>
 				<div className='publication'>

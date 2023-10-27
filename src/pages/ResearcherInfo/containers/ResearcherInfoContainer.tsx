@@ -265,6 +265,13 @@ Props) => {
 		},
 		[twitterEdit],
 	);
+	const onEnterKeyPress = (e: any) => {
+		if (e.key === 'Enter') {
+			// Enter 키가 눌렸을 때 줄 바꿈 추가
+			e.preventDefault(); // Enter 키의 기본 동작을 취소
+			setBiographyEdit(biographyEdit + '\n'); // 줄 바꿈을 추가한 내용으로 업데이트
+		}
+	};
 	const onChangeBiographyEdit = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 			setBiographyEdit(e.target.value);
@@ -324,6 +331,7 @@ Props) => {
 				});
 			}
 			console.log(selectedProfile);
+			console.log(biographyEdit);
 			const createTempResearcher = () => ({
 				affiliation: departmentEdit,
 				id,
@@ -401,6 +409,7 @@ Props) => {
 			pubEdit={pubEdit}
 			onClickPubEdit={onClickPubEdit}
 			onSubClicked={onSubClicked}
+			onEnterKeyPress={onEnterKeyPress}
 		/>
 	);
 };
