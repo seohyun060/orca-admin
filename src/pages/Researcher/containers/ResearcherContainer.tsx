@@ -26,16 +26,12 @@ const ResearcherContainer = ({}: Props) => {
 	const [edit, setEdit] = useState(false);
 	const [storedColor, setStoredColor] = useState(0.3);
 
-	if (location.state) {
-		console.log(location.state);
-	}
 	const onDisplayedClick = useCallback(() => {
 		if (stored) {
 			setStored(false);
 			setDisplayedColor(1);
 			setStoredColor(0.3);
 		}
-		console.log(stored, displayedColor, storedColor);
 	}, [stored, displayedColor, storedColor]);
 	const onStoredClick = useCallback(() => {
 		if (!stored) {
@@ -43,7 +39,6 @@ const ResearcherContainer = ({}: Props) => {
 			setDisplayedColor(0.3);
 			setStoredColor(1);
 		}
-		console.log(stored, displayedColor, storedColor);
 	}, [stored, displayedColor, storedColor]);
 	const onStoredisplayClick = useCallback(
 		(researcherList: ResearcherList, id: number) => {
@@ -119,41 +114,37 @@ const ResearcherContainer = ({}: Props) => {
 	);
 
 	useEffect(() => {
-		setTimeout(() => {
-			getResearchers().then((data) => {
-				console.log(data.data); // 나옴
-				const updatedList: ResearcherList = [];
-				data.data.map((d: any) => {
-					const tempData: Researchers = {
-						id: d.id,
-						name: d.name,
-						profile: d.image ? d.image : images.orcagroup,
-						location: d.locationNumber,
-						department: d.affiliation,
-						project: d.projectType,
-						stored: d.isStored,
-						link: 'https://ca70-221-166-133-218.ngrok-free.app',
-						twitter: `twitter`,
-						biography: 'Biography of researcher',
-						publications: [
-							{
-								link: 'www.bodybuilding.com',
-								title: 'Olympia',
-								author: 'Chris, Bumstead',
-								pubYear: 2023,
-								journal: 'Classic',
-								conference: 'Physique',
-								volume: 'Grand Prix',
-								editable: false,
-							},
-						],
-					};
-					updatedList.push(tempData);
-				});
-				setResearcherList(updatedList);
-				//console.log(researcherList); // 안나옴
+		getResearchers().then((data) => {
+			const updatedList: ResearcherList = [];
+			data.data.map((d: any) => {
+				const tempData: Researchers = {
+					id: d.id,
+					name: d.name,
+					profile: d.image ? d.image : images.orcagroup,
+					location: d.locationNumber,
+					department: d.affiliation,
+					project: d.projectType,
+					stored: d.isStored,
+					link: 'https://ca70-221-166-133-218.ngrok-free.app',
+					twitter: `twitter`,
+					biography: 'Biography of researcher',
+					publications: [
+						{
+							link: 'www.bodybuilding.com',
+							title: 'Olympia',
+							author: 'Chris, Bumstead',
+							pubYear: 2023,
+							journal: 'Classic',
+							conference: 'Physique',
+							volume: 'Grand Prix',
+							editable: false,
+						},
+					],
+				};
+				updatedList.push(tempData);
 			});
-		}, 0);
+			setResearcherList(updatedList);
+		});
 
 		return () => {};
 	}, []);
@@ -163,14 +154,6 @@ const ResearcherContainer = ({}: Props) => {
 				(researcher) => researcher.name.indexOf(search) !== -1,
 			),
 		);
-		// setTimeout(() => {
-		// 	setFilteredList(
-		// 		researcherList.filter(
-		// 			(researcher) => researcher.name.indexOf(search) !== -1,
-		// 		),
-		// 	);
-		// }, 300);
-
 		return () => {};
 	}, [researcherList, search]);
 

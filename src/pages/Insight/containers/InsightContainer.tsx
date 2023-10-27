@@ -57,12 +57,7 @@ const InsightContainer = ({}: Props) => {
 				const updatedList = prevList.filter((insight) => insight.id !== id);
 				return updatedList;
 			});
-			deleteInsight(id).then((data) => {
-				//console.log(data.data); // 나옴
-
-				console.log(data);
-				//console.log(researcherList); // 안나옴
-			});
+			deleteInsight(id).then((data) => {});
 		},
 		[insightList],
 	);
@@ -82,26 +77,21 @@ const InsightContainer = ({}: Props) => {
 	}
 
 	useEffect(() => {
-		setTimeout(() => {
-			getInsights().then((data) => {
-				console.log(data.data); // 나옴
-				const updatedList: InsightApi[] = [];
-				data.data.map((d: any) => {
-					const tempData: InsightApi = {
-						id: d.id,
-						createDate: new Date(d.createDate),
-						category: d.category,
-						title: d.title,
-						isStored: d.isStored,
-					};
-					updatedList.push(tempData);
-					console.log(d.title);
-				});
-				setInsightList(updatedList);
-				console.log(insightList); // 안나옴
-				//setCheck(true);
+		getInsights().then((data) => {
+			const updatedList: InsightApi[] = [];
+			data.data.map((d: any) => {
+				const tempData: InsightApi = {
+					id: d.id,
+					createDate: new Date(d.createDate),
+					category: d.category,
+					title: d.title,
+					isStored: d.isStored,
+				};
+				updatedList.push(tempData);
 			});
-		}, 0);
+			setInsightList(updatedList);
+			//setCheck(true);
+		});
 
 		return () => {};
 	}, [navigate, location]);

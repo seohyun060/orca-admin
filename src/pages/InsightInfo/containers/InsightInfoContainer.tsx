@@ -105,7 +105,6 @@ const InsightInfoContainer = ({}: Props) => {
 				title: title,
 				files: selectedFiles,
 			});
-			console.log(createTempInsight());
 			// const updatedInsights = edit
 			// 	? insightList.map((insight) =>
 			// 			insight.id === id ? createTempInsight() : insight,
@@ -115,7 +114,6 @@ const InsightInfoContainer = ({}: Props) => {
 			// setInsightList(updatedInsights);
 
 			if (id == 0) {
-				console.log('제발요');
 				await postInsights(createTempInsight());
 			} else {
 				await putInsights(id, createTempInsight());
@@ -142,23 +140,6 @@ const InsightInfoContainer = ({}: Props) => {
 				setSelectedType(data.data.category);
 				setPdfListEdit(data.data.files);
 				setTitleEdit(data.data.title);
-
-				// if (data.data.publications.length != 0) {
-				// 	const updatedPublication = [...publicationEdit];
-				// 	for (let i = 0; i < pubAPI.length; i++) {
-				// 		updatedPublication[i].title = pubAPI[i].title;
-				// 		updatedPublication[i].author = pubAPI[i].author;
-				// 		updatedPublication[i].year = pubAPI[i].pubYear;
-				// 		updatedPublication[i].journal = pubAPI[i].journal;
-				// 		updatedPublication[i].conference = pubAPI[i].conference;
-				// 		updatedPublication[i].ho = pubAPI[i].volume;
-				// 		updatedPublication[i].link = pubAPI[i].link;
-				// 	}
-				// 	setPublicationEdit(updatedPublication);
-				// 	console.log(updatedPublication);
-				// }
-
-				//console.log(researcherList); // 안나옴
 			});
 		}
 
@@ -169,7 +150,6 @@ const InsightInfoContainer = ({}: Props) => {
 		Promise.all(createFilesPromises)
 			.then((files: any) => {
 				setSelectedFiles(files);
-				console.log(files);
 			})
 			.catch((error) => {
 				console.error('파일 생성 실패:', error);
@@ -177,7 +157,6 @@ const InsightInfoContainer = ({}: Props) => {
 		return () => {};
 	}, [pdfListEdit]);
 
-	console.log(selectedFiles);
 	return (
 		<InsightInfo
 			dropbox={dropbox}
@@ -189,10 +168,8 @@ const InsightInfoContainer = ({}: Props) => {
 			onChangeTitleEdit={onChangeTitleEdit}
 			onBackClicked={onBackClicked}
 			pdfListEdit={pdfListEdit}
-			//id={id}
 			selectedType={selectedType}
 			onApplyClicked={onApplyClicked}
-			//edit={edit}
 			onSubClicked={onSubClicked}
 			id={id}
 			selectedFiles={selectedFiles}

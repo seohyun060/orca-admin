@@ -56,7 +56,6 @@ const GnbContainer = ({ location }: Props) => {
 			setSelectedTab(path);
 			navigate(path);
 			window.scrollTo(0, 0);
-			console.log(location);
 		},
 		[selectedTab, location],
 	);

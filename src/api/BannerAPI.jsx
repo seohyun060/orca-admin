@@ -12,7 +12,6 @@ export async function putMainBanner(mainBanner, orcaBanner) {
 
 export async function putOrcaBanner(mainBanner, orcaBanner) {
 	let data = new FormData();
-	console.log(orcaBanner);
 	// data.append('mainBanner', mainBanner);
 	data.append('orcaBanner', orcaBanner);
 	return fetch(`https://api-orca.beamworks.co.kr/api/banners`, {
@@ -30,8 +29,6 @@ export async function getMainBanner() {
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
-
 			return data;
 		});
 }
@@ -43,8 +40,6 @@ export async function getOrcaBanner() {
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
-
 			return data;
 		});
 }

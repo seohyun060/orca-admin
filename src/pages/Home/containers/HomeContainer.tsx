@@ -68,7 +68,6 @@ const HomeContainer = (props: Props) => {
 	}, [selectedInsights]);
 	useEffect(() => {
 		getMainProjects().then((data) => {
-			console.log(data.data); // 나옴
 			const updatedList: string[] = [];
 			data.data.map((d: any) => {
 				updatedList.push(`http://orca.beamworks.co.kr/projects/${d.id}`);
@@ -76,23 +75,19 @@ const HomeContainer = (props: Props) => {
 			setSelectedProjects(updatedList);
 		});
 		getMainInsights().then((data) => {
-			console.log(data.data); // 나옴
 			const updatedList: string[] = [];
 			data.data.map((d: any) => {
 				updatedList.push(`http://orca.beamworks.co.kr/insights/${d.id}`);
 			});
 			setSelectedInsights(updatedList);
 		});
-		getOrcaBanner().then((data) => {
-			console.log(data.data); // 나옴
-		});
+		getOrcaBanner().then((data) => {});
 		getMainBanner().then((data) => {
 			// console.log(data.data); // 나옴
 		});
 		return () => {};
 	}, []);
 
-	console.log(selectedInsights);
 	return (
 		<Home
 			selectedMain={selectedMain}

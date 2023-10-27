@@ -5,8 +5,6 @@ export async function getResearchers() {
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
-
 			return data;
 		});
 }
@@ -17,8 +15,6 @@ export async function deleteResearcher(id) {
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
-
 			return data;
 		});
 }
@@ -41,7 +37,6 @@ export async function putResearchers(id, researcher, image) {
 	data.append('info', new Blob([infoJson], { type: 'application/json' }));
 	if (image) {
 		data.append('image', image);
-		console.log('이미지 변경함');
 	}
 	console.log(data);
 
@@ -62,7 +57,6 @@ export async function getResearcherDetail(id) {
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
 			//data = researcher;
 			return data;
 		});
@@ -88,8 +82,6 @@ export async function postResearchers(researcher, image) {
 		data.append('image', image);
 	}
 
-	console.log(data);
-
 	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/`, {
 		method: 'POST',
 
@@ -100,13 +92,15 @@ export async function postResearchers(researcher, image) {
 		.then((data) => {});
 }
 export async function storeResearcher(id, isStored) {
-	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/${id}?store=${isStored}`, {
-		method: 'PUT',
-	})
+	return fetch(
+		`https://api-orca.beamworks.co.kr/api/researchers/${id}?store=${isStored}`,
+		{
+			method: 'PUT',
+		},
+	)
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
 			//data = researcher;
 			return data;
 		});

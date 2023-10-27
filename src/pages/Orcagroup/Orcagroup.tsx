@@ -28,7 +28,7 @@ const Orcagroup = ({ orcagroupList, onTrashClick, downloadExcel }: Props) => {
 					</div>
 				</div>
 				{orcagroupList.map((orcagroup, index) => (
-					<div className='list'>
+					<div className='list' key={index}>
 						<div className='type'>
 							<span>{orcagroup.email}</span>
 						</div>

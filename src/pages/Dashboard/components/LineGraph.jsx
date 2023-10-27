@@ -35,7 +35,6 @@ const LineGraph = (props) => {
 		};
 	}, [handleResize]);
 
-	console.log(graphList);
 	return (
 		<div className='chart-container'>
 			<div className='range' onClick={onRangeClick}>

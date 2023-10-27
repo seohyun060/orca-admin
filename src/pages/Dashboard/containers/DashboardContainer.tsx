@@ -262,7 +262,6 @@ const DashboardContainer = (props: Props) => {
 	}, [range]);
 	useEffect(() => {
 		getStatistic().then((data) => {
-			console.log(data.data);
 			const updatedList: StatisticsList = {
 				researcherNumber: data.data[0][1],
 				newsletterNumber: data.data[1][1],

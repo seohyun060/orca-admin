@@ -93,7 +93,7 @@ const Researcher = ({
 						<span>이름</span>
 					</div>
 					<div className='department'>
-						<span>소속</span>
+						<span>소속</span>ß
 					</div>
 					<div className='project'>
 						<span>프로젝트</span>
@@ -101,7 +101,7 @@ const Researcher = ({
 				</div>
 				{filteredList.map((researcher, index) =>
 					researcher.stored == stored ? (
-						<div className='list'>
+						<div className='list' key={index}>
 							<div className='name'>
 								<span>{researcher.name}</span>
 							</div>

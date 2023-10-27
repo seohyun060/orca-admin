@@ -92,7 +92,7 @@ const Insight = ({
 				</div>
 				{filteredList.map((insight, index) =>
 					insight.isStored == stored ? (
-						<div className='list'>
+						<div className='list' key={index}>
 							<div className='type'>
 								<span>{insight.category}</span>
 							</div>

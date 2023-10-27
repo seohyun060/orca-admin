@@ -5,8 +5,6 @@ export async function getInsights() {
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
-
 			return data;
 		});
 }
@@ -17,8 +15,6 @@ export async function getMainInsights() {
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
-
 			return data;
 		});
 }
@@ -40,19 +36,20 @@ export async function getInsightDetail(id) {
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
 			//data = researcher;
 			return data;
 		});
 }
 export async function storeInsight(id, isStored) {
-	return fetch(`https://api-orca.beamworks.co.kr/api/insights/${id}?store=${isStored}`, {
-		method: 'PUT',
-	})
+	return fetch(
+		`https://api-orca.beamworks.co.kr/api/insights/${id}?store=${isStored}`,
+		{
+			method: 'PUT',
+		},
+	)
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
 			//data = researcher;
 			return data;
 		});
@@ -84,7 +81,6 @@ export async function postInsights(insight) {
 	data.append('title', insight.title);
 	data.append('category', insight.category);
 	for (let i = 0; i < insight.files.length; i++) {
-		console.log(insight.files[i]);
 		data.append('files', insight.files[i]);
 	}
 
@@ -107,8 +103,6 @@ export async function deleteInsight(id) {
 		.then((res) => res.json())
 
 		.then((data) => {
-			console.log(data);
-
 			return data;
 		});
 }

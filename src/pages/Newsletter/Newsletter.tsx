@@ -28,7 +28,7 @@ const Newsletter = ({ newsletterList, onTrashClick, downloadExcel }: Props) => {
 					</div>
 				</div>
 				{newsletterList.map((newsletter, index) => (
-					<div className='list'>
+					<div className='list' key={index}>
 						<div className='type'>
 							<span>{newsletter.email}</span>
 						</div>

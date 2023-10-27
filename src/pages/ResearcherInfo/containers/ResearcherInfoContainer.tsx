@@ -369,7 +369,6 @@ Props) => {
 	useEffect(() => {
 		return () => {};
 	}, []);
-	console.log(publicationEdit);
 	return (
 		<ResearcherInfo
 			//edit={edit}
@@ -394,7 +393,6 @@ Props) => {
 			onChangeTwitterEdit={onChangeTwitterEdit}
 			onChangeBiographyEdit={onChangeBiographyEdit}
 			publicationEdit={publicationEdit}
-			//onChangePublicationEdit={onChangePublicationEdit}
 			locationEdit={locationEdit}
 			onLocationClicked={onLocationClicked}
 			onAddClicked={onAddClicked}
