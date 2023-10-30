@@ -53,133 +53,142 @@ const InsightInfo = ({
 	];
 	return (
 		<div className='insightinfo'>
-			<div className='insightinfo-head'>
-				<img src={images.back} onClick={onBackClicked} />
-				<div className='back' onClick={onBackClicked}>
-					Back
-				</div>
-				<div className='title'>인사이트 추가 페이지</div>
-				<div
-					className='upload'
-					onClick={() => {
-						onApplyClicked(id, selectedType, selectedFiles, titleEdit);
-					}}
-				>
-					올리기
-				</div>
-			</div>
-			<div className='insightinfo-type'>
-				<div className='dropdown-button' onClick={onDropboxClicked}>
-					<div>{selectedType}</div>
-					<img src={images.down_b} />
-				</div>
-				{dropbox ? (
-					<div className='dropdown-container'>
-						<div className='dropdown-content'>
-							{insightTypes.map((type) => (
-								<div
-									key={type}
-									className='dropdown-item'
-									onClick={() => {
-										onTypeClicked(type);
-									}}
-								>
-									{type}
-								</div>
-							))}
-						</div>
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					onApplyClicked(id, selectedType, selectedFiles, titleEdit);
+				}}
+			>
+				<div className='insightinfo-head'>
+					<img src={images.back} onClick={onBackClicked} />
+					<div className='back' onClick={onBackClicked}>
+						Back
 					</div>
-				) : (
-					''
-				)}
-			</div>
-			<div className='insightinfo-pdf'>
-				{/* {pdfListEdit.length === 0 ? ( */}
+					<div className='title'>인사이트 추가 페이지</div>
+					<button
+						className='upload'
+						type='submit'
+						// onClick={() => {
+						// 	onApplyClicked(id, selectedType, selectedFiles, titleEdit);
+						// }}
+					>
+						올리기
+					</button>
+				</div>
+				<div className='insightinfo-type'>
+					<div className='dropdown-button' onClick={onDropboxClicked}>
+						<div>{selectedType}</div>
+						<img src={images.down_b} />
+					</div>
+					{dropbox ? (
+						<div className='dropdown-container'>
+							<div className='dropdown-content'>
+								{insightTypes.map((type) => (
+									<div
+										key={type}
+										className='dropdown-item'
+										onClick={() => {
+											onTypeClicked(type);
+										}}
+									>
+										{type}
+									</div>
+								))}
+							</div>
+						</div>
+					) : (
+						''
+					)}
+				</div>
+				<div className='insightinfo-pdf'>
+					{/* {pdfListEdit.length === 0 ? ( */}
 
-				{/* ) : ( */}
-				{selectedFiles.map((file, index) => (
-					<div key={index} className='lastitem'>
+					{/* ) : ( */}
+					{selectedFiles.map((file, index) => (
+						<div key={index} className='lastitem'>
+							<div className='box'>
+								<label htmlFor={`mainInput-${index}`}>
+									<img src={images.download} alt='Upload' />
+									<div className='text'>Upload PDF</div>
+
+									<p>{file ? file.name : ''}</p>
+
+									<input
+										type='file'
+										id={`mainInput-${index}`}
+										onChange={(e) => {
+											uploadPdfHandler(e, index);
+										}}
+										style={{ display: 'none' }}
+									/>
+								</label>
+							</div>
+							{index === selectedFiles.length - 1 ? (
+								<img
+									className='sub'
+									src={images.sub}
+									onClick={() => {
+										onSubClicked(index);
+									}}
+								></img>
+							) : (
+								<img
+									className='sub'
+									src={images.sub}
+									onClick={() => {
+										onSubClicked(index);
+									}}
+								></img>
+							)}
+						</div>
+					))}
+					<div className='lastitem'>
 						<div className='box'>
-							<label htmlFor={`mainInput-${index}`}>
+							<label htmlFor='mainInput'>
 								<img src={images.download} alt='Upload' />
 								<div className='text'>Upload PDF</div>
-
-								<p>{file.name}</p>
-
 								<input
 									type='file'
-									id={`mainInput-${index}`}
+									id='mainInput'
 									onChange={(e) => {
-										uploadPdfHandler(e, index);
+										uploadPdfHandler(e, selectedFiles.length);
 									}}
 									style={{ display: 'none' }}
 								/>
 							</label>
 						</div>
-						{index === selectedFiles.length - 1 ? (
-							<img
-								className='sub'
-								src={images.sub}
-								onClick={() => {
-									onSubClicked(index);
-								}}
-							></img>
-						) : (
-							<img
-								className='sub'
-								src={images.sub}
-								onClick={() => {
-									onSubClicked(index);
-								}}
-							></img>
-						)}
+						<img className='add' src={images.add} onClick={onAddClicked}></img>
 					</div>
-				))}
-				<div className='lastitem'>
-					<div className='box'>
-						<label htmlFor='mainInput'>
-							<img src={images.download} alt='Upload' />
-							<div className='text'>Upload PDF</div>
-							<input
-								type='file'
-								id='mainInput'
-								onChange={(e) => {
-									uploadPdfHandler(e, 0);
-								}}
-								style={{ display: 'none' }}
-							/>
-						</label>
-					</div>
-					<img className='add' src={images.add} onClick={onAddClicked}></img>
 				</div>
-			</div>
-			<div className='insightinfo-text'>
-				<div className='head'>인사이드 제목</div>
-				<textarea
-					onChange={onChangeTitleEdit}
-					required
-					value={titleEdit}
-				></textarea>
-			</div>
-			<div className='insightinfo-divider'></div>
-			<div className='insightinfo-preview'>
-				<div className='head'>미리보기</div>
+				<div className='insightinfo-text'>
+					<div className='head'>인사이드 제목</div>
+					<textarea
+						onChange={onChangeTitleEdit}
+						required
+						maxLength={255}
+						value={titleEdit}
+					></textarea>
+				</div>
+				<div className='insightinfo-divider'></div>
+				<div className='insightinfo-preview'>
+					<div className='head'>미리보기</div>
 
-				{pdfListEdit.map((url, index) => {
-					if (url) {
-						// Check if url is not an empty string
-						return (
-							<iframe
-								key={index}
-								src={pdfListEdit[index]}
-								height='776x'
-								title='PDF Viewer'
-							/>
-						);
-					}
-					return null; // Return null for empty url
-				})}
-			</div>
+					{pdfListEdit.map((url, index) => {
+						if (url) {
+							// Check if url is not an empty string
+							return (
+								<iframe
+									key={index}
+									src={pdfListEdit[index]}
+									height='776x'
+									title='PDF Viewer'
+								/>
+							);
+						}
+						return null; // Return null for empty url
+					})}
+				</div>
+			</form>
 		</div>
 	);
 };

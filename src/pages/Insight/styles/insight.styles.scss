@@ -158,6 +158,13 @@
 				@extend .type;
 				border-left: 0px;
 				width: 714px;
+
+				span {
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					padding-right: 10px;
+				}
 			}
 			.date {
 				@extend .title;

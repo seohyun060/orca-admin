@@ -146,6 +146,12 @@
   border-left: 0px;
   width: 714px;
 }
+.insight-body .list .title span, .insight-body .list .date span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
 .insight-body .list .date {
   width: 404px;
   display: flex;
