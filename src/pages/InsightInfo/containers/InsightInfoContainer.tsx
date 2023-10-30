@@ -18,11 +18,11 @@ const InsightInfoContainer = ({}: Props) => {
 	const [id, setId] = useState(0);
 
 	const [dropbox, setDropbox] = useState(false);
-	const [selectedType, setSelectedType] = useState('');
+	const [selectedType, setSelectedType] = useState('WHITE_PAPER');
 	const [titleEdit, setTitleEdit] = useState('');
-	const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+	const [selectedFiles, setSelectedFiles] = useState<any[]>([]);
 
-	const [pdfListEdit, setPdfListEdit] = useState<string[]>(['']); // 넘겨받은 pdf url을 관리할 배열 state
+	const [pdfListEdit, setPdfListEdit] = useState<string[]>([]); // 넘겨받은 pdf url을 관리할 배열 state
 	function createFileFromPath(filePath: string) {
 		return new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
@@ -62,7 +62,18 @@ const InsightInfoContainer = ({}: Props) => {
 	);
 	const onAddClicked = useCallback(() => {
 		setPdfListEdit((prevList) => [...prevList, '']);
-	}, [pdfListEdit]);
+		let empty = false;
+		// for (let i = 0; i < selectedFiles.length; i++) {
+		// 	if (selectedFiles[i] == null) {
+		// 		empty = true;
+		// 		break;
+		// 	}
+		// }
+		// if (!empty) {
+		// 	setSelectedFiles([...selectedFiles, null]);
+		// }
+		setSelectedFiles([...selectedFiles, null]);
+	}, [pdfListEdit, selectedFiles]);
 	const onSubClicked = (index: number) => {
 		setPdfListEdit((prevList) => {
 			// 배열에서 index 위치의 요소를 제외한 새 배열 생성
@@ -76,11 +87,16 @@ const InsightInfoContainer = ({}: Props) => {
 			const file = event.target.files?.[0];
 			console.log(file);
 			if (file) {
-				const url = URL.createObjectURL(file);
-				const updatedUrlList = [...pdfListEdit];
-				updatedUrlList[index] = url;
-				setPdfListEdit(updatedUrlList);
-				setSelectedFiles([...selectedFiles, file]);
+				if (file.type === 'application/pdf') {
+					// 파일이 PDF 형식인 경우
+					const url = URL.createObjectURL(file);
+					const updatedUrlList = [...pdfListEdit];
+					updatedUrlList[index] = url;
+					setPdfListEdit(updatedUrlList);
+					setSelectedFiles([...selectedFiles, file]);
+				} else {
+					alert('올바른 PDF 파일을 선텍하세요.');
+				}
 			}
 		},
 		[pdfListEdit, setPdfListEdit],
@@ -98,12 +114,15 @@ const InsightInfoContainer = ({}: Props) => {
 
 	const onApplyClicked = useCallback(
 		async (id: number, type: string, selectedFiles: File[], title: string) => {
-			const filteredUrlList = selectedFiles.filter((item) => item !== null);
+			console.log(selectedFiles);
+			//const filteredUrlList = selectedFiles.filter((item) => item !== null);
+			const filteredUrlList = selectedFiles.filter((file) => file.name !== '');
+			console.log(filteredUrlList);
 			const createTempInsight = () => ({
 				id: id,
 				category: type,
 				title: title,
-				files: selectedFiles,
+				files: filteredUrlList,
 			});
 			// const updatedInsights = edit
 			// 	? insightList.map((insight) =>
