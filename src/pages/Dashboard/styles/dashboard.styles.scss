@@ -89,6 +89,7 @@
 				height: 33px;
 				display: flex;
 				flex-direction: row;
+				transition: 0.2s ease-in-out;
 				&-month {
 					width: 77px;
 					height: 33px;
@@ -102,11 +103,17 @@
 					font-style: normal;
 					font-weight: 400;
 					line-height: 30.5px; /* 138.636% */
+					//transition-delay: 1s;
+					transition: 0.3s ease-in-out;
 				}
 				&-week {
 					@extend .range-month;
 				}
+				&:hover {
+					cursor: pointer;
+				}
 			}
+
 			.linechart {
 				margin-left: -25px;
 			}
