@@ -165,6 +165,7 @@ const InsightInfo = ({
 					<textarea
 						onChange={onChangeTitleEdit}
 						required
+						maxLength={255}
 						value={titleEdit}
 					></textarea>
 				</div>
