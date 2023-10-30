@@ -56,6 +56,10 @@
   font-weight: 300;
   line-height: 28.5px; /* 142.5% */
 }
+.insightinfo-head .upload:hover {
+  cursor: pointer;
+  background: #093f71;
+}
 .insightinfo-type {
   position: relative;
   width: 1496px;

@@ -274,6 +274,9 @@
   font-style: normal;
   font-weight: 400;
   line-height: 28px; /* 127.273% */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .researcherinfo-body .info .department {
   margin-left: 32px;
@@ -281,6 +284,7 @@
 }
 .researcherinfo-body .info .department input {
   width: 357px;
+  padding-right: 20px;
 }
 .researcherinfo-body .info .project {
   margin-left: 32px;
@@ -291,6 +295,7 @@
 }
 .researcherinfo-body .info .project input {
   width: 624px;
+  padding-right: 20px;
 }
 .researcherinfo-body .profile-image {
   width: 1496px;
@@ -537,18 +542,23 @@
 }
 .researcherinfo-body .publication .container .info-title .body, .researcherinfo-body .publication .container .info-ho .body, .researcherinfo-body .publication .container .info-yjc .y .body, .researcherinfo-body .publication .container .info-yjc .c .body, .researcherinfo-body .publication .container .info-yjc .j .body, .researcherinfo-body .publication .container .info-author .body {
   color: var(--Dark-gray, #3c3c3c);
+  width: 1000px;
   font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 300;
   line-height: 28px; /* 140% */
   background-color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .researcherinfo-body .publication .container .info-author .body {
-  width: 150px;
+  width: 1000px;
 }
 .researcherinfo-body .publication .container .info-author img {
   margin-left: 10px;
+  display: none;
 }
 .researcherinfo-body .publication .container .info-yjc {
   width: 1200px;
@@ -1072,6 +1082,9 @@
     flex-direction: row;
     align-items: center;
     margin-bottom: 30px;
+  }
+  .researcherinfo-body .publication .container .info-title .body, .researcherinfo-body .publication .container .info-author .body, .researcherinfo-body .publication .container .info-yjc .y .body, .researcherinfo-body .publication .container .info-yjc .j .body, .researcherinfo-body .publication .container .info-yjc .c .body, .researcherinfo-body .publication .container .info-ho .body {
+    width: 450px;
   }
   .researcherinfo-body .publication .container .info-author .body {
     width: 150px;

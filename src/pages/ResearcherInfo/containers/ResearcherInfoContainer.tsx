@@ -110,7 +110,15 @@ Props) => {
 		(event: ChangeEvent<HTMLInputElement>) => {
 			const file = event.target.files?.[0];
 			if (file) {
-				setSelectedProfile(file);
+				if (
+					file.type ===
+					('application/png' || 'application/jpeg' || 'application/svg')
+				) {
+					console.log('이건 이미지');
+					setSelectedProfile(file);
+				} else {
+					alert('올바른 이미지 파일을 선텍하세요.');
+				}
 			}
 		},
 		[setSelectedProfile],

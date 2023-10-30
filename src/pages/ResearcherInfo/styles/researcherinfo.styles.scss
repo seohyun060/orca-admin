@@ -289,6 +289,9 @@
 					font-style: normal;
 					font-weight: 400;
 					line-height: 28px; /* 127.273% */
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 				}
 			}
 			.department {
@@ -297,6 +300,7 @@
 				width: 432px;
 				input {
 					width: 357px;
+					padding-right: 20px;
 				}
 			}
 			.project {
@@ -308,6 +312,7 @@
 				}
 				input {
 					width: 624px;
+					padding-right: 20px;
 				}
 			}
 		}
@@ -575,21 +580,26 @@
 						}
 						.body {
 							color: var(--Dark-gray, #3c3c3c);
+							width: 1000px;
 							font-family: Pretendard;
 							font-size: 20px;
 							font-style: normal;
 							font-weight: 300;
 							line-height: 28px; /* 140% */
 							background-color: white;
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
 						}
 					}
 					&-author {
 						@extend .info-title;
 						.body {
-							width: 150px;
+							width: 1000px;
 						}
 						img {
 							margin-left: 10px;
+							display: none;
 						}
 					}
 					&-yjc {
@@ -1178,6 +1188,7 @@
 							.stroke {
 							}
 							.body {
+								width: 450px;
 							}
 						}
 						&-author {
