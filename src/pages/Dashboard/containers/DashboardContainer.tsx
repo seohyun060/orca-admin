@@ -94,12 +94,37 @@ const DashboardContainer = (props: Props) => {
 				const modifiedDate = monthNames[month - 1] + day; // 월 이름과 일을 합침
 				return [modifiedDate, ...item.slice(1)]; // 수정된 날짜와 나머지 부분을 합침
 			});
-			const convertData = modifyMonth.map((item: any) => ({
-				date: item[0],
+			console.log(data);
+			const convertData = modifyMonth.reduce(
+				(result: any, item: any) => {
+					const date = item[0];
+					const device = item[1];
+					const value = parseInt(item[2]);
 
-				desktop: item[1] == 'desktop' ? parseInt(item[2]) : 0,
-				mobile: item[1] == 'mobile' ? parseInt(item[2]) : 0,
-			}));
+					// result 배열에서 동일한 날짜의 항목 찾기
+					const existingItem = result.find((entry: any) => entry.date === date);
+
+					// 해당 날짜의 항목이 이미 존재하는 경우
+					if (existingItem) {
+						if (device === 'desktop') {
+							existingItem.desktop = value;
+						} else if (device === 'mobile') {
+							existingItem.mobile = value;
+						}
+					} else {
+						// 해당 날짜의 항목이 존재하지 않는 경우
+						const newItem = {
+							date: date,
+							desktop: device === 'desktop' ? value : 0,
+							mobile: device === 'mobile' ? value : 0,
+						};
+						result.push(newItem);
+					}
+
+					return result;
+				},
+				[range],
+			);
 
 			setGraphList(convertData);
 		});
@@ -249,12 +274,33 @@ const DashboardContainer = (props: Props) => {
 				const modifiedDate = monthNames[month - 1] + day; // 월 이름과 일을 합침
 				return [modifiedDate, ...item.slice(1)]; // 수정된 날짜와 나머지 부분을 합침
 			});
-			const convertData = modifyMonth.map((item: any) => ({
-				date: item[0],
+			const convertData = modifyMonth.reduce((result: any, item: any) => {
+				const date = item[0];
+				const device = item[1];
+				const value = parseInt(item[2]);
 
-				desktop: item[1] == 'desktop' ? parseInt(item[2]) : 0,
-				mobile: item[1] == 'mobile' ? parseInt(item[2]) : 0,
-			}));
+				// result 배열에서 동일한 날짜의 항목 찾기
+				const existingItem = result.find((entry: any) => entry.date === date);
+
+				// 해당 날짜의 항목이 이미 존재하는 경우
+				if (existingItem) {
+					if (device === 'desktop') {
+						existingItem.desktop = value;
+					} else if (device === 'mobile') {
+						existingItem.mobile = value;
+					}
+				} else {
+					// 해당 날짜의 항목이 존재하지 않는 경우
+					const newItem = {
+						date: date,
+						desktop: device === 'desktop' ? value : 0,
+						mobile: device === 'mobile' ? value : 0,
+					};
+					result.push(newItem);
+				}
+
+				return result;
+			}, []);
 
 			setGraphList(convertData);
 		});
