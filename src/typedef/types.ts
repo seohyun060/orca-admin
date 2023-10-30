@@ -2,7 +2,7 @@ export type Publication = {
 	link: string;
 	title: string;
 	author: string;
-	pubYear: number;
+	pubYear: any;
 	journal: string;
 	conference: string;
 	volume: string;

@@ -47,15 +47,15 @@ Props) => {
 			link: '',
 			title: '',
 			author: '',
-			pubYear: 2023,
+			pubYear: null,
 			journal: '',
 			conference: '',
 			volume: '',
-			editable: false,
+			editable: true,
 		},
 	]);
 	const [locationEdit, setLocationEdit] = useState(1);
-	const [pubEdit, setPubEdit] = useState(false);
+	const [pubEdit, setPubEdit] = useState(true);
 
 	useEffect(() => {
 		if (params.id != '0') {
@@ -220,11 +220,11 @@ Props) => {
 				link: '',
 				title: '',
 				author: '',
-				pubYear: 2023,
+				pubYear: null,
 				journal: '',
 				conference: '',
 				volume: '',
-				editable: false,
+				editable: true,
 			},
 		]);
 	}, [publicationEdit]);
@@ -312,7 +312,7 @@ Props) => {
 					item.link !== '' ||
 					item.title !== '' ||
 					item.author !== '' ||
-					item.pubYear !== 2023 ||
+					item.pubYear !== null ||
 					item.journal !== '' ||
 					item.conference !== '' ||
 					item.volume !== ''
@@ -323,11 +323,11 @@ Props) => {
 					link: '',
 					title: '',
 					author: '',
-					pubYear: 2023,
+					pubYear: null,
 					journal: '',
 					conference: '',
 					volume: '',
-					editable: false,
+					editable: true,
 				});
 			}
 			console.log(selectedProfile);
