@@ -96,6 +96,7 @@
 					font-size: 22px;
 					font-style: normal;
 					font-weight: 400;
+					padding-right: 20px;
 				}
 			}
 
@@ -204,6 +205,9 @@
 						font-size: 22px;
 						font-style: normal;
 						font-weight: 400;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
 					}
 				}
 
