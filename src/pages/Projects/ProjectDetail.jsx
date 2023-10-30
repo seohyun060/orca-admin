@@ -38,7 +38,20 @@ const ProjectDetail = () => {
   );
 
   const [projectEnrollment, setProjectEnrollment] = useState();
-  const [projectStudyType, setProjectStudyType] = useState();
+  const [projectStudyType, setProjectStudyType] = useState("CADAI_B");
+  const studyTypesa = [
+    ["CADAI_B", "CADAI_T", "CHAT_AI"],
+    ["CadAI-B", "CadAI-T", "Chat AI"],
+  ];
+
+  const studyTypes = {
+    CADAI_B: "CadAI-B",
+    CADAI_T: "CadAI-T",
+    CHAT_AI: "Chat AI",
+  };
+
+  const [isStudyTypeOpen, setIsStudyTypeOpen] = useState(false);
+
   const [projectId, setProjectId] = useState();
   const [projectOtherStudyId, setProjectOtherStudyId] = useState();
 
@@ -295,7 +308,16 @@ const ProjectDetail = () => {
   };
 
   const onApplyClick = async (e) => {
-    if (projectTitle == null || projectTitle == "") {
+    if (
+      projectTitle == null ||
+      projectTitle == "" ||
+      projectOverview == null ||
+      projectOverview == "" ||
+      projectStudyType == null ||
+      projectStudyType == "" ||
+      projectId == null ||
+      projectId == ""
+    ) {
       return;
     }
     e.preventDefault();
@@ -303,6 +325,7 @@ const ProjectDetail = () => {
     const formData = new FormData(document.getElementById("projectForm"));
     formData.append("projectID", "1.23456");
     formData.append("status", statusInPost[isStatusChecked.indexOf(true)]);
+    formData.append("studyType", projectStudyType);
 
     formData.append("sexEligible", sexesInPost[isSexesChecked.indexOf(true)]);
     formData.append(
@@ -352,6 +375,8 @@ const ProjectDetail = () => {
           alert("저장 실패!");
         } else {
           alert("저장 성공!");
+          navigate("/project");
+          window.scrollTo(0, 0);
         }
       });
     } else {
@@ -361,12 +386,11 @@ const ProjectDetail = () => {
           alert("수정 실패!");
         } else {
           alert("수정 성공!");
+          navigate("/project");
+          window.scrollTo(0, 0);
         }
       });
     }
-
-    navigate("/project");
-    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -422,6 +446,7 @@ const ProjectDetail = () => {
                 placeholder="Text"
                 value={projectTitle}
                 onChange={(e) => setProjectTitle(e.target.value)}
+                maxLength={1000}
                 required
               />
             </div>
@@ -472,6 +497,7 @@ const ProjectDetail = () => {
                     setIsClose={setIsCompleteDateClick}
                     eventDate={projectCompleteDate}
                     setEventDate={setProjectCompleteDate}
+                    preventDate={projectStartDate}
                   />
                 ) : (
                   <></>
@@ -480,7 +506,8 @@ const ProjectDetail = () => {
               <div className="PeriodInputBox">
                 <div className="title">Enrollment (Estimated)</div>
                 <input
-                  placeholder="Text"
+                  type="Number"
+                  placeholder="Number"
                   name="enrollment"
                   value={projectEnrollment}
                   onChange={(e) => setProjectEnrollment(e.target.value)}
@@ -489,13 +516,38 @@ const ProjectDetail = () => {
               </div>
               <div className="PeriodInputBox">
                 <div className="title">Study Type</div>
-                <input
+                {/* <input
                   placeholder="Text"
                   name="studyType"
                   value={projectStudyType}
                   onChange={(e) => setProjectStudyType(e.target.value)}
                   onKeyDown={handleKeyDown}
-                />
+                  required
+                /> */}
+                <div className="StudyTypeSet">
+                  <button
+                    type="button"
+                    onClick={() => setIsStudyTypeOpen(!isStudyTypeOpen)}
+                  >
+                    {projectStudyType ? studyTypes[projectStudyType] : "Study Type"}
+                  </button>
+                  {isStudyTypeOpen && (
+                    <ul>
+                      {Object.entries(studyTypes).map(([key, value]) => (
+                        <li>
+                          <button
+                            onClick={(e) => {
+                              setIsStudyTypeOpen(!isStudyTypeOpen);
+                              setProjectStudyType(key);
+                            }}
+                          >
+                            {value}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
               <div className="PeriodInputBox">
                 <div className="title">Project ID</div>
@@ -505,6 +557,7 @@ const ProjectDetail = () => {
                   value={projectId}
                   onChange={(e) => setProjectId(e.target.value)}
                   onKeyDown={handleKeyDown}
+                  required
                 />
               </div>
               <div className="PeriodInputBox">
@@ -526,6 +579,7 @@ const ProjectDetail = () => {
                 name="overview"
                 value={projectOverview}
                 onChange={(e) => setProjectOverview(e.target.value)}
+                maxLength={1000}
               />
             </div>
             <div className="OfficialTitle">

@@ -148,6 +148,7 @@ const Events = () => {
     formData.append("location", eventLocation);
     formData.append("latitude", eventLatitude);
     formData.append("longitude", eventLongitude);
+    console.log("lat", eventLatitude, "lng", eventLongitude);
 
     console.log(eventGalleryImg);
     eventGalleryImg.map((data) => {
@@ -273,7 +274,7 @@ const Events = () => {
         } else {
           setEventGalleryImg([{ id: 1, file: null }]);
         }
-
+        setEventLocation(eventData.location);
         setEventLatitude(eventData.latitude);
         setEventLongitude(eventData.longitude);
       });
@@ -291,8 +292,8 @@ const Events = () => {
       setEventPurpose();
       setEventExplanation();
       // 지도 초기 props값 세팅
-      setEventLatitude(35.9552);
-      setEventLongitude(128.566);
+      setEventLatitude(0);
+      setEventLongitude(0);
       setEventDetailImg([{ id: 1, file: null }]);
       setEventGalleryImg([{ id: 1, file: null }]);
     }
@@ -448,6 +449,7 @@ const Events = () => {
                         isAlldayChecked ? eventStartDate : eventEndDate
                       }
                       setEventDate={isAlldayChecked ? null : setEventEndDate}
+                      preventDate={eventStartDate}
                     />
                   ) : (
                     <></>
@@ -582,10 +584,12 @@ const Events = () => {
                   </div>
                 ))}
             </div>
-            {eventLatitude && (
+            {eventLocation && (
               <MapContainer
                 latitude={eventLatitude}
+                setLatitude={setEventLatitude}
                 longitude={eventLongitude}
+                setLongitude={setEventLongitude}
                 location={eventLocation}
                 setLocation={setEventLocation}
               />

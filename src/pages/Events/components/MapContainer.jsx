@@ -11,7 +11,14 @@ import images from "src/assets/images";
 MapContainer.MAP_LIBRARIES = ["places"];
 
 function MapContainer(props) {
-  const { latitude, longitude, location, setLocation } = props;
+  const {
+    latitude,
+    setLatitude,
+    longitude,
+    setLongitude,
+    location,
+    setLocation,
+  } = props;
 
   const [searchBox, setSearchBox] = useState(null);
   const [center, setCenter] = useState({
@@ -35,6 +42,9 @@ function MapContainer(props) {
     const lat = places[0].geometry.location.lat();
     const lng = places[0].geometry.location.lng();
     setCenter({ lat: lat, lng: lng });
+    setLatitude(lat);
+    setLongitude(lng);
+    console.log("lat", lat, "lng", lng);
   };
 
   useEffect(() => {
@@ -47,7 +57,9 @@ function MapContainer(props) {
           setLocation(data.results[0].formatted_address);
         }
       });
-  }, []);
+    setCenter({ lat: latitude, lng: longitude });
+    console.log("lat", latitude, "lng", longitude);
+  }, [latitude, longitude]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

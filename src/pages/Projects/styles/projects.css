@@ -94,7 +94,7 @@
 }
 .Project-body .label .type, .Project-body .label .status, .Project-body .label .category, .Project-body .label .pid, .Project-body .label .title {
   width: 376px;
-  margin-right: 1px;
+  border-right: 1px solid white;
   background-color: black;
 }
 .Project-body .label .type span, .Project-body .label .status span, .Project-body .label .category span, .Project-body .label .pid span, .Project-body .label .title span {
@@ -107,13 +107,13 @@
   line-height: 40px;
 }
 .Project-body .label .title, .Project-body .label .list .status, .Project-body .list .label .status {
-  width: 376px;
+  width: 377px;
 }
 .Project-body .label .pid {
-  width: 382px;
+  width: 383px;
 }
 .Project-body .label .category {
-  width: 300px;
+  width: 301px;
 }
 .Project-body .label .status {
   width: 435px;
@@ -249,6 +249,9 @@
   font-weight: 300;
   line-height: 28px;
 }
+.ProjectDetailButtonSet button:hover {
+  cursor: pointer;
+}
 .ProjectDetailButtonSet button.status {
   width: 132px;
 }
@@ -337,6 +340,23 @@
   line-height: 28px;
   border: 1px solid #000;
   padding: 1px 8px;
+  width: 257px;
+}
+.PeriodInputBox .StudyTypeSet button {
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 28px;
+  border: 1px solid #000;
+  padding: 1px 8px;
+  width: 257px;
+  background-color: white;
+  text-align: left;
+}
+.PeriodInputBox ul {
+  position: relative;
+  z-index: 100;
   width: 257px;
 }
 .PeriodInputBox .title, .PeriodInputBox .Project-body .list .status, .Project-body .list .PeriodInputBox .status {
@@ -545,11 +565,7 @@
   line-height: 28px;
   margin-bottom: 12px;
 }
-.CandI .CandIFormSet > div:last-child > img {
-  width: 50px;
-  height: 50px;
-}
-.CandI .CandIFormSet > div:last-child > img:hover {
+.CandI .CandIFormSet > div:last-of-type img:hover {
   content: url("../../../../public/assets/images/addform_hover.svg");
 }
 
@@ -569,11 +585,7 @@
 .CandIInputSet .link {
   width: 592px;
 }
-.CandIInputSet > img {
-  width: 50px;
-  height: 50px;
-}
-.CandIInputSet > img:hover {
+.CandIInputSet img:hover {
   content: url("../../../../public/assets/images/removeform_hover.svg");
 }
 
@@ -586,11 +598,7 @@
   line-height: 28px;
   margin-bottom: 14px;
 }
-.Publiciations > div:last-child > img {
-  width: 50px;
-  height: 50px;
-}
-.Publiciations > div:last-child > img:hover {
+.Publiciations > div:nth-last-of-type(2) img:hover {
   content: url("../../../../public/assets/images/addform_hover.svg");
 }
 
@@ -620,6 +628,9 @@
 }
 .PublicationLink > img:hover {
   content: url("../../../../public/assets/images/removeform_hover.svg");
+}
+.PublicationLink:last-child {
+  background-color: black;
 }
 
 .info {

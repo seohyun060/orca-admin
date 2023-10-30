@@ -6,7 +6,7 @@ import "../styles/setEventDateCalendar.css";
 import moment, { months } from "moment";
 
 const SetEventDateCalendar = (props) => {
-  const { setIsClose, eventDate, setEventDate } = props;
+  const { setIsClose, eventDate, setEventDate, preventDate } = props;
 
   const tileDisabled = ({ activeStartDate, date, view }) => {
     if (view === "month") {
@@ -17,9 +17,15 @@ const SetEventDateCalendar = (props) => {
   };
 
   const handleDateChange = (selectedDate) => {
-    const newDate = moment(selectedDate).format("YYYY-MM-DD");
-    setEventDate(newDate);
-    setIsClose(false);
+    console.log(preventDate, selectedDate)
+    if (preventDate && moment(preventDate).isAfter(selectedDate)) {
+      console.log("누르지마")
+      setIsClose(false);
+    } else {
+      const newDate = moment(selectedDate).format("YYYY-MM-DD");
+      setEventDate(newDate);
+      setIsClose(false);
+    }
   };
 
   return (
