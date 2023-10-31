@@ -21,7 +21,11 @@ const HomeContainer = (props: Props) => {
 		(event: ChangeEvent<HTMLInputElement>) => {
 			const file = event.target.files?.[0];
 			if (file) {
-				setSelectedMain(file);
+				if (file.type === ('video/mp4' || 'video/webm' || 'video/ogg')) {
+					setSelectedMain(file);
+				} else {
+					alert('올바른 동영상 파일을 선텍하세요.');
+				}
 			}
 		},
 		[selectedMain],
@@ -31,7 +35,14 @@ const HomeContainer = (props: Props) => {
 		(event: ChangeEvent<HTMLInputElement>) => {
 			const file = event.target.files?.[0];
 			if (file) {
-				setSelectedOrca(file);
+				if (
+					file.type ===
+					('application/png' || 'application/jpeg' || 'application/svg')
+				) {
+					setSelectedOrca(file);
+				} else {
+					alert('올바른 이미지 파일을 선텍하세요.');
+				}
 			}
 		},
 		[selectedOrca],
