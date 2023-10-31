@@ -363,7 +363,6 @@ const ResearcherInfo = ({
 												onChange={(e) => onChangePubEdit(e, index, 0)}
 												value={publicationEdit[index].link}
 												maxLength={255}
-												required
 											/>
 										</div>
 										{index === publicationEdit.length - 1 ? (
@@ -390,7 +389,6 @@ const ResearcherInfo = ({
 												className='body'
 												onChange={(e) => onChangePubEdit(e, index, 1)}
 												value={publicationEdit[index].title}
-												required
 												maxLength={255}
 											/>
 										</div>

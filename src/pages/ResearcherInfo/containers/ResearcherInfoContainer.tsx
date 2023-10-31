@@ -315,59 +315,92 @@ Props) => {
 			biographyEdit: string,
 			publicationEdit: Publication[],
 		) => {
-			const filteredPublicationEdit = publicationEdit.filter((item, index) => {
-				return (
-					item.link !== '' ||
-					item.title !== '' ||
-					item.author !== '' ||
-					item.pubYear !== null ||
-					item.journal !== '' ||
-					item.conference !== '' ||
-					item.volume !== ''
-				);
-			});
-			if (filteredPublicationEdit.length == 0) {
-				filteredPublicationEdit.push({
-					link: '',
-					title: '',
-					author: '',
-					pubYear: null,
-					journal: '',
-					conference: '',
-					volume: '',
-					editable: true,
-				});
-			}
-			console.log(selectedProfile);
-			console.log(biographyEdit);
-			const createTempResearcher = () => ({
-				affiliation: departmentEdit,
-				id,
-
-				locationNumber: locationEdit,
-				name: nameEdit,
-				projectType: projectEdit,
-
-				linkedIn: linkEdit,
-				twitter: twitterEdit,
-				biography: biographyEdit,
-				publications: filteredPublicationEdit,
-			});
-
-			console.log(id);
-
-			if (id == 0) {
-				console.log('추가중~');
-				await postResearchers(createTempResearcher(), selectedProfile);
+			let check = 0;
+			if (
+				linkEdit !== '' &&
+				!linkEdit.includes('https://') &&
+				!linkEdit.includes('http://')
+			) {
+				check = 1;
+			} else if (
+				twitterEdit !== '' &&
+				!twitterEdit.includes('https://') &&
+				!twitterEdit.includes('http://')
+			) {
+				check = 2;
 			} else {
-				await putResearchers(id, createTempResearcher(), selectedProfile);
+				for (let i = 0; i < publicationEdit.length; i++) {
+					if (
+						publicationEdit[i].link !== '' &&
+						!publicationEdit[i].link.includes('https://') &&
+						!publicationEdit[i].link.includes('http://')
+					) {
+						check = 3;
+						break;
+					}
+				}
 			}
-			setEdit(true);
-			navigate('/researcher', {
-				state: {
-					Edit: edit,
-				},
-			});
+			if (check == 0) {
+				const filteredPublicationEdit = publicationEdit.filter(
+					(item, index) => {
+						return (
+							item.link !== '' ||
+							item.title !== '' ||
+							item.author !== '' ||
+							item.pubYear !== null ||
+							item.journal !== '' ||
+							item.conference !== '' ||
+							item.volume !== ''
+						);
+					},
+				);
+				if (filteredPublicationEdit.length == 0) {
+					filteredPublicationEdit.push({
+						link: '',
+						title: '',
+						author: '',
+						pubYear: null,
+						journal: '',
+						conference: '',
+						volume: '',
+						editable: true,
+					});
+				}
+
+				const createTempResearcher = () => ({
+					affiliation: departmentEdit,
+					id,
+
+					locationNumber: locationEdit,
+					name: nameEdit,
+					projectType: projectEdit,
+
+					linkedIn: linkEdit,
+					twitter: twitterEdit,
+					biography: biographyEdit,
+					publications: filteredPublicationEdit,
+				});
+
+				console.log(id);
+
+				if (id == 0) {
+					await postResearchers(createTempResearcher(), selectedProfile);
+				} else {
+					await putResearchers(id, createTempResearcher(), selectedProfile);
+				}
+				setEdit(true);
+				navigate('/researcher', {
+					state: {
+						Edit: edit,
+					},
+				});
+			} else if (check == 1) {
+				alert('링크드인 주소 제대로 적으세요');
+			} else if (check == 2) {
+				alert('트위터 주소 제대로 적으세요');
+			} else if (check == 3) {
+				alert('논문 주소 제대로 적으세요');
+			}
 		},
 		[
 			nameEdit,
