@@ -198,10 +198,14 @@ const DashboardContainer = (props: Props) => {
 	}, [handleResize]);
 	useEffect(() => {
 		onTableReload();
-		onGraphReload();
+
 		onStatisticReload();
 		return () => {};
 	}, []);
+	useEffect(() => {
+		onGraphReload();
+		return () => {};
+	}, [range]);
 
 	return (
 		<Dashboard
