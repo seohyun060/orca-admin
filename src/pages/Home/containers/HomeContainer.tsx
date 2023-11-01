@@ -56,8 +56,9 @@ const HomeContainer = (props: Props) => {
 		},
 		[selectedProjects],
 	);
-	const onProjectSubmit = useCallback(() => {
-		putMainProjects(selectedProjects);
+	const onProjectSubmit = useCallback(async () => {
+		await putMainProjects(selectedProjects);
+		alert('적용되었습니다');
 	}, [selectedProjects]);
 	const onChangeInsights = useCallback(
 		(e: EChange, index: number) => {
@@ -68,14 +69,17 @@ const HomeContainer = (props: Props) => {
 		},
 		[selectedInsights],
 	);
-	const onOrcaBannerSubmit = useCallback(() => {
-		putOrcaBanner(selectedMain, selectedOrca);
+	const onOrcaBannerSubmit = useCallback(async () => {
+		await putOrcaBanner(selectedMain, selectedOrca);
+		alert('적용되었습니다');
 	}, [selectedOrca]);
-	const onMainBannerSubmit = useCallback(() => {
-		putMainBanner(selectedMain, selectedOrca);
+	const onMainBannerSubmit = useCallback(async () => {
+		await putMainBanner(selectedMain, selectedOrca);
+		alert('적용되었습니다');
 	}, [selectedMain]);
-	const onInsightSubmit = useCallback(() => {
-		putMainInsights(selectedInsights);
+	const onInsightSubmit = useCallback(async () => {
+		await putMainInsights(selectedInsights);
+		alert('적용되었습니다');
 	}, [selectedInsights]);
 	useEffect(() => {
 		getMainProjects().then((data) => {

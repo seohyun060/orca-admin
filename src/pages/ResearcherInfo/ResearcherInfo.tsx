@@ -3,6 +3,8 @@ import './styles/researcherinfo.styles.css';
 import Map from './components/Map';
 import images from 'src/assets/images';
 import { EChange, OnApplyClicked, Publication } from '@typedef/types';
+import { ToastContainer, toast } from 'react-toastify';
+
 import { useNavigate } from 'react-router-dom';
 type Props = {
 	//edit: boolean;
@@ -77,6 +79,7 @@ const ResearcherInfo = ({
 	const navigate = useNavigate();
 	return (
 		<div className='researcherinfo'>
+			<ToastContainer />
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();

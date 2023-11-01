@@ -56,18 +56,24 @@ const ResearcherContainer = ({}: Props) => {
 	);
 	const onTrashClick = useCallback(
 		(id: number) => {
-			setResearcherList((prevList: ResearcherList) => {
-				const updatedList = prevList.filter(
-					(researcher) => researcher.id !== id,
-				);
-				return updatedList;
-			});
-			deleteResearcher(id).then((data) => {
-				//console.log(data.data); // 나옴
+			const confirmed = window.confirm('삭제하시겠습니까?');
+			if (confirmed) {
+				setResearcherList((prevList: ResearcherList) => {
+					const updatedList = prevList.filter(
+						(researcher) => researcher.id !== id,
+					);
+					return updatedList;
+				});
+				deleteResearcher(id).then((data) => {
+					//console.log(data.data); // 나옴
 
-				console.log(data);
-				//console.log(researcherList); // 안나옴
-			});
+					console.log(data);
+					//console.log(researcherList); // 안나옴
+				});
+				alert('연구원 삭제 완료');
+			} else {
+				alert('취소되었습니다');
+			}
 		},
 		[researcherList],
 	);

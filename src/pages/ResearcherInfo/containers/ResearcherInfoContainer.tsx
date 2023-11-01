@@ -3,6 +3,7 @@ import ResearcherInfo from '../ResearcherInfo';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { EChange, Researchers } from '@typedef/types';
 import { ResearcherList, Publication } from '@typedef/types';
+import { ToastContainer, toast } from 'react-toastify';
 import {
 	putResearchers,
 	getResearcherDetail,
@@ -385,8 +386,10 @@ Props) => {
 
 				if (id == 0) {
 					await postResearchers(createTempResearcher(), selectedProfile);
+					alert('연구원 추가 완료');
 				} else {
 					await putResearchers(id, createTempResearcher(), selectedProfile);
+					alert('연구원 편집 완료');
 				}
 				setEdit(true);
 				navigate('/researcher', {
@@ -394,12 +397,16 @@ Props) => {
 						Edit: edit,
 					},
 				});
+				// if (id == 0) {
+				// } else {
+				// 	alert('연구원 편집 완료');
+				// }
 			} else if (check == 1) {
-				alert('링크드인 주소 제대로 적으세요');
+				alert('링크드인 주소가 올바르지 않습니다.');
 			} else if (check == 2) {
-				alert('트위터 주소 제대로 적으세요');
+				alert('트위터 주소가 올바르지 않습니다.');
 			} else if (check == 3) {
-				alert('논문 주소 제대로 적으세요');
+				alert('논문 주소가 올바르지 않습니다.');
 			}
 		},
 		[

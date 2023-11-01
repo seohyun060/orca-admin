@@ -31,11 +31,17 @@ const OrcagroupContainer = (props: Props) => {
 	};
 	const onTrashClick = useCallback(
 		(id: number) => {
-			setOrcagroupList((prevList: Newsletters[]) => {
-				const updatedList = prevList.filter((orcagroup) => orcagroup.id !== id);
-				return updatedList;
-			});
-			deleteOrcaMember(id);
+			const confirmed = window.confirm('삭제하시겠습니까?');
+			if (confirmed) {
+				setOrcagroupList((prevList: Newsletters[]) => {
+					const updatedList = prevList.filter(
+						(orcagroup) => orcagroup.id !== id,
+					);
+					return updatedList;
+				});
+				deleteOrcaMember(id);
+				alert('삭제되었습니다.');
+			}
 		},
 		[orcagroupList],
 	);
