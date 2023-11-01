@@ -6,26 +6,30 @@ import Table from './components/Table';
 import { StatisticsList } from '@typedef/types';
 type Props = {
 	statisticsList: StatisticsList | undefined;
-	downloadStatisticsAsExcel: () => void;
+	downloadAtExcel: () => void;
 	graphList: any;
 	onRangeClick: () => void;
 	onGraphReload: () => void;
-	onTableReload: () => void;
+	onTableReload: () => Promise<void>;
+	onStatisticReload: () => void;
 	range: string;
 	desktopData: number[];
 	mobileData: number[];
+	chartWidth: number;
 };
 
 const Dashboard = ({
 	statisticsList,
-	downloadStatisticsAsExcel,
+	downloadAtExcel,
 	graphList,
 	onRangeClick,
 	onGraphReload,
 	onTableReload,
+	onStatisticReload,
 	range,
 	desktopData,
 	mobileData,
+	chartWidth,
 }: Props) => {
 	return (
 		<div className='dashboard'>
@@ -34,8 +38,8 @@ const Dashboard = ({
 				<div
 					className='reload'
 					onClick={() => {
-						//window.location.reload();
 						onGraphReload();
+						onTableReload();
 					}}
 				>
 					<img src={images.reload} />
@@ -44,7 +48,7 @@ const Dashboard = ({
 				<div
 					className='excel'
 					onClick={() => {
-						downloadStatisticsAsExcel();
+						downloadAtExcel();
 					}}
 				>
 					Excel download
@@ -55,6 +59,7 @@ const Dashboard = ({
 					graphList={graphList}
 					onRangeClick={onRangeClick}
 					range={range}
+					chartWidth={chartWidth}
 				/>
 				<Table desktopData={desktopData} mobileData={mobileData} />
 			</div>
@@ -64,8 +69,7 @@ const Dashboard = ({
 					<div
 						className='reload'
 						onClick={() => {
-							//window.location.reload();
-							onTableReload();
+							onStatisticReload();
 						}}
 					>
 						<img src={images.reload} />

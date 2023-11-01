@@ -17,6 +17,7 @@ const HomeContainer = (props: Props) => {
 	const [selectedOrca, setSelectedOrca] = useState<File | null>(null);
 	const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
 	const [selectedInsights, setSelectedInsights] = useState<string[]>([]);
+
 	const uploadMainHandler = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
 			const file = event.target.files?.[0];
@@ -30,7 +31,6 @@ const HomeContainer = (props: Props) => {
 		},
 		[selectedMain],
 	);
-
 	const uploadOrcaHandler = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
 			const file = event.target.files?.[0];
@@ -52,14 +52,9 @@ const HomeContainer = (props: Props) => {
 			const updatedList = [...selectedProjects];
 			updatedList[index] = e.target.value;
 			setSelectedProjects(updatedList);
-			console.log(selectedProjects);
 		},
 		[selectedProjects],
 	);
-	const onProjectSubmit = useCallback(async () => {
-		await putMainProjects(selectedProjects);
-		alert('적용되었습니다');
-	}, [selectedProjects]);
 	const onChangeInsights = useCallback(
 		(e: EChange, index: number) => {
 			const updatedList = [...selectedInsights];
@@ -69,18 +64,24 @@ const HomeContainer = (props: Props) => {
 		},
 		[selectedInsights],
 	);
-	const onOrcaBannerSubmit = useCallback(async () => {
-		await putOrcaBanner(selectedMain, selectedOrca);
-		alert('적용되었습니다');
-	}, [selectedOrca]);
+
 	const onMainBannerSubmit = useCallback(async () => {
 		await putMainBanner(selectedMain, selectedOrca);
 		alert('적용되었습니다');
 	}, [selectedMain]);
+	const onOrcaBannerSubmit = useCallback(async () => {
+		await putOrcaBanner(selectedMain, selectedOrca);
+		alert('적용되었습니다');
+	}, [selectedOrca]);
+	const onProjectSubmit = useCallback(async () => {
+		await putMainProjects(selectedProjects);
+		alert('적용되었습니다');
+	}, [selectedProjects]);
 	const onInsightSubmit = useCallback(async () => {
 		await putMainInsights(selectedInsights);
 		alert('적용되었습니다');
 	}, [selectedInsights]);
+
 	useEffect(() => {
 		getMainProjects().then((data) => {
 			const updatedList: string[] = [];
@@ -97,9 +98,7 @@ const HomeContainer = (props: Props) => {
 			setSelectedInsights(updatedList);
 		});
 		getOrcaBanner().then((data) => {});
-		getMainBanner().then((data) => {
-			// console.log(data.data); // 나옴
-		});
+		getMainBanner().then((data) => {});
 		return () => {};
 	}, []);
 

@@ -12,28 +12,7 @@ import {
 } from 'recharts';
 
 const LineGraph = (props) => {
-	const { graphList, onRangeClick, range } = props;
-	const [maxRange, setMaxRange] = useState(0);
-	//const [range, setRange] = useState('month');
-	const [chartWidth, setChartWidth] = useState(calculateChartWidth);
-
-	function calculateChartWidth() {
-		if (window.innerWidth > 1400) {
-			return 1050;
-		} else {
-			return 650;
-		}
-	}
-	const handleResize = useCallback(() => {
-		setChartWidth(calculateChartWidth());
-	}, []);
-
-	useEffect(() => {
-		window.addEventListener('resize', handleResize);
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, [handleResize]);
+	const { graphList, onRangeClick, range, chartWidth } = props;
 
 	return (
 		<div className='chart-container'>

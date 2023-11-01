@@ -10,27 +10,15 @@ import {
 	postResearchers,
 } from 'src/api/ResearcherAPI';
 import images from 'src/assets/images';
-type Props = {
-	//researcherList: ResearcherList; setResearcherList: any
-};
+type Props = {};
 
 const ResearcherInfoContainer = ({}: // researcherList,
 // setResearcherList,
 Props) => {
 	const location = useLocation();
-	//const edit = location.state.Edit;
-	// id = location.state.Id;
+
 	const params = useParams();
 	const navigate = useNavigate();
-	// const name = location.state.Name;
-	// const department = location.state.Department;
-	// const project = location.state.Project;
-	// const mapLocation = location.state.Location;
-	// //const profile = location.state.Profile;
-	// const link = location.state.Link;
-	// const twitter = location.state.Twitter;
-	// const biography = location.state.Biography;
-	// const publications = location.state.Publications;
 	const [edit, setEdit] = useState(false);
 	const [id, setId] = useState(0);
 	const [mapDisplay, setMapDisplay] = useState(true);
@@ -61,42 +49,19 @@ Props) => {
 	useEffect(() => {
 		if (params.id != '0') {
 			getResearcherDetail(params.id).then((data) => {
-				console.log(data.data); // 나옴
-				//const updatedList: ResearcherList = [];
 				setId(data.data.id);
 				setLocationEdit(data.data.locationNumber);
 				setNameEdit(data.data.name);
 				setDepartmentEdit(data.data.affiliation);
 				setProjectEdit(data.data.projectType);
 				setProfile(data.data.image);
-				//setSelectedProfile(data.data.image);
 				setLinkEdit(data.data.linkedIn);
 				setTwitterEdit(data.data.twitter);
 				setBiographyEdit(data.data.biography);
 				const pubAPI = data.data.publications;
-				console.log(pubAPI);
 				setPublicationEdit(pubAPI);
-				console.log(publicationEdit);
-				// if (data.data.publications.length != 0) {
-				// 	const updatedPublication = [...publicationEdit];
-				// 	for (let i = 0; i < pubAPI.length; i++) {
-				// 		updatedPublication[i].title = pubAPI[i].title;
-				// 		updatedPublication[i].author = pubAPI[i].author;
-				// 		updatedPublication[i].year = pubAPI[i].pubYear;
-				// 		updatedPublication[i].journal = pubAPI[i].journal;
-				// 		updatedPublication[i].conference = pubAPI[i].conference;
-				// 		updatedPublication[i].ho = pubAPI[i].volume;
-				// 		updatedPublication[i].link = pubAPI[i].link;
-				// 	}
-				// 	setPublicationEdit(updatedPublication);
-				// 	console.log(updatedPublication);
-				// }
-
-				//console.log(researcherList); // 안나옴
 			});
 		}
-
-		//console.log(researcherList); // 안나옴
 	}, []);
 	const onClickPubEdit = useCallback(
 		(index: number) => {
@@ -125,14 +90,6 @@ Props) => {
 		[setSelectedProfile],
 	);
 
-	// const onChangePublicationEdit = useCallback(
-	// 	(e: EChange, index: number) => {
-	// 		const updatedPublication = [...publicationEdit];
-	// 		updatedPublication[index] = e.target.value;
-	// 		setPublicationEdit(updatedPublication);
-	// 	},
-	// 	[publicationEdit],
-	// );
 	const onChangePubEdit = useCallback(
 		(e: EChange, index: number, type: number) => {
 			const updatedPublication = [...publicationEdit];
@@ -166,62 +123,7 @@ Props) => {
 		},
 		[publicationEdit],
 	);
-	// const onChangePubLink = useCallback(
-	// 	(e: EChange, index: number) => {
-	// 		const updatedPublication = [...publicationEdit];
-	// 		updatedPublication[index].link = e.target.value;
-	// 		setPublicationEdit(updatedPublication);
-	// 	},
-	// 	[publicationEdit],
-	// );
-	// const onChangePubTitle = useCallback(
-	// 	(e: EChange, index: number) => {
-	// 		const updatedPublication = [...publicationEdit];
-	// 		updatedPublication[index].title = e.target.value;
-	// 		setPublicationEdit(updatedPublication);
-	// 	},
-	// 	[publicationEdit],
-	// );
-	// const onChangePubAuthor = useCallback(
-	// 	(e: EChange, index: number) => {
-	// 		const updatedPublication = [...publicationEdit];
-	// 		updatedPublication[index].author = e.target.value;
-	// 		setPublicationEdit(updatedPublication);
-	// 	},
-	// 	[publicationEdit],
-	// );
-	// const onChangePubYear = useCallback(
-	// 	(e: EChange, index: number) => {
-	// 		const updatedPublication = [...publicationEdit];
-	// 		updatedPublication[index].year = parseInt(e.target.value);
-	// 		setPublicationEdit(updatedPublication);
-	// 	},
-	// 	[publicationEdit],
-	// );
-	// const onChangePubJournal = useCallback(
-	// 	(e: EChange, index: number) => {
-	// 		const updatedPublication = [...publicationEdit];
-	// 		updatedPublication[index].journal = e.target.value;
-	// 		setPublicationEdit(updatedPublication);
-	// 	},
-	// 	[publicationEdit],
-	// );
-	// const onChangePubConference = useCallback(
-	// 	(e: EChange, index: number) => {
-	// 		const updatedPublication = [...publicationEdit];
-	// 		updatedPublication[index].conference = e.target.value;
-	// 		setPublicationEdit(updatedPublication);
-	// 	},
-	// 	[publicationEdit],
-	// );
-	// const onChangePubHo = useCallback(
-	// 	(e: EChange, index: number) => {
-	// 		const updatedPublication = [...publicationEdit];
-	// 		updatedPublication[index].ho = e.target.value;
-	// 		setPublicationEdit(updatedPublication);
-	// 	},
-	// 	[publicationEdit],
-	// );
+
 	const onAddClicked = useCallback(() => {
 		setPublicationEdit((prevEdit) => [
 			...prevEdit,
@@ -276,7 +178,6 @@ Props) => {
 	);
 	const onEnterKeyPress = (e: any) => {
 		if (e.key === 'Enter') {
-			// Enter 키가 눌렸을 때 줄 바꿈 추가
 			e.preventDefault(); // Enter 키의 기본 동작을 취소
 			setBiographyEdit(biographyEdit + '\n'); // 줄 바꿈을 추가한 내용으로 업데이트
 		}
@@ -304,7 +205,6 @@ Props) => {
 
 	const onApplyClicked = useCallback(
 		async (
-			//edit: boolean,
 			id: number,
 			locationEdit: number,
 			nameEdit: string,
@@ -367,7 +267,6 @@ Props) => {
 						editable: true,
 					});
 				}
-
 				const createTempResearcher = () => ({
 					affiliation: departmentEdit,
 					id,
@@ -382,8 +281,6 @@ Props) => {
 					publications: filteredPublicationEdit,
 				});
 
-				console.log(id);
-
 				if (id == 0) {
 					await postResearchers(createTempResearcher(), selectedProfile);
 					alert('연구원 추가 완료');
@@ -397,10 +294,6 @@ Props) => {
 						Edit: edit,
 					},
 				});
-				// if (id == 0) {
-				// } else {
-				// 	alert('연구원 편집 완료');
-				// }
 			} else if (check == 1) {
 				alert('링크드인 주소가 올바르지 않습니다.');
 			} else if (check == 2) {
@@ -427,7 +320,6 @@ Props) => {
 	}, []);
 	return (
 		<ResearcherInfo
-			//edit={edit}
 			id={id}
 			mapDisplay={mapDisplay}
 			onMapDisplayClicked={onMapDisplayClicked}

@@ -17,7 +17,6 @@ type Props = {};
 const ResearcherContainer = ({}: Props) => {
 	const navigate = useNavigate();
 	const [researcherList, setResearcherList] = useState<ResearcherList>([]);
-	const location = useLocation();
 	const [search, setSearch] = useState('');
 	const [stored, setStored] = useState(false);
 	const [filteredList, setFilteredList] =
@@ -64,15 +63,8 @@ const ResearcherContainer = ({}: Props) => {
 					);
 					return updatedList;
 				});
-				deleteResearcher(id).then((data) => {
-					//console.log(data.data); // 나옴
-
-					console.log(data);
-					//console.log(researcherList); // 안나옴
-				});
-				alert('연구원 삭제 완료');
-			} else {
-				alert('취소되었습니다');
+				deleteResearcher(id).then((data) => {});
+				alert('삭제되었습니다.');
 			}
 		},
 		[researcherList],
@@ -84,36 +76,8 @@ const ResearcherContainer = ({}: Props) => {
 		[search],
 	);
 	const onSetEdit = useCallback(
-		(
-			edit: boolean,
-			id: number,
-			name: string,
-			department: string,
-			project: string,
-			location: number,
-			profile: string,
-			link: string,
-			twitter: string,
-			biography: string,
-			publications: Publication[],
-		) => {
-			//setEdit(index);
-
-			navigate(`/researcherinfo/${id}`, {
-				state: {
-					Edit: edit,
-					Id: id,
-					Name: name,
-					Department: department,
-					Project: project,
-					Location: location,
-					Profile: profile,
-					Link: link,
-					Twitter: twitter,
-					Biography: biography,
-					Publications: publications,
-				},
-			});
+		(id: number) => {
+			navigate(`/researcherinfo/${id}`);
 			window.scrollTo(0, 0);
 		},
 		[edit],
@@ -131,21 +95,10 @@ const ResearcherContainer = ({}: Props) => {
 					department: d.affiliation,
 					project: d.projectType,
 					stored: d.isStored,
-					link: 'https://ca70-221-166-133-218.ngrok-free.app',
-					twitter: `twitter`,
-					biography: 'Biography of researcher',
-					publications: [
-						{
-							link: 'www.bodybuilding.com',
-							title: 'Olympia',
-							author: 'Chris, Bumstead',
-							pubYear: 2023,
-							journal: 'Classic',
-							conference: 'Physique',
-							volume: 'Grand Prix',
-							editable: false,
-						},
-					],
+					link: '',
+					twitter: ``,
+					biography: '',
+					publications: [],
 				};
 				updatedList.push(tempData);
 			});

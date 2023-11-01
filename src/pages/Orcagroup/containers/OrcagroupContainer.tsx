@@ -9,6 +9,7 @@ type Props = {};
 
 const OrcagroupContainer = (props: Props) => {
 	const [orcagroupList, setOrcagroupList] = useState<Newsletters[]>([]);
+
 	const downloadExcel = (data: Newsletters[]) => {
 		// 데이터를 이차원 배열로 변환
 		const dataArray = [
@@ -54,18 +55,6 @@ const OrcagroupContainer = (props: Props) => {
 
 		return () => {};
 	}, []);
-	// useEffect(() => {
-	// 	const updatedList = [];
-	// 	for (let i = 0; i < 8; i++) {
-	// 		const orcagroup = {
-	// 			id: i + 1,
-	// 			email: 'fjal;k@asfmdal.o.kr',
-	// 		};
-	// 		updatedList.push(orcagroup);
-	// 	}
-	// 	setOrcagroupList(updatedList);
-	// 	return () => {};
-	// }, []);
 
 	return (
 		<Orcagroup

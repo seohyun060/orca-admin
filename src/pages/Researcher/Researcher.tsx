@@ -14,7 +14,7 @@ type Props = {
 	onStoredClick: () => void;
 	onStoredisplayClick: (filteredList: ResearcherList, index: number) => void;
 	onTrashClick: (index: number) => void;
-	onSetEdit: OnSetEdit;
+	onSetEdit: (id: number) => void;
 	researcherList: ResearcherList;
 };
 
@@ -70,18 +70,7 @@ const Researcher = ({
 						color: stored ? '#9E9E9E' : '#fff',
 					}}
 					onClick={() => {
-						onSetEdit(false, 0, '', '', '', 15, '', '', '', '', [
-							{
-								link: '',
-								title: '',
-								author: '',
-								pubYear: 2023,
-								journal: '',
-								conference: '',
-								volume: '',
-								editable: false,
-							},
-						]);
+						onSetEdit(0);
 					}}
 				>
 					사용자 추가
@@ -121,19 +110,7 @@ const Researcher = ({
 								<button
 									className='edit'
 									onClick={() => {
-										onSetEdit(
-											true,
-											researcher.id,
-											researcher.name,
-											researcher.department,
-											researcher.project,
-											researcher.location,
-											researcher.profile,
-											researcher.link,
-											researcher.twitter,
-											researcher.biography,
-											researcher.publications,
-										);
+										onSetEdit(researcher.id);
 									}}
 								>
 									편집

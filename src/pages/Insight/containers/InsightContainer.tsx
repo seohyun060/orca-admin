@@ -24,6 +24,7 @@ const InsightContainer = ({}: Props) => {
 			setStoredColor(0.3);
 		}
 	}, [stored, displayedColor, storedColor]);
+
 	const onStoredClick = useCallback(() => {
 		if (!stored) {
 			setStored(true);
@@ -53,11 +54,15 @@ const InsightContainer = ({}: Props) => {
 	);
 	const onTrashClick = useCallback(
 		(id: number) => {
-			setInsightList((prevList: InsightApi[]) => {
-				const updatedList = prevList.filter((insight) => insight.id !== id);
-				return updatedList;
-			});
-			deleteInsight(id).then((data) => {});
+			const confirmed = window.confirm('삭제하시겠습니까?');
+			if (confirmed) {
+				setInsightList((prevList: InsightApi[]) => {
+					const updatedList = prevList.filter((insight) => insight.id !== id);
+					return updatedList;
+				});
+				deleteInsight(id).then((data) => {});
+				alert('삭제되었습니다.');
+			}
 		},
 		[insightList],
 	);
@@ -94,19 +99,15 @@ const InsightContainer = ({}: Props) => {
 		});
 
 		return () => {};
-	}, [navigate, location]);
+	}, []);
+
 	useEffect(() => {
 		setFilteredList(
 			insightList.filter((insight) => insight.title.indexOf(search) !== -1),
 		);
-		// setTimeout(() => {
-		// 	setFilteredList(
-		// 		insightList.filter((insight) => insight.title.indexOf(search) !== -1),
-		// 	);
-		// }, 300);
 
 		return () => {};
-	}, [search, insightList, location, navigate]);
+	}, [search, insightList]);
 
 	return (
 		<Insight

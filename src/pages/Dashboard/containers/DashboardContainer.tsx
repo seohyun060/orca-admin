@@ -8,15 +8,12 @@ type Props = {};
 
 const DashboardContainer = (props: Props) => {
 	const [statisticsList, setStatisticsList] = useState<StatisticsList>();
-	const [dayList, setDayList] = useState([]);
 	const [graphList, setGraphList] = useState<any[]>([]);
 	const [range, setRange] = useState('month');
 	const [desktopData, setDesktopData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
 	const [mobileData, setMobileData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
-	const tempDesktop = [0, 0, 0, 0, 0, 0, 0, 0];
-	const tempMob = [0, 0, 0, 0, 0, 0, 0, 0];
-
-	const downloadStatisticsAsExcel = () => {
+	const [chartWidth, setChartWidth] = useState(1050);
+	const downloadAtExcel = useCallback(() => {
 		// CSV 데이터 생성
 		const graphLabel: string[] = [''];
 		const graphDesktopValue: string[] = [''];
@@ -26,7 +23,6 @@ const DashboardContainer = (props: Props) => {
 			graphDesktopValue.push(graphList[i].desktop);
 			graphMobileValue.push(graphList[i].mobile);
 		}
-		console.log(graphList);
 		const csvData = [
 			graphLabel,
 			graphDesktopValue,
@@ -55,13 +51,13 @@ const DashboardContainer = (props: Props) => {
 				statisticsList?.eventStatus.upcomingEvent,
 			],
 		];
-
 		// CSV 파일 생성
 		const ws = XLSX.utils.aoa_to_sheet(csvData);
 		const wb = XLSX.utils.book_new();
 		XLSX.utils.book_append_sheet(wb, ws, 'Statistics');
 		XLSX.writeFile(wb, 'statistics.xlsx');
-	};
+	}, [desktopData, mobileData, graphList, statisticsList]);
+
 	const onRangeClick = useCallback(() => {
 		if (range === 'month') {
 			setRange('week');
@@ -69,6 +65,7 @@ const DashboardContainer = (props: Props) => {
 			setRange('month');
 		}
 	}, [range]);
+
 	const onGraphReload = useCallback(() => {
 		getGraph(range).then((data) => {
 			console.log(data);
@@ -126,7 +123,7 @@ const DashboardContainer = (props: Props) => {
 			setGraphList(convertData);
 		});
 	}, [range, graphList]);
-	const onTableReload = useCallback(() => {
+	const onStatisticReload = useCallback(() => {
 		getStatistic().then((data) => {
 			console.log(data.data);
 			const updatedList: StatisticsList = {
@@ -146,197 +143,79 @@ const DashboardContainer = (props: Props) => {
 			setStatisticsList(updatedList);
 		});
 	}, [statisticsList]);
-	async function setData() {
-		setDesktopData(tempDesktop);
-		setMobileData(tempMob);
-	}
-	async function setAfterGet() {
-		getTable('today').then((data) => {
-			if (data.data.length != 0) {
-				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'desktop') {
-						tempDesktop[0] = data.data[i][2];
-					} else {
-						tempMob[0] = data.data[i][2];
-					}
-				}
-			}
-		});
-		getTable('yesterday').then((data) => {
-			if (data.data.length != 0) {
-				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'desktop') {
-						tempDesktop[1] = data.data[i][2];
-					} else {
-						tempMob[1] = data.data[i][2];
-					}
-				}
-			}
-		});
-		getTable('7days').then((data) => {
-			if (data.data.length != 0) {
-				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'desktop') {
-						tempDesktop[2] = data.data[i][2];
-					} else {
-						tempMob[2] = data.data[i][2];
-					}
-				}
-			}
-		});
-		getTable('30days').then((data) => {
-			if (data.data.length != 0) {
-				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'desktop') {
-						tempDesktop[3] = data.data[i][2];
-					} else {
-						tempMob[3] = data.data[i][2];
-					}
-				}
-			}
-		});
-		getTable('60days').then((data) => {
-			if (data.data.length != 0) {
-				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'desktop') {
-						tempDesktop[4] = data.data[i][2];
-					} else {
-						tempMob[4] = data.data[i][2];
-					}
-				}
-			}
-		});
-		getTable('90days').then((data) => {
-			if (data.data.length != 0) {
-				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'desktop') {
-						tempDesktop[5] = data.data[i][2];
-					} else {
-						tempMob[5] = data.data[i][2];
-					}
-				}
-			}
-		});
-		getTable('1year').then((data) => {
-			if (data.data.length != 0) {
-				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'desktop') {
-						tempDesktop[6] = data.data[i][2];
-					} else {
-						tempMob[6] = data.data[i][2];
-					}
-				}
-			}
-		});
-		getTable('thisYear').then((data) => {
-			if (data.data.length != 0) {
-				for (let i = 0; i < data.data.length; i++) {
-					if (data.data[i][1] == 'desktop') {
-						tempDesktop[7] = data.data[i][2];
-					} else {
-						tempMob[7] = data.data[i][2];
-					}
-				}
-			}
-		});
-		await setData();
-	}
-	useEffect(() => {
-		setAfterGet();
-		return () => {};
-	}, []);
-	useEffect(() => {
-		getGraph(range).then((data) => {
-			console.log(data);
-			const monthNames = [
-				'Jan',
-				'Feb',
-				'Mar',
-				'Apr',
-				'May',
-				'Jun',
-				'Jul',
-				'Aug',
-				'Sep',
-				'Oct',
-				'Nov',
-				'Dec',
-			];
 
-			// 각 요소를 수정하여 날짜 부분을 변경
-			const modifyMonth = data.data.map((item: any) => {
-				const date = item[0];
-				const month = parseInt(date.slice(4, 6)); // 월 숫자 추출
-				const day = date.slice(6); // 일 추출
-				const modifiedDate = monthNames[month - 1] + day; // 월 이름과 일을 합침
-				return [modifiedDate, ...item.slice(1)]; // 수정된 날짜와 나머지 부분을 합침
+	const onTableReload = useCallback(async () => {
+		const updatedDesktop = [...desktopData];
+		const updatedMobile = [...mobileData];
+		const getPromises = [
+			getTable('today'),
+			getTable('yesterday'),
+			getTable('7days'),
+			getTable('30days'),
+			getTable('60days'),
+			getTable('90days'),
+			getTable('1year'),
+			getTable('thisYear'),
+		];
+
+		try {
+			const getResults = await Promise.all(getPromises);
+			getResults.forEach((data, index) => {
+				if (data.data.length !== 0) {
+					for (let i = 0; i < data.data.length; i++) {
+						if (data.data[i][1] === 'desktop') {
+							updatedDesktop[index] = data.data[i][2];
+						} else {
+							updatedMobile[index] = data.data[i][2];
+						}
+					}
+				}
 			});
-			const convertData = modifyMonth.reduce((result: any, item: any) => {
-				const date = item[0];
-				const device = item[1];
-				const value = parseInt(item[2]);
+			setDesktopData(updatedDesktop);
+			setMobileData(updatedMobile);
+		} catch (error) {
+			console.error(error);
+		}
+	}, [desktopData, mobileData]);
 
-				// result 배열에서 동일한 날짜의 항목 찾기
-				const existingItem = result.find((entry: any) => entry.date === date);
+	const calculateChartWidth = useCallback(() => {
+		if (window.innerWidth > 1400) {
+			return 1050;
+		} else {
+			return 650;
+		}
+	}, [window.innerWidth]);
 
-				// 해당 날짜의 항목이 이미 존재하는 경우
-				if (existingItem) {
-					if (device === 'desktop') {
-						existingItem.desktop = value;
-					} else if (device === 'mobile') {
-						existingItem.mobile = value;
-					}
-				} else {
-					// 해당 날짜의 항목이 존재하지 않는 경우
-					const newItem = {
-						date: date,
-						desktop: device === 'desktop' ? value : 0,
-						mobile: device === 'mobile' ? value : 0,
-					};
-					result.push(newItem);
-				}
+	const handleResize = useCallback(() => {
+		setChartWidth(calculateChartWidth());
+	}, [chartWidth]);
 
-				return result;
-			}, []);
-
-			setGraphList(convertData);
-		});
-
-		return () => {};
-	}, [range]);
 	useEffect(() => {
-		getStatistic().then((data) => {
-			const updatedList: StatisticsList = {
-				researcherNumber: data.data[0][1],
-				newsletterNumber: data.data[1][1],
-				orcagroupNumber: data.data[2][1],
-				projectStatus: {
-					active: data.data[3][1],
-					completed: data.data[4][1],
-					terminated: data.data[5][1],
-				},
-				eventStatus: {
-					lastEvent: data.data[6][1],
-					upcomingEvent: data.data[7][1],
-				},
-			};
-			setStatisticsList(updatedList);
-		});
-
+		window.addEventListener('resize', handleResize);
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, [handleResize]);
+	useEffect(() => {
+		onTableReload();
+		onGraphReload();
+		onStatisticReload();
 		return () => {};
 	}, []);
 
 	return (
 		<Dashboard
 			statisticsList={statisticsList}
-			downloadStatisticsAsExcel={downloadStatisticsAsExcel}
+			downloadAtExcel={downloadAtExcel}
 			graphList={graphList}
 			onRangeClick={onRangeClick}
 			onGraphReload={onGraphReload}
 			onTableReload={onTableReload}
+			onStatisticReload={onStatisticReload}
 			range={range}
 			desktopData={desktopData}
 			mobileData={mobileData}
+			chartWidth={chartWidth}
 		/>
 	);
 };
