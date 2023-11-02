@@ -21,12 +21,25 @@ const NewsletterContainer = (props: Props) => {
 		// 워크북 생성
 		const wb = XLSX.utils.book_new();
 		const ws = XLSX.utils.aoa_to_sheet(dataArray);
-
+		const date = new Date();
+		function formatDate(date: Date) {
+			const year = date.getFullYear().toString(); // 년도의 마지막 두 자리
+			let month = (date.getMonth() + 1).toString(); // 월을 문자열로 변환
+			if (parseInt(month) < 10) {
+				month = `0${month}`;
+			}
+			let day = date.getDate().toString(); // 일
+			if (parseInt(day) < 10) {
+				day = `0${day}`;
+			}
+			return `${year}.${month}.${day}`;
+		}
 		// 워크북에 워크시트 추가
-		XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+		XLSX.utils.book_append_sheet(wb, ws, 'Newsletter');
 
 		// 엑셀 파일 생성 및 다운로드
-		XLSX.writeFile(wb, 'newsletter.xlsx');
+		//XLSX.writeFile(wb, `newsletter_${date}.xlsx`);
+		XLSX.writeFile(wb, `newsletter_${formatDate(date)}.xlsx`);
 	}, []);
 
 	const onTrashClick = useCallback(

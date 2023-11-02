@@ -13,11 +13,14 @@ const DashboardContainer = (props: Props) => {
 	const [desktopData, setDesktopData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
 	const [mobileData, setMobileData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
 	const [chartWidth, setChartWidth] = useState(1050);
+	const date = Date();
+	console.log(date);
 	const downloadAtExcel = useCallback(() => {
 		// CSV 데이터 생성
 		const graphLabel: string[] = [''];
 		const graphDesktopValue: string[] = [''];
 		const graphMobileValue: string[] = [''];
+
 		for (let i = 0; i < graphList.length; i++) {
 			graphLabel.push(graphList[i].date);
 			graphDesktopValue.push(graphList[i].desktop);
@@ -52,10 +55,24 @@ const DashboardContainer = (props: Props) => {
 			],
 		];
 		// CSV 파일 생성
+		const date = new Date();
+		function formatDate(date: Date) {
+			const year = date.getFullYear().toString(); // 년도의 마지막 두 자리
+			let month = (date.getMonth() + 1).toString(); // 월을 문자열로 변환
+			if (parseInt(month) < 10) {
+				month = `0${month}`;
+			}
+			let day = date.getDate().toString(); // 일
+			if (parseInt(day) < 10) {
+				day = `0${day}`;
+			}
+			return `${year}.${month}.${day}`;
+		}
 		const ws = XLSX.utils.aoa_to_sheet(csvData);
 		const wb = XLSX.utils.book_new();
 		XLSX.utils.book_append_sheet(wb, ws, 'Statistics');
-		XLSX.writeFile(wb, 'statistics.xlsx');
+		//XLSX.writeFile(wb, `statistics_${formatDate(date)}.xlsx`);
+		XLSX.writeFile(wb, `statistics_${formatDate(date)}.xlsx`);
 	}, [desktopData, mobileData, graphList, statisticsList]);
 
 	const onRangeClick = useCallback(() => {
