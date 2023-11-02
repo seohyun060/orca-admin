@@ -3,7 +3,7 @@ import Dashboard from '../Dashboard';
 import * as XLSX from 'xlsx';
 import { StatisticsList } from '@typedef/types';
 import { getGraph, getStatistic, getTable } from 'src/api/DashboardAPI';
-
+import { getAdmin } from 'src/api/AdminAPI';
 type Props = {};
 
 const DashboardContainer = (props: Props) => {
@@ -214,8 +214,10 @@ const DashboardContainer = (props: Props) => {
 		};
 	}, [handleResize]);
 	useEffect(() => {
+		// getAdmin().then((data) => {
+		// 	console.log(data);
+		// });
 		onTableReload();
-
 		onStatisticReload();
 		return () => {};
 	}, []);
