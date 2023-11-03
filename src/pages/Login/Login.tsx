@@ -8,7 +8,7 @@ type Props = {
 	password: string;
 	onChangeId: (e: EChange) => void;
 	onChangePassword: (e: EChange) => void;
-	onLoginClicked: () => void;
+	onLoginClicked: (e: any) => void;
 };
 
 const Login = ({
@@ -23,13 +23,15 @@ const Login = ({
 			<div className='login-container'>
 				<img src={images.logo} />
 				<div className='title'>ORCA ADMIN</div>
-				<form onSubmit={onLoginClicked}>
+				<form onSubmit={(e) => onLoginClicked(e)}>
 					<input
 						className='id'
 						type='id'
+						id='id'
 						value={id}
 						placeholder='ID'
 						required
+						autoFocus
 						onChange={onChangeId}
 					></input>
 					<input

@@ -1,6 +1,10 @@
+import { getCookie } from 'src/cookies/cookie';
 
 export async function getAllProjectData() {
 	return fetch(`https://api-orca.beamworks.co.kr/api/projects`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -10,6 +14,9 @@ export async function getAllProjectData() {
 }
 export async function getMainProjects() {
 	return fetch(`https://api-orca.beamworks.co.kr/api/projects?select=true`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -22,6 +29,9 @@ export async function putMainProjects(urls) {
 	console.log(urls);
 	data.append('urls', urls);
 	return fetch(`https://api-orca.beamworks.co.kr/api/projects`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'PUT',
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
 	})
@@ -30,6 +40,9 @@ export async function putMainProjects(urls) {
 }
 export async function getOneProjectData(id) {
 	return fetch(`https://api-orca.beamworks.co.kr/api/projects/${id}`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -46,6 +59,7 @@ export async function postNewProjectData(data) {
 		body: jsonData,
 		headers: {
 			'Content-Type': 'application/json',
+			Authorization: `Bearer ${getCookie('login')}`,
 		},
 	})
 		.then((res) => res.json())
@@ -55,13 +69,19 @@ export async function postNewProjectData(data) {
 }
 
 export async function putChangeStoredProjectData(id, isStored) {
-  return fetch(`https://api-orca.beamworks.co.kr/api/projects/${id}?store=${isStored}`, {
-    method: "PUT",
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
+	return fetch(
+		`https://api-orca.beamworks.co.kr/api/projects/${id}?store=${isStored}`,
+		{
+			headers: {
+				Authorization: `Bearer ${getCookie('login')}`,
+			},
+			method: 'PUT',
+		},
+	)
+		.then((res) => res.json())
+		.then((data) => {
+			return data;
+		});
 }
 
 export async function putOneProjectData(id, data) {
@@ -72,6 +92,7 @@ export async function putOneProjectData(id, data) {
 		body: jsonData,
 		headers: {
 			'Content-Type': 'application/json',
+			Authorization: `Bearer ${getCookie('login')}`,
 		},
 	})
 		.then((res) => res.json())
@@ -82,6 +103,9 @@ export async function putOneProjectData(id, data) {
 
 export async function deleteOneProjectData(id) {
 	return fetch(`https://api-orca.beamworks.co.kr/api/projects/${id}`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'DELETE',
 	})
 		.then((res) => res.json())
@@ -210,10 +234,14 @@ export const testAPI = async () => {
 		body: testJson,
 		headers: {
 			'Content-Type': 'application/json',
+			Authorization: `Bearer ${getCookie('login')}`,
 		},
 	}).then((res) => res.json().then((data) => console.log('data', data)));
 
 	fetch('https://api-orca.beamworks.co.kr/api/events', {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'GET',
 	}).then((res) => res.json().then((data) => console.log('data', data)));
 };

@@ -4,6 +4,8 @@ import { Newsletters } from '@typedef/types';
 import { getNewsletters, deleteNewsletter } from 'src/api/NewsletterAPI';
 import * as XLSX from 'xlsx';
 import { setMaxListeners } from 'events';
+import { useNavigate } from 'react-router-dom';
+import { getCookie } from 'src/cookies/cookie';
 type Props = {};
 
 const NewsletterContainer = (props: Props) => {
@@ -58,6 +60,15 @@ const NewsletterContainer = (props: Props) => {
 		},
 		[newsletterList],
 	);
+	const navigate = useNavigate();
+	useEffect(() => {
+		let check = getCookie('login');
+		console.log(typeof check, 'sfsdfsffasgagf');
+		if (typeof check == 'undefined') {
+			//alert('로그인이 필요한 화면입니다');
+			navigate('/');
+		}
+	}, []);
 	useEffect(() => {
 		getNewsletters().then((data) => {
 			console.log(data.data); // 나옴

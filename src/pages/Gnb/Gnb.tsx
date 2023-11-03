@@ -1,6 +1,8 @@
 import React from 'react';
 import './styles/gnb.styles.css';
 import { GNBTableTypes } from '@typedef/types';
+import { removeCookie } from 'src/cookies/cookie';
+import { useNavigate } from 'react-router-dom';
 type Props = {
 	tabTable: GNBTableTypes[];
 	onTabClicked: (path: string) => void;
@@ -8,6 +10,7 @@ type Props = {
 };
 
 const Gnb = ({ tabTable, onTabClicked, location }: Props) => {
+	const navigate = useNavigate();
 	return (
 		<div className='gnb'>
 			<div className='gnb-tabs'>
@@ -32,6 +35,14 @@ const Gnb = ({ tabTable, onTabClicked, location }: Props) => {
 						</div>
 					);
 				})}
+				<button
+					onClick={() => {
+						removeCookie('login');
+						navigate('/');
+					}}
+				>
+					로그아웃
+				</button>
 			</div>
 		</div>
 	);

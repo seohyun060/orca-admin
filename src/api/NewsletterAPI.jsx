@@ -1,5 +1,10 @@
+import { getCookie } from 'src/cookies/cookie';
+
 export async function getNewsletters() {
 	return fetch('https://api-orca.beamworks.co.kr/api/newsletters', {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -13,6 +18,9 @@ export async function getNewsletters() {
 
 export async function deleteNewsletter(id) {
 	return fetch(`https://api-orca.beamworks.co.kr/api/newsletters/${id}`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'DELETE',
 	})
 		.then((res) => res.json())

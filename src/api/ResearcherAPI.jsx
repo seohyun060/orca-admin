@@ -1,5 +1,10 @@
+import { getCookie } from 'src/cookies/cookie';
+
 export async function getResearchers() {
 	return fetch('https://api-orca.beamworks.co.kr/api/researchers', {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -11,6 +16,9 @@ export async function getResearchers() {
 export async function deleteResearcher(id) {
 	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/${id}`, {
 		method: 'DELETE',
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 	})
 		.then((res) => res.json())
 
@@ -41,6 +49,9 @@ export async function putResearchers(id, researcher, image) {
 	console.log(data);
 
 	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/${id}`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'PUT',
 
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
@@ -52,6 +63,9 @@ export async function putResearchers(id, researcher, image) {
 
 export async function getResearcherDetail(id) {
 	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/${id}`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -83,6 +97,9 @@ export async function postResearchers(researcher, image) {
 	}
 
 	return fetch(`https://api-orca.beamworks.co.kr/api/researchers/`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'POST',
 
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
@@ -95,6 +112,9 @@ export async function storeResearcher(id, isStored) {
 	return fetch(
 		`https://api-orca.beamworks.co.kr/api/researchers/${id}?store=${isStored}`,
 		{
+			headers: {
+				Authorization: `Bearer ${getCookie('login')}`,
+			},
 			method: 'PUT',
 		},
 	)
