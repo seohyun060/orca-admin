@@ -23,13 +23,12 @@ const PublicationForm = (props) => {
   const [inputConference, setInputConference] = useState(conference);
   const [inputVolume, setInputVolume] = useState(volume);
   const [inputLink, setInputLink] = useState(link);
-  const [isEdit, setIsEdit] = useState(false);
 
   const syncParentData = () => {
     let modifyData = [...inputData];
     modifyData.map((data) => {
       if (data.id === id) {
-        data.title = inputTitle
+        data.title = inputTitle;
         data.author = inputAuthor;
         data.pubYear = inputPubYear;
         data.journal = inputJournal;
@@ -39,10 +38,6 @@ const PublicationForm = (props) => {
       }
     });
     changeInputData(modifyData);
-  };
-
-  const onClickEditButton = () => {
-    setIsEdit(!isEdit);
   };
 
   useEffect(() => {
@@ -74,6 +69,7 @@ const PublicationForm = (props) => {
           <img src={images.link} />
           <input
             value={inputLink}
+            maxLength={1000}
             onChange={(e) => {
               setInputLink(e.target.value);
             }}
@@ -94,9 +90,9 @@ const PublicationForm = (props) => {
           <div className="stroke"></div>
           <input
             className="body"
+            maxLength={1000}
             onChange={(e) => setInputTitle(e.target.value)}
             value={inputTitle}
-            disabled={!isEdit}
           />
         </div>
         <div className="info-author">
@@ -104,15 +100,9 @@ const PublicationForm = (props) => {
           <div className="stroke"></div>
           <input
             className="body"
+            maxLength={1000}
             onChange={(e) => setInputAuthor(e.target.value)}
             value={inputAuthor}
-            disabled={!isEdit}
-          />
-          <img
-            src={isEdit ? images.pen_w : images.pen_b}
-            onClick={() => {
-              onClickEditButton();
-            }}
           />
         </div>
         <div className="info-yjc">
@@ -121,6 +111,7 @@ const PublicationForm = (props) => {
             <div className="stroke"></div>
             <input
               className="body"
+              maxLength={4}
               onChange={(e) => {
                 const inputValue = e.target.value;
                 // 숫자 형태의 문자열만 허용하는 정규식
@@ -132,7 +123,6 @@ const PublicationForm = (props) => {
                 }
               }}
               value={inputPubYear}
-              disabled={!isEdit}
             />
           </div>
           <div className="j">
@@ -140,9 +130,9 @@ const PublicationForm = (props) => {
             <div className="stroke"></div>
             <input
               className="body"
+              maxLength={1000}
               onChange={(e) => setInputJournal(e.target.value)}
               value={inputJournal}
-              disabled={!isEdit}
             />
           </div>
           <div className="c">
@@ -150,9 +140,9 @@ const PublicationForm = (props) => {
             <div className="stroke"></div>
             <input
               className="body"
+              maxLength={1000}
               onChange={(e) => setInputConference(e.target.value)}
               value={inputConference}
-              disabled={!isEdit}
             />
           </div>
         </div>
@@ -163,7 +153,6 @@ const PublicationForm = (props) => {
             className="body"
             onChange={(e) => setInputVolume(e.target.value)}
             value={inputVolume}
-            disabled={!isEdit}
           />
         </div>
       </div>

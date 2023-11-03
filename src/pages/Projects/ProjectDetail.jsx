@@ -97,7 +97,6 @@ const ProjectDetail = () => {
   const [projectPublications, setProjectPublications] = useState();
 
   const onPiButtonClick = (id) => {
-    console.log(projectPis);
     const lastIndex = projectPis[projectPis.length - 1].id;
     if (id === lastIndex) {
       setProjectPis([
@@ -112,7 +111,6 @@ const ProjectDetail = () => {
   };
 
   const onCollaboratorsButtonClick = (id) => {
-    console.log(projectCollaborators);
     const lastIndex = projectCollaborators[projectCollaborators.length - 1].id;
     if (id === lastIndex) {
       setProjectCollaborators([
@@ -135,7 +133,7 @@ const ProjectDetail = () => {
           id: lastIndex + 1,
           title: "",
           author: "",
-          pubYear: 2023,
+          pubYear: "",
           journal: "",
           conference: "",
           volume: "",
@@ -193,6 +191,9 @@ const ProjectDetail = () => {
       ];
     } else {
       pis.map((data, idx) => {
+        if (data === null) {
+          return;
+        }
         const pi = {
           id: idx,
           name: data.name,
@@ -218,6 +219,9 @@ const ProjectDetail = () => {
       ];
     } else {
       collaborators.map((data, idx) => {
+        if (data === null) {
+          return;
+        }
         const collaborator = {
           id: idx,
           name: data.name,
@@ -238,7 +242,7 @@ const ProjectDetail = () => {
           id: 0,
           title: "",
           author: "",
-          pubYear: 2023,
+          pubYear: "",
           journal: "",
           conference: "",
           volume: "",
@@ -247,6 +251,9 @@ const ProjectDetail = () => {
       ];
     } else {
       publications.map((data, idx) => {
+        if (data === null) {
+          return;
+        }
         const publication = {
           id: idx,
           title: data.title,
@@ -322,6 +329,11 @@ const ProjectDetail = () => {
     }
     e.preventDefault();
 
+    if (projectStartDate > projectCompleteDate) {
+      alert("프로젝트 종료날짜는 이벤트 시작날짜 이후가 되어야 합니다!");
+      return;
+    }
+
     const formData = new FormData(document.getElementById("projectForm"));
     formData.append("projectID", "1.23456");
     formData.append("status", statusInPost[isStatusChecked.indexOf(true)]);
@@ -333,10 +345,10 @@ const ProjectDetail = () => {
       VolunteersInPost[isVolunteersChecked.indexOf(true)]
     );
 
-    let entries = formData.entries();
-    for (const pair of entries) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+    // let entries = formData.entries();
+    // for (const pair of entries) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
 
     const jsonObject = {};
 
@@ -351,22 +363,29 @@ const ProjectDetail = () => {
 
     let pis = [];
     projectPis.map((pi) => {
-      pis.push(pi.link);
+      if (pi.link !== "") {
+        pis.push(pi.link);
+      }
     });
     jsonObject["pis"] = pis;
 
     let collaborators = [];
     projectCollaborators.map((collaborator) => {
-      collaborators.push(collaborator.link);
+      if (collaborator.link !== "") {
+        collaborators.push(collaborator.link);
+      }
     });
     jsonObject["collaborators"] = collaborators;
 
     let publications = [];
     projectPublications.map((publication) => {
-      publications.push(publication);
+      if (publication.title !== "" && publication.link !== "") {
+        publications.push(publication);
+      }
     });
-    console.log(publications);
     jsonObject["publications"] = publications;
+
+    console.log(jsonObject);
 
     if (id === 0) {
       await postNewProjectData(jsonObject).then((data) => {
@@ -510,6 +529,7 @@ const ProjectDetail = () => {
                   placeholder="Number"
                   name="enrollment"
                   value={projectEnrollment}
+                  maxLength={255}
                   onChange={(e) => setProjectEnrollment(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
@@ -529,7 +549,9 @@ const ProjectDetail = () => {
                     type="button"
                     onClick={() => setIsStudyTypeOpen(!isStudyTypeOpen)}
                   >
-                    {projectStudyType ? studyTypes[projectStudyType] : "Study Type"}
+                    {projectStudyType
+                      ? studyTypes[projectStudyType]
+                      : "Study Type"}
                   </button>
                   {isStudyTypeOpen && (
                     <ul>
@@ -555,6 +577,7 @@ const ProjectDetail = () => {
                   placeholder="Text"
                   name="projectId"
                   value={projectId}
+                  maxLength={255}
                   onChange={(e) => setProjectId(e.target.value)}
                   onKeyDown={handleKeyDown}
                   required
@@ -566,6 +589,7 @@ const ProjectDetail = () => {
                   placeholder="Text"
                   name="otherStudyId"
                   value={projectOtherStudyId}
+                  maxLength={255}
                   onChange={(e) => setProjectOtherStudyId(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
@@ -579,7 +603,7 @@ const ProjectDetail = () => {
                 name="overview"
                 value={projectOverview}
                 onChange={(e) => setProjectOverview(e.target.value)}
-                maxLength={1000}
+                required
               />
             </div>
             <div className="OfficialTitle">
@@ -589,6 +613,7 @@ const ProjectDetail = () => {
                 placeholder="Text"
                 name="officialTitle"
                 value={projectOfficialTitle}
+                maxLength={1000}
                 onChange={(e) => setProjectOfficialTitle(e.target.value)}
               />
             </div>
@@ -598,6 +623,7 @@ const ProjectDetail = () => {
                 className="smallInput element"
                 name="conditions"
                 value={projectConditions}
+                maxLength={255}
                 onChange={(e) => setProjectConditions(e.target.value)}
                 onKeyDown={handleKeyDown}
               />
@@ -613,6 +639,7 @@ const ProjectDetail = () => {
                   placeholder="Text"
                   name="name"
                   value={projectName}
+                  maxLength={255}
                   onChange={(e) => setProjectName(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
@@ -622,6 +649,7 @@ const ProjectDetail = () => {
                   placeholder="00"
                   name="phoneNumber"
                   value={projectPhoneNumber}
+                  maxLength={255}
                   onChange={(e) => setProjectPhoneNumber(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
@@ -631,6 +659,7 @@ const ProjectDetail = () => {
                   placeholder="Text"
                   name="email"
                   value={projectEmail}
+                  maxLength={255}
                   onChange={(e) => setProjectEmail(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
@@ -642,6 +671,7 @@ const ProjectDetail = () => {
                   placeholder="00"
                   name="location"
                   value={projectLocation}
+                  maxLength={255}
                   onChange={(e) => setProjectLocation(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
@@ -677,6 +707,7 @@ const ProjectDetail = () => {
                   placeholder="ㅇ"
                   name="ageEligible"
                   value={projectAgeEligible}
+                  maxLength={255}
                   onChange={(e) => setProjectAgeEligible(e.target.value)}
                   onKeyDown={handleKeyDown}
                 ></input>
@@ -734,6 +765,7 @@ const ProjectDetail = () => {
                   className="smallInput ObservationalModel"
                   placeholder="Text"
                   name="observationalModel"
+                  maxLength={255}
                   value={projectObservationalModelMethod}
                   onChange={(e) =>
                     setProjectObservationalModelMethod(e.target.value)

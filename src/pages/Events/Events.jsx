@@ -34,8 +34,8 @@ const Events = () => {
   const [eventEndDate, setEventEndDate] = useState(today);
   const [isAlldayChecked, setIsAlldayChecked] = useState(true);
   const [eventVenue, setEventVenue] = useState();
-  const [eventOpeningHoursHour, setEventOpeningHoursHour] = useState();
-  const [eventOpeningHoursMinute, setEventOpeningHoursMinute] = useState();
+  const [eventOpeningHoursHour, setEventOpeningHoursHour] = useState(0);
+  const [eventOpeningHoursMinute, setEventOpeningHoursMinute] = useState(0);
   const [relatedWebsite, setRelatedWebsite] = useState();
 
   const [eventPurpose, setEventPurpose] = useState();
@@ -65,6 +65,7 @@ const Events = () => {
 
   const onAlldayClick = () => {
     setIsAlldayChecked(!isAlldayChecked);
+    setEventEndDate(eventStartDate);
   };
 
   const uploadGalleryHandler = (id, event) => {
@@ -117,6 +118,23 @@ const Events = () => {
     }
     e.preventDefault();
 
+    if (eventStartDate > eventEndDate) {
+      alert("이벤트 종료날짜는 이벤트 시작날짜 이후가 되어야 합니다!");
+      return;
+    }
+
+    if (
+      !(
+        eventOpeningHoursHour >= 0 &&
+        eventOpeningHoursHour < 24 &&
+        eventOpeningHoursMinute >= 0 &&
+        eventOpeningHoursMinute < 60
+      )
+    ) {
+      alert("Opening Hours의 시간이 잘못되었습니다!");
+      return;
+    }
+
     const formData = new FormData(document.getElementById("eventForm"));
 
     formData.append("isEnded", isPast);
@@ -126,16 +144,12 @@ const Events = () => {
     }
 
     formData.append("isAllDay", isAlldayChecked);
-    const openingHour =
-      eventOpeningHoursHour >= 0 &&
-      eventOpeningHoursHour <= 24 &&
-      eventOpeningHoursMinute >= 0 &&
-      eventOpeningHoursMinute <= 60
-        ? moment()
-            .add(eventOpeningHoursHour, "h")
-            .add(eventOpeningHoursMinute, "m")
-            .format("HH:mm")
-        : "00:00";
+    const openingHour = moment()
+      .startOf("day")
+      .add(eventOpeningHoursHour, "h")
+      .add(eventOpeningHoursMinute, "m")
+      .format("HH:mm");
+    console.log(openingHour);
     formData.append("openingHour", openingHour);
 
     console.log(eventDetailImg);
@@ -169,8 +183,8 @@ const Events = () => {
           alert("저장 실패!");
         } else {
           alert("저장 성공!");
+          window.location.reload();
         }
-        window.location.reload();
       });
     } else if (isFormOpen > 0) {
       putOneEventData(isFormOpen, formData).then((data) => {
@@ -179,8 +193,8 @@ const Events = () => {
           alert("수정 실패!");
         } else {
           alert("수정 성공!");
+          window.location.reload();
         }
-        window.location.reload();
       });
     }
   };
@@ -222,7 +236,13 @@ const Events = () => {
         console.log(data);
         const eventData = data.data;
 
-        setIsPast(eventData.isEnded);
+        const today = moment(new Date()).startOf("day");
+        if (today.isSameOrBefore(eventData.endDate)) {
+          setIsPast(false);
+        } else {
+          setIsPast(true);
+        }
+
         if (eventData.thumbnail) {
           loadImage(eventData.thumbnail, "Thumbnail_Image.jpg").then((data) =>
             setEventThumbnail(data)
@@ -286,8 +306,8 @@ const Events = () => {
       setEventEndDate(today);
       setIsAlldayChecked(true);
       setEventVenue();
-      setEventOpeningHoursHour();
-      setEventOpeningHoursMinute();
+      setEventOpeningHoursHour(0);
+      setEventOpeningHoursMinute(0);
       setRelatedWebsite();
       setEventPurpose();
       setEventExplanation();
@@ -339,18 +359,10 @@ const Events = () => {
           <div className="EventInputLayout">
             <div className="EventInputLayoutUpperBar">
               <div className="EventSelectButtonSet">
-                <button
-                  type="button"
-                  className={isPast.toString()}
-                  onClick={() => setIsPast(true)}
-                >
+                <button type="button" className={isPast.toString()}>
                   종료된 이벤트
                 </button>
-                <button
-                  type="button"
-                  className={(!isPast).toString()}
-                  onClick={() => setIsPast(false)}
-                >
+                <button type="button" className={(!isPast).toString()}>
                   예정 이벤트
                 </button>
               </div>
@@ -406,55 +418,61 @@ const Events = () => {
             <div className="EventPeriodInput">
               <div className="ArticleTitle">이벤트 날짜</div>
               <div className="EventPeriodSetting">
-                <div className="EventStartDate">
-                  <div
-                    className="clickLayout"
-                    onClick={() => setIsStartDateClick(!isStartDateClick)}
-                  >
-                    <img src={images.smallcalendar} />
-                    시작날짜:
-                    <input
-                      name="startDate"
-                      value={eventStartDate}
-                      onKeyDown={handleKeyDown}
-                    />
+                <div style={{ display: "flex" }}>
+                  <div className="EventStartDate">
+                    <div
+                      className="clickLayout"
+                      onClick={() => setIsStartDateClick(!isStartDateClick)}
+                    >
+                      <img src={images.smallcalendar} />
+                      시작날짜:
+                      <input
+                        name="startDate"
+                        value={eventStartDate}
+                        onKeyDown={handleKeyDown}
+                      />
+                    </div>
+                    {isStartDateClick ? (
+                      <SetEventDateCalendar
+                        setIsClose={setIsStartDateClick}
+                        eventDate={eventStartDate}
+                        setEventDate={setEventStartDate}
+                      />
+                    ) : (
+                      <></>
+                    )}
                   </div>
-                  {isStartDateClick ? (
-                    <SetEventDateCalendar
-                      setIsClose={setIsStartDateClick}
-                      eventDate={eventStartDate}
-                      setEventDate={setEventStartDate}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-                <div className="EventEndDate">
-                  <div
-                    className="clickLayout"
-                    onClick={() => setIsEndDateClick(!isEndDateClick)}
-                  >
-                    <img src={images.smallcalendar} />
-                    종료날짜:
-                    <input
-                      name="endDate"
-                      value={isAlldayChecked ? eventStartDate : eventEndDate}
-                      onKeyDown={handleKeyDown}
-                    />
-                  </div>
-                  {isEndDateClick ? (
-                    <SetEventDateCalendar
-                      setIsClose={isAlldayChecked ? true : setIsEndDateClick}
-                      eventDate={
-                        isAlldayChecked ? eventStartDate : eventEndDate
+
+                  <div className="EventEndDate">
+                    <div
+                      className={
+                        !isAlldayChecked ? "clickLayout" : "clickLayout enable"
                       }
-                      setEventDate={isAlldayChecked ? null : setEventEndDate}
-                      preventDate={eventStartDate}
-                    />
-                  ) : (
-                    <></>
-                  )}
+                      onClick={() => setIsEndDateClick(!isEndDateClick)}
+                    >
+                      <img src={images.smallcalendar} />
+                      종료날짜:
+                      <input
+                        name="endDate"
+                        value={isAlldayChecked ? eventStartDate : eventEndDate}
+                        onKeyDown={handleKeyDown}
+                      />
+                    </div>
+                    {!isAlldayChecked && isEndDateClick ? (
+                      <SetEventDateCalendar
+                        setIsClose={isAlldayChecked ? true : setIsEndDateClick}
+                        eventDate={
+                          isAlldayChecked ? eventStartDate : eventEndDate
+                        }
+                        setEventDate={isAlldayChecked ? null : setEventEndDate}
+                        preventDate={eventStartDate}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
+
                 <div className="EventDateAllday">
                   {!isAlldayChecked ? (
                     <input
@@ -479,6 +497,7 @@ const Events = () => {
                   <input
                     name="venue"
                     value={eventVenue}
+                    maxLength={255}
                     onChange={(e) => setEventVenue(e.target.value)}
                     onKeyDown={handleKeyDown}
                   />
@@ -489,15 +508,21 @@ const Events = () => {
                     <div className="title">Opening Hours</div>
                     <div className="EventPeriodDetailTime">
                       <input
+                        type="number"
                         maxLength={2}
                         placeholder="Hour"
                         value={eventOpeningHoursHour}
-                        onChange={(e) =>
-                          setEventOpeningHoursHour(e.target.value)
-                        }
+                        onChange={(e) => {
+                          setEventOpeningHoursHour(e.target.value);
+                          console.log(
+                            eventOpeningHoursHour,
+                            eventOpeningHoursMinute
+                          );
+                        }}
                         onKeyDown={handleKeyDown}
                       />
                       <input
+                        type="number"
                         maxLength={2}
                         placeholder="Minute"
                         value={eventOpeningHoursMinute}
@@ -519,6 +544,7 @@ const Events = () => {
                     <input
                       name="relatedWebsite"
                       value={relatedWebsite}
+                      maxLength={255}
                       onChange={(e) => setRelatedWebsite(e.target.value)}
                       onKeyDown={handleKeyDown}
                     />
@@ -533,6 +559,7 @@ const Events = () => {
                 className="ArticleInputArea"
                 placeholder="Text"
                 value={eventPurpose}
+                maxLength={5000}
                 onChange={(e) => setEventPurpose(e.target.value)}
               />
             </div>
@@ -543,6 +570,7 @@ const Events = () => {
                 className="ArticleInputArea"
                 placeholder="Text"
                 value={eventExplanation}
+                maxLength={5000}
                 onChange={(e) => setEventExplanation(e.target.value)}
               />
               {/* 이미지 목록 첨부 필요 */}
@@ -584,16 +612,16 @@ const Events = () => {
                   </div>
                 ))}
             </div>
-            {eventLocation && (
-              <MapContainer
-                latitude={eventLatitude}
-                setLatitude={setEventLatitude}
-                longitude={eventLongitude}
-                setLongitude={setEventLongitude}
-                location={eventLocation}
-                setLocation={setEventLocation}
-              />
-            )}
+
+            <MapContainer
+              latitude={eventLatitude}
+              setLatitude={setEventLatitude}
+              longitude={eventLongitude}
+              setLongitude={setEventLongitude}
+              location={eventLocation}
+              setLocation={setEventLocation}
+            />
+
             {isPast ? (
               <div className="EventGalleryInput">
                 <div className="title">Gallery</div>

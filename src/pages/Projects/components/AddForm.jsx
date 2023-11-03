@@ -48,6 +48,7 @@ const AddForm = (props) => {
             className="smallInput name"
             placeholder="Text"
             value={inputName}
+            maxLength={255}
             onChange={(e) => setInputName(e.target.value)}
           />
         </div>
@@ -57,6 +58,7 @@ const AddForm = (props) => {
             className="smallInput affiliation"
             placeholder="00"
             value={inputAffiliation}
+            maxLength={255}
             onChange={(e) => setInputAffiliation(e.target.value)}
           />
         </div>
@@ -69,6 +71,7 @@ const AddForm = (props) => {
             className="smallInput link"
             placeholder="Text"
             value={inputLink}
+            maxLength={255}
             onChange={(e) => setInputLink(e.target.value)}
           />
         </div>

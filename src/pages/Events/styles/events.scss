@@ -209,6 +209,7 @@
 
 .EventPeriodSetting {
   display: flex;
+  justify-content: space-between;
   width: 1496px;
   height: 80px;
   flex-shrink: 0;
@@ -245,6 +246,16 @@
       line-height: 37px;
       caret-color: transparent;
     }
+
+    &.enable {
+      color: white;
+      img {
+        visibility: hidden;
+      }
+      input {
+        color: white;
+      }
+    }
   }
 }
 
@@ -257,7 +268,6 @@
   font-style: normal;
   font-weight: 300;
   line-height: 28px;
-  margin-left: 620px;
   input,
   img {
     width: 31px;
@@ -560,14 +570,11 @@
 
   .EventStartDate,
   .EventEndDate {
-    width: 30%;
+    width: 350px;
+    margin-right: 0px;
     .clickLayout {
       width: 100%;
     }
-  }
-
-  .EventDateAllday {
-    margin-left: 16px;
   }
 
   .EventPeriodDetail {
