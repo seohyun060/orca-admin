@@ -23,16 +23,6 @@ const Events = () => {
 
 	const [isFormOpen, setIsFormOpen] = useState(false);
 	const [isPast, setIsPast] = useState(true);
-	const navigate = useNavigate();
-	useEffect(() => {
-		let check = getCookie('login');
-		console.log(typeof check, 'sfsdfsffasgagf');
-		if (typeof check == 'undefined') {
-			//alert('로그인이 필요한 화면입니다');
-			navigate('/');
-		}
-	}, []);
-
 	// Form Data
 	const [eventsData, setEventsData] = useState();
 
