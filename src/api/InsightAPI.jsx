@@ -1,5 +1,10 @@
+import { getCookie } from 'src/cookies/cookie';
+
 export async function getInsights() {
 	return fetch('https://api-orca.beamworks.co.kr/api/insights', {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -10,6 +15,9 @@ export async function getInsights() {
 }
 export async function getMainInsights() {
 	return fetch('https://api-orca.beamworks.co.kr/api/insights?select=true', {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'GET',
 	})
 		.then((res) => res.json())
@@ -23,6 +31,9 @@ export async function putMainInsights(urls) {
 	console.log(urls);
 	data.append('urls', urls);
 	return fetch(`https://api-orca.beamworks.co.kr/api/insights`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'PUT',
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
 	})
@@ -32,6 +43,9 @@ export async function putMainInsights(urls) {
 export async function getInsightDetail(id) {
 	return fetch(`https://api-orca.beamworks.co.kr/api/insights/${id}`, {
 		method: 'GET',
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 	})
 		.then((res) => res.json())
 
@@ -44,6 +58,9 @@ export async function storeInsight(id, isStored) {
 	return fetch(
 		`https://api-orca.beamworks.co.kr/api/insights/${id}?store=${isStored}`,
 		{
+			headers: {
+				Authorization: `Bearer ${getCookie('login')}`,
+			},
 			method: 'PUT',
 		},
 	)
@@ -67,6 +84,9 @@ export async function putInsights(id, insight) {
 	console.log(data);
 
 	return fetch(`https://api-orca.beamworks.co.kr/api/insights/${id}`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'PUT',
 
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
@@ -87,6 +107,9 @@ export async function postInsights(insight) {
 	console.log(data);
 
 	return fetch(`https://api-orca.beamworks.co.kr/api/insights/`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'POST',
 
 		body: data, // 데이터를 JSON 문자열로 변환하여 본문에 추가
@@ -98,6 +121,9 @@ export async function postInsights(insight) {
 
 export async function deleteInsight(id) {
 	return fetch(`https://api-orca.beamworks.co.kr/api/insights/${id}`, {
+		headers: {
+			Authorization: `Bearer ${getCookie('login')}`,
+		},
 		method: 'DELETE',
 	})
 		.then((res) => res.json())

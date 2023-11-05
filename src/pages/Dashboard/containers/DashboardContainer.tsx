@@ -3,18 +3,22 @@ import Dashboard from '../Dashboard';
 import * as XLSX from 'xlsx';
 import { StatisticsList } from '@typedef/types';
 import { getGraph, getStatistic, getTable } from 'src/api/DashboardAPI';
-
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getAdmin } from 'src/api/AdminAPI';
+import { getCookie } from 'src/cookies/cookie';
 type Props = {};
 
 const DashboardContainer = (props: Props) => {
 	const [statisticsList, setStatisticsList] = useState<StatisticsList>();
 	const [graphList, setGraphList] = useState<any[]>([]);
 	const [range, setRange] = useState('month');
+	const location = useLocation();
 	const [desktopData, setDesktopData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
 	const [mobileData, setMobileData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
 	const [chartWidth, setChartWidth] = useState(1050);
 	const date = Date();
-	console.log(date);
+	const navigate = useNavigate();
+
 	const downloadAtExcel = useCallback(() => {
 		// CSV 데이터 생성
 		const graphLabel: string[] = [''];
@@ -201,21 +205,34 @@ const DashboardContainer = (props: Props) => {
 		} else {
 			return 650;
 		}
-	}, [window.innerWidth]);
+	}, [window.innerWidth, location]);
 
 	const handleResize = useCallback(() => {
 		setChartWidth(calculateChartWidth());
-	}, [chartWidth]);
+		console.log('check');
+	}, [chartWidth, location]);
 
 	useEffect(() => {
 		window.addEventListener('resize', handleResize);
+		console.log(chartWidth);
+
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
-	}, [handleResize]);
+	}, [handleResize, window.innerWidth, location]);
 	useEffect(() => {
-		onTableReload();
+		// getAdmin().then((data) => {
+		// 	console.log(data);
+		// });
+		let check = getCookie('login');
+		console.log(typeof check, 'sfsdfsffasgagf');
+		if (typeof check == 'undefined') {
+			alert('로그인이 필요한 화면입니다');
+			navigate('/');
+		}
 
+		setChartWidth(calculateChartWidth());
+		onTableReload();
 		onStatisticReload();
 		return () => {};
 	}, []);
@@ -223,7 +240,7 @@ const DashboardContainer = (props: Props) => {
 		onGraphReload();
 		return () => {};
 	}, [range]);
-
+	console.log(chartWidth);
 	return (
 		<Dashboard
 			statisticsList={statisticsList}

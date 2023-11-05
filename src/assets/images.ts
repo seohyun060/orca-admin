@@ -37,6 +37,7 @@ const images = {
 	smallcalendar: '/assets/images/smallcalendar.svg',
 	pen_b: '/assets/images/pen-b.svg',
 	pen_w: '/assets/images/pen-w.svg',
+	logo: '/assets/images/logo.svg',
 };
 
 export default images;

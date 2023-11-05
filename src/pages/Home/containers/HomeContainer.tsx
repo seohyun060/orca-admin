@@ -9,6 +9,8 @@ import {
 } from 'src/api/BannerAPI';
 import Home from '../Home';
 import { EChange } from '@typedef/types';
+import { useNavigate } from 'react-router-dom';
+import { getCookie } from 'src/cookies/cookie';
 
 type Props = {};
 
@@ -81,7 +83,15 @@ const HomeContainer = (props: Props) => {
 		await putMainInsights(selectedInsights);
 		alert('적용되었습니다');
 	}, [selectedInsights]);
-
+	const navigate = useNavigate();
+	useEffect(() => {
+		let check = getCookie('login');
+		console.log(typeof check, 'sfsdfsffasgagf');
+		if (typeof check == 'undefined') {
+			//alert('로그인이 필요한 화면입니다');
+			navigate('/');
+		}
+	}, []);
 	useEffect(() => {
 		getMainProjects().then((data) => {
 			const updatedList: string[] = [];

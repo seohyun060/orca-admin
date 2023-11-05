@@ -4,6 +4,8 @@ import { Newsletters } from '@typedef/types';
 import { getOrcaMembers, deleteOrcaMember } from 'src/api/OrcaMemberAPI';
 
 import * as XLSX from 'xlsx';
+import { useNavigate } from 'react-router-dom';
+import { getCookie } from 'src/cookies/cookie';
 
 type Props = {};
 
@@ -59,6 +61,15 @@ const OrcagroupContainer = (props: Props) => {
 		},
 		[orcagroupList],
 	);
+	const navigate = useNavigate();
+	useEffect(() => {
+		let check = getCookie('login');
+		console.log(typeof check, 'sfsdfsffasgagf');
+		if (typeof check == 'undefined') {
+			//alert('로그인이 필요한 화면입니다');
+			navigate('/');
+		}
+	}, []);
 	useEffect(() => {
 		getOrcaMembers().then((data) => {
 			const updatedList = data.data;

@@ -7,6 +7,7 @@ import {
 	postInsights,
 	putInsights,
 } from 'src/api/InsightAPI';
+import { getCookie } from 'src/cookies/cookie';
 type Props = {};
 
 const InsightInfoContainer = ({}: Props) => {
@@ -127,6 +128,14 @@ const InsightInfoContainer = ({}: Props) => {
 		},
 		[selectedType, pdfListEdit, titleEdit],
 	);
+	useEffect(() => {
+		let check = getCookie('login');
+		console.log(typeof check, 'sfsdfsffasgagf');
+		if (typeof check == 'undefined') {
+			//alert('로그인이 필요한 화면입니다');
+			navigate('/');
+		}
+	}, []);
 	useEffect(() => {
 		if (params.id != '0') {
 			getInsightDetail(params.id).then((data) => {

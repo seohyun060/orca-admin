@@ -7,6 +7,7 @@ type Props = { location: string };
 
 const GnbContainer = ({ location }: Props) => {
 	const navigate = useNavigate();
+	console.log(location);
 	const tabTable: GNBTableTypes[] = [
 		{
 			label: 'Dashboard',
@@ -15,7 +16,7 @@ const GnbContainer = ({ location }: Props) => {
 		},
 		{
 			label: 'Home',
-			path: '/',
+			path: '/home',
 			icon: images.home,
 		},
 		{
@@ -59,8 +60,10 @@ const GnbContainer = ({ location }: Props) => {
 		},
 		[selectedTab, location],
 	);
-	return (
+	return location !== '/' ? (
 		<Gnb tabTable={tabTable} onTabClicked={onTabClicked} location={location} />
+	) : (
+		<></>
 	);
 };
 

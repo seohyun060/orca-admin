@@ -13,6 +13,7 @@ import {
 	storeResearcher,
 } from 'src/api/ResearcherAPI';
 import images from 'src/assets/images';
+import { getCookie } from 'src/cookies/cookie';
 type Props = {};
 const ResearcherContainer = ({}: Props) => {
 	const navigate = useNavigate();
@@ -116,6 +117,14 @@ const ResearcherContainer = ({}: Props) => {
 		return () => {};
 	}, [researcherList, search]);
 
+	useEffect(() => {
+		let check = getCookie('login');
+		console.log(typeof check, 'sfsdfsffasgagf');
+		if (typeof check == 'undefined') {
+			//alert('로그인이 필요한 화면입니다');
+			navigate('/');
+		}
+	}, []);
 	return (
 		<Researcher
 			stored={stored}
