@@ -227,7 +227,6 @@ const DashboardContainer = (props: Props) => {
 		let check = getCookie('login');
 		console.log(typeof check, 'sfsdfsffasgagf');
 		if (typeof check == 'undefined') {
-			alert('로그인이 필요한 화면입니다');
 			navigate('/');
 		}
 

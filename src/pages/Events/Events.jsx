@@ -3,7 +3,8 @@ import moment from 'moment';
 
 import EventsDashboard from './components/EventsDashboard';
 import MapContainer from './components/MapContainer';
-
+import { getCookie } from 'src/cookies/cookie';
+import { useNavigate } from 'react-router-dom';
 import SetEventDateCalendar from './components/SetEventDateCalendar';
 
 import './styles/events.css';
@@ -334,7 +335,14 @@ const Events = () => {
 			e.preventDefault(); // Enter 키 이벤트를 무시하도록 기본 동작을 막음
 		}
 	};
-
+	const navigate = useNavigate();
+	useEffect(() => {
+		let check = getCookie('login');
+		console.log(typeof check, 'sfsdfsffasgagf');
+		if (typeof check == 'undefined') {
+			navigate('/');
+		}
+	}, []);
 	useEffect(() => {}, []);
 
 	return (

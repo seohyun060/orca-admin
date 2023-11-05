@@ -36,6 +36,7 @@ const Gnb = ({ tabTable, onTabClicked, location }: Props) => {
 					);
 				})}
 				<button
+					className='logout'
 					onClick={() => {
 						removeCookie('login');
 						navigate('/');
