@@ -4,6 +4,7 @@ import { Insights, ResearcherList, InsightApi } from '@typedef/types';
 import { EChange } from '@typedef/types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getInsights, deleteInsight, storeInsight } from 'src/api/InsightAPI';
+import { getCookie } from 'src/cookies/cookie';
 type Props = {};
 
 const InsightContainer = ({}: Props) => {
@@ -100,7 +101,14 @@ const InsightContainer = ({}: Props) => {
 
 		return () => {};
 	}, []);
-
+	useEffect(() => {
+		let check = getCookie('login');
+		console.log(typeof check, 'sfsdfsffasgagf');
+		if (typeof check == 'undefined') {
+			//alert('로그인이 필요한 화면입니다');
+			navigate('/');
+		}
+	}, []);
 	useEffect(() => {
 		setFilteredList(
 			insightList.filter((insight) => insight.title.indexOf(search) !== -1),
