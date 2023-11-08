@@ -47,7 +47,6 @@ const Project = (props) => {
 
 		const isStored = !projectList[targetIndex].isStored;
 		await putChangeStoredProjectData(id, isStored).then((data) => {
-			console.log(data);
 		});
 		let temp = [...projectList];
 
@@ -56,6 +55,7 @@ const Project = (props) => {
 	};
 
 	const onEditClicked = (id) => {
+		console.log(id)
 		navigate('/project/default', {
 			state: {
 				id: id,
@@ -66,14 +66,12 @@ const Project = (props) => {
 
 	const onTrashClick = async (id) => {
 		await deleteOneProjectData(id).then((data) => {
-			console.log(data);
 		});
 		setProjectList(projectList.filter((data) => data.id != id));
 	};
 
 	const initData = async () => {
 		await getAllProjectData().then((data) => {
-			console.log(data.data);
 			setProjectData(data.data);
 
 			const updatedProjects = [];
@@ -165,7 +163,6 @@ const Project = (props) => {
 						<span>상태</span>
 					</div>
 				</div>
-				{console.log(projectList)}
 				{projectList.map((project, index) =>
 					project.isStored == isStored ? (
 						<div className='list'>

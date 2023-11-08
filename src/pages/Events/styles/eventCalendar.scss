@@ -1,6 +1,3 @@
-// calendar
-
-//eventCalendar
 .EventCalendar {
   .react-calendar {
     width: 100%;
@@ -142,5 +139,17 @@
     border-radius: 50%;
     display: flex;
     margin: 1px;
+  }
+
+  @media (max-width: 1400px) {
+    .react-calendar__decade-view__years__year {
+      padding: 25px 10px 25px 10px;
+      font-size: 22px;
+    }
+
+    .react-calendar__century-view__decades__decade {
+      padding: 15px 10px 15px 10px;
+      font-size: 20px;
+    }
   }
 }

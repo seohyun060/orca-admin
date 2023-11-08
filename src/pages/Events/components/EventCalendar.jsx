@@ -54,7 +54,12 @@ const EventCalendar = (props) => {
         moment(data.endDate).format("YYYY-MM-DD") >=
           moment(date).format("YYYY-MM-DD")
       ) {
-        html.push(<div className="dot" style={{backgroundColor: dotColors[idx%10]}}></div>);
+        html.push(
+          <div
+            className="dot"
+            style={{ backgroundColor: dotColors[idx % 10] }}
+          ></div>
+        );
       }
     });
 
@@ -75,6 +80,7 @@ const EventCalendar = (props) => {
         formatDay={(locale, date) => moment(date).format("D")}
         tileDisabled={tileDisabled}
         tileContent={({ date }) => tileContent(date)}
+        maxDate={new Date("2030-12-31")}
       ></Calendar>
     </div>
   );
