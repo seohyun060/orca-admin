@@ -80,7 +80,7 @@ const LoginContainer = (props: Props) => {
 	useEffect(() => {
 		let check = getCookie('login');
 		if (typeof check != 'undefined') {
-			navigate(-1);
+			navigate('/dashboard');
 		} else {
 			removeCookie('login');
 		}
