@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import moment from "moment";
 
 import "./styles/projects.css";
@@ -17,8 +17,11 @@ import {
 
 const ProjectDetail = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const id = location.state.id;
+  // const location = useLocation();
+  // const id = location.state.id;
+  const params = useParams();
+
+  const id = params.id;
 
   const [projectData, setProjectData] = useState([]);
 
@@ -165,17 +168,6 @@ const ProjectDetail = () => {
     temp[index] = true;
     setIsVolunteersChecked(temp);
     setProjectAcceptedHealthy(Volunteers[index]);
-  };
-
-  const initStatus = () => {
-    if (id === 0) {
-      setIsStatusChecked([true, false, false]);
-    } else {
-      const temp = [...status];
-      const idx = temp.indexOf(location.state.status);
-      temp[idx] = true;
-      setIsStatusChecked(temp);
-    }
   };
 
   const initPi = (pis, links) => {
@@ -413,7 +405,7 @@ const ProjectDetail = () => {
   };
 
   useEffect(() => {
-    initStatus();
+    // initStatus();
     initProject();
 
     // 새 데이터 입력시

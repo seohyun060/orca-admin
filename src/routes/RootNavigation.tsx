@@ -45,7 +45,7 @@ const RootNavigation = () => {
 				/>
 				<Route path='/insight' element={<InsightContainer />} />
 				<Route path='/project' element={<Project />} />
-				<Route path='/project/default' element={<ProjectDetail />} />
+				<Route path='/project/:id' element={<ProjectDetail />} />
 				<Route path='/event' element={<Events />} />
 				<Route path='/insightinfo/:id' element={<InsightInfoContainer />} />
 				<Route path='/newsletter' element={<NewsletterContainer />} />
