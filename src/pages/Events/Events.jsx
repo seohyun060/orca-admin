@@ -220,8 +220,9 @@ const Events = () => {
 			.then((response) => response.blob())
 			.then((imageBlob) => {
 				// Blob을 파일로 생성
+				console.log(imageBlob)
 				imageFile = new File([imageBlob], name, {
-					type: 'image/jepg',
+					type: 'image/jpeg',
 				});
 			})
 			.catch((error) => {
