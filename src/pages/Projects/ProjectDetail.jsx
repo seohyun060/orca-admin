@@ -266,7 +266,6 @@ const ProjectDetail = () => {
 	const initProject = async () => {
 		if (id !== 0) {
 			await getOneProjectData(id).then((data) => {
-				console.log(data);
 
 				const project = data.data;
 				setProjectData(project);
@@ -378,11 +377,8 @@ const ProjectDetail = () => {
 		});
 		jsonObject['publications'] = publications;
 
-		console.log(jsonObject);
-
 		if (id === 0) {
 			await postNewProjectData(jsonObject).then((data) => {
-				console.log(data);
 				if (data.status !== 201) {
 					alert('저장 실패!');
 				} else {
@@ -393,7 +389,6 @@ const ProjectDetail = () => {
 			});
 		} else {
 			await putOneProjectData(id, jsonObject).then((data) => {
-				console.log(data);
 				if (data.status !== 201) {
 					alert('수정 실패!');
 				} else {

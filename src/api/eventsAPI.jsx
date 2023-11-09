@@ -9,7 +9,6 @@ export async function getAllEventData() {
 	})
 		.then((res) => res.json())
 		.then((data) => {
-			console.log(data);
 			return data;
 		});
 }
@@ -64,7 +63,6 @@ export async function deleteOneEventData(id) {
 	})
 		.then((res) => res.json())
 		.then((data) => {
-			console.log(data);
 			return data;
 		});
 }

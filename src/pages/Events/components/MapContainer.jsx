@@ -36,15 +36,14 @@ function MapContainer(props) {
   };
 
   const onPlacesChanged = () => {
-    const places = searchBox.getPlaces();
     // places 배열에 선택된 장소 정보가 포함됩니다.
-    console.log(places);
+    const places = searchBox.getPlaces();
+
     const lat = places[0].geometry.location.lat();
     const lng = places[0].geometry.location.lng();
     setCenter({ lat: lat, lng: lng });
     setLatitude(lat);
     setLongitude(lng);
-    console.log("lat", lat, "lng", lng);
   };
 
   useEffect(() => {
@@ -58,7 +57,6 @@ function MapContainer(props) {
         }
       });
     setCenter({ lat: latitude, lng: longitude });
-    console.log("lat", latitude, "lng", longitude);
   }, [latitude, longitude]);
 
   const handleKeyDown = (e) => {

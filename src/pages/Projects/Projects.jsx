@@ -54,7 +54,6 @@ const Project = (props) => {
   };
 
   const onEditClicked = (id) => {
-    console.log(id);
     navigate(`/project/${id}`);
     window.scrollTo(0, 0);
   };
@@ -83,7 +82,6 @@ const Project = (props) => {
 
   useEffect(() => {
     let check = getCookie("login");
-    console.log(typeof check, "sfsdfsffasgagf");
     if (typeof check == "undefined") {
       //alert('로그인이 필요한 화면입니다');
       navigate("/");

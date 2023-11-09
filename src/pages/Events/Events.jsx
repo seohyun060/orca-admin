@@ -52,7 +52,6 @@ const Events = () => {
 
 	const initEventdata = () => {
 		getAllEventData().then((data) => {
-			console.log(data);
 			setEventsData(data.data);
 		});
 	};
@@ -139,7 +138,7 @@ const Events = () => {
 		const formData = new FormData(document.getElementById('eventForm'));
 
 		formData.append('isEnded', isPast);
-		console.log(eventThumbnail);
+
 		if (eventThumbnail != null) {
 			formData.append('thumbnail', eventThumbnail);
 		}
@@ -150,10 +149,8 @@ const Events = () => {
 			.add(eventOpeningHoursHour, 'h')
 			.add(eventOpeningHoursMinute, 'm')
 			.format('HH:mm');
-		console.log(openingHour);
 		formData.append('openingHour', openingHour);
 
-		console.log(eventDetailImg);
 		eventDetailImg.map((data) => {
 			if (data.file != null) {
 				formData.append('mainImages', data.file);
@@ -163,23 +160,20 @@ const Events = () => {
 		formData.append('location', eventLocation);
 		formData.append('latitude', eventLatitude);
 		formData.append('longitude', eventLongitude);
-		console.log('lat', eventLatitude, 'lng', eventLongitude);
 
-		console.log(eventGalleryImg);
 		eventGalleryImg.map((data) => {
 			if (data.file != null) {
 				formData.append('galleries', data.file);
 			}
 		});
 
-		let entries = formData.entries();
-		for (const pair of entries) {
-			console.log(pair[0] + ', ' + pair[1]);
-		}
+		// let entries = formData.entries();
+		// for (const pair of entries) {
+		// 	console.log(pair[0] + ', ' + pair[1]);
+		// }
 
 		if (isFormOpen === -1) {
 			postNewEventData(formData).then((data) => {
-				console.log(data);
 				if (data.status !== 201) {
 					alert('저장 실패!');
 				} else {
@@ -189,7 +183,6 @@ const Events = () => {
 			});
 		} else if (isFormOpen > 0) {
 			putOneEventData(isFormOpen, formData).then((data) => {
-				console.log(data);
 				if (data.status !== 201) {
 					alert('수정 실패!');
 				} else {
@@ -203,7 +196,6 @@ const Events = () => {
 	const deleteEvent = (e) => {
 		e.preventDefault();
 		deleteOneEventData(isFormOpen).then((data) => {
-			console.log(data);
 			if (data.status !== 200) {
 				alert('삭제 실패!');
 			} else {
@@ -220,7 +212,6 @@ const Events = () => {
 			.then((response) => response.blob())
 			.then((imageBlob) => {
 				// Blob을 파일로 생성
-				console.log(imageBlob)
 				imageFile = new File([imageBlob], name, {
 					type: 'image/jpeg',
 				});
@@ -233,9 +224,7 @@ const Events = () => {
 
 	const eventInputLayout = () => {
 		if (isFormOpen > 0) {
-			console.log(isFormOpen);
 			getOneEventData(isFormOpen).then((data) => {
-				console.log(data);
 				const eventData = data.data;
 
 				const today = moment(new Date()).startOf('day');
@@ -339,7 +328,6 @@ const Events = () => {
 	const navigate = useNavigate();
 	useEffect(() => {
 		let check = getCookie('login');
-		console.log(typeof check, 'sfsdfsffasgagf');
 		if (typeof check == 'undefined') {
 			navigate('/');
 		}
@@ -523,10 +511,6 @@ const Events = () => {
 												value={eventOpeningHoursHour}
 												onChange={(e) => {
 													setEventOpeningHoursHour(e.target.value);
-													console.log(
-														eventOpeningHoursHour,
-														eventOpeningHoursMinute,
-													);
 												}}
 												onKeyDown={handleKeyDown}
 											/>
