@@ -50,6 +50,7 @@ const RootNavigation = () => {
 				<Route path='/insightinfo/:id' element={<InsightInfoContainer />} />
 				<Route path='/newsletter' element={<NewsletterContainer />} />
 				<Route path='/orcagroup' element={<OrcagroupContainer />} />
+				<Route path='*' element={<DashboardContainer />} />
 			</Routes>
 		</>
 	);

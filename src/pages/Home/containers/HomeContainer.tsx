@@ -36,11 +36,10 @@ const HomeContainer = (props: Props) => {
 	const uploadOrcaHandler = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
 			const file = event.target.files?.[0];
+
 			if (file) {
-				if (
-					file.type ===
-					('application/png' || 'application/jpeg' || 'application/svg')
-				) {
+				console.log(file.type);
+				if (file.type === ('image/png' || 'image/jpeg' || 'image/svg')) {
 					setSelectedOrca(file);
 				} else {
 					alert('올바른 이미지 파일을 선텍하세요.');
